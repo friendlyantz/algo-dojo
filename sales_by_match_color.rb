@@ -6,7 +6,7 @@ def sockMerchant(n, ar)
 
   ar.each do |color|
       if color_hash[color].nil?
-        color_hash[color] = 0
+        color_hash[color] = 1
       elsif color_hash.key?(color)
           # puts color.to_s.insert(" adding")
           color_hash[color] += 1
@@ -15,8 +15,14 @@ def sockMerchant(n, ar)
       end
         
   end
-  color_hash
+  p color_hash
+  matched_pairs = 0
+  color_hash.each_value do |value|
+    # p value
+    matched_pairs = matched_pairs + (value / 2)
+  end
 
+  p matched_pairs
 end
 
 sockMerchant(7, arr)
