@@ -15,8 +15,8 @@ def minimumBribes(q)
 
             if q[index...q.length].any? {|element| element < number }
                 puts "basta"
-                bribe_streak = q[index..8].count {|element| element < number }
-                # p bribe_streak
+                bribe_streak = q[index...q.length].count {|element| element < number }
+                p bribe_streak
                 if bribe_streak <= 2
                     bribe_sum += bribe_streak
                 else
