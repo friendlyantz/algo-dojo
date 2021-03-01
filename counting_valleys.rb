@@ -1,25 +1,27 @@
 
-path = "UDDDUDUU"
+path = "DDUUDDUDUUUD"
 
 def countingValleys(steps, path)
   current_depth = 0
   valley_counter = 0
     # Write your code here
-    
+  previous_depth = 0
     path.split(//).each do |step|
         if step == "D"
           current_depth -= 1
-          valley_counter += 1 if current_depth == 0
+          # valley_counter += 1 if current_depth == 0 && previous_depth == 1
+          p current_depth.to_s + step*2 + valley_counter.to_s 
+          previous_depth = current_depth
         elsif step == "U"
-          p step
-          # p current_depth
-            current_depth = current_depth + 1
-            valley_counter += 1 if current_depth == 0
+          current_depth += 1 
+          valley_counter += 1 if current_depth == 0 && previous_depth == -1
+          p current_depth.to_s + step + valley_counter.to_s 
+          previous_depth = current_depth
         else
             puts "error"
         end
     end
-    p valley_counter / 2 + valley_counter%2
+    p valley_counter
 end
 
 countingValleys(8, path)
