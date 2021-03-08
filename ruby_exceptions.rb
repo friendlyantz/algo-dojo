@@ -5,7 +5,9 @@
 # While the exception mechanism of raise and rescue is great for abandoning execution when things go wrong, it’s sometimes nice to be able to jump out of some deeply nested construct during normal processing. This is where catch and throw come in handy. (Thomas and Hunt, 2001)
 def power(n, p)
   # begin
-  raise RangeError, 'n and p should be non-negative' if (n | p).negative?
-
   n**p
+  raise 'n and p should be non-negative' if (n | p).negative?
+
 end
+
+puts power(-2,4)
