@@ -1,5 +1,3 @@
-#!/#{bin}/ruby
-#{
   n = gets.strip.to_i
   array = gets.strip
   array = array.split(' ').map(&:to_i)
