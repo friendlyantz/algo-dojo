@@ -13,7 +13,7 @@ def minimumBribes(q)
     bribe_streak = 0
     too_chaotic = 0
       q.each_with_index do |number, index|
-        puts "#{number} checking for bribes. index: #{index}" if index%ga1000 == 0
+        puts "#{number} checking for bribes. index: #{index}" if index%10 == 0
             # break if index == 10
             if bribe_streak = q[index...q.length].count {|element| element < number }
                 # puts "basta"
