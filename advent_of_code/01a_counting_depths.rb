@@ -2,8 +2,6 @@ require_relative  '01a_inputs'
 
 DEPTHS.map!(&:to_i)
 
-p DEPTHS.first.class
-
 def counting_depths(data)
   current_depth = 0
   depth_increase_count = 0
@@ -28,5 +26,6 @@ end
 
 counting_depths(DEPTHS)
 
-# Michael Milewski <saramic@gmail.com>
+# EXTRA SOLUTION BY: Michael Milewski <saramic@gmail.com>
+
 # DEPTHS.map(&:to_i).reduce({last: nil, count: 0}){|acc,a| { count: (acc[:last] && acc[:last] < a) ? acc[:count] + 1 : acc[:count], last: a } }[:count]
