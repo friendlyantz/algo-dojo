@@ -27,6 +27,19 @@ end
 counting_depths(DEPTHS)
 
 # _______________________________________________________
+# ALL SOLUTIONS REPOS
+# https://github.com/gusgollings/adventofcode2021
+# https://github.com/tomdalling/advent_of_code_2021
+# https://github.com/trev/adventofcode2021/
+# https://github.com/astley92/Aoc_2021/
+# https://github.com/corroded/aoc-2021/
+
+# Wei Zeng  < 1 minute ago
+#   mine with elixir and TEST !!!
+#   https://github.com/gzzengwei/advent-of-code_solutions
+
+
+# _______________________________________________________
 # EXTRA SOLUTION BY: Michael Milewski <saramic@gmail.com>
 
 # DEPTHS.map(&:to_i).reduce({last: nil, count: 0}){|acc,a| { count: (acc[:last] && acc[:last] < a) ? acc[:count] + 1 : acc[:count], last: a } }[:count]
