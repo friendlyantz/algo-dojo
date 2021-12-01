@@ -27,3 +27,6 @@ def counting_depths(data)
 end
 
 counting_depths(DEPTHS)
+
+# Michael Milewski <saramic@gmail.com>
+# DEPTHS.map(&:to_i).reduce({last: nil, count: 0}){|acc,a| { count: (acc[:last] && acc[:last] < a) ? acc[:count] + 1 : acc[:count], last: a } }[:count]
