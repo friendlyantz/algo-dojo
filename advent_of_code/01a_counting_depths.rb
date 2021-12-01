@@ -26,6 +26,65 @@ end
 
 counting_depths(DEPTHS)
 
+# _______________________________________________________
 # EXTRA SOLUTION BY: Michael Milewski <saramic@gmail.com>
 
 # DEPTHS.map(&:to_i).reduce({last: nil, count: 0}){|acc,a| { count: (acc[:last] && acc[:last] < a) ? acc[:count] + 1 : acc[:count], last: a } }[:count]
+
+
+# _______________________________________________________
+# # EXTRA SOLUTION BY: Tom Dalling <tomdalling@users.noreply.github.com>
+# DEPTHS = DATA.lines.map(&:strip).map(&:to_i)
+
+# puts(
+#   DEPTHS.zip([nil] + DEPTHS).count do |(this_depth, prev_depth)|
+#     prev_depth && this_depth > prev_depth
+#   end
+# )
+# __END__
+# 190
+# 168
+# 166
+# 163
+# 170
+# 160
+# 190
+# 168
+# 166
+# 163
+# 170
+# 160
+# 171
+# 166
+# 161
+# 167
+# 175
+# 178
+# 193
+# 189
+# 188
+# 191
+# 193
+# 192
+# 193
+# 180
+# 177
+# 178
+# 176
+# 177
+# 196
+# 203
+# 211
+# 209
+# 210
+# 209
+# 225
+# 219
+# 229
+# 214
+# 202
+# 205
+# 208
+# 207
+# 208
+# 204
