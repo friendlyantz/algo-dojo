@@ -7,11 +7,12 @@ drawing_numbers = data.shift.split(',')
 card_raw_data = data
 class Card
   attr_reader :id, :card_nums
-  attr_accessor :line_sums, :col_sums
+  attr_accessor :line_sums, :col_sums, :bingo
 
   def initialize(id, card_nums)
     @id = id
     @card_nums = card_nums
+    @bingo = false
 
     @line_sums = [0, 0, 0, 0, 0]
     @col_sums = [0, 0, 0, 0, 0]
@@ -25,9 +26,29 @@ class Card
         sum_unmarked_numbers += card_num.num.to_i unless card_num.crossed
       end
 
-      raise "BINGOOO!!! . card# #{id} won. magic num was: #{magic_num}" +
-            '====' +
-            "YOLO000! Final score: #{sum_unmarked_numbers * magic_num.to_i}"
+      puts "BINGOOO!!! . card# #{id} won. magic num was: #{magic_num}" +
+           '====' +
+           "YOLO000! Final score: #{sum_unmarked_numbers * magic_num.to_i}"
+
+      self.bingo = true
+    end
+  end
+
+  def last_board_bingo_check(magic_num)
+    if line_sums.include?(5) || col_sums.include?(5)
+      sum_unmarked_numbers = 0
+
+      card_nums.each do |card_num|
+        sum_unmarked_numbers += card_num.num.to_i unless card_num.crossed
+      end
+
+      puts '____________________'
+      puts 'PT2 BOARD BINGOOO!!!'
+      puts "card# #{id} won. "
+      puts '____________________'
+      puts "magic num was: #{magic_num}" +
+           '====' +
+           "YOLO000! Final score: #{sum_unmarked_numbers * magic_num.to_i}"
 
     end
   end
@@ -100,8 +121,22 @@ def assess_cards(array_of_cards, magic_num)
   array_of_cards.each do |card|
     p "assessing card: #{card.id}"
     card.cross_and_update_line_and_col_sum_trackers(magic_num)
+    # Case for pt1
+    # raise "we have a winner" if card.bingo_check(magic_num)
+    # _______________
+    # Case for pt2 below
     card.bingo_check(magic_num)
+    raise 'all boards won' if all_cards_won(array_of_cards) # Case for pt2
+    # _______________
   end
+end
+
+def all_cards_won(array_of_cards)
+  filter = array_of_cards.select do |element|
+    element.bingo == false
+  end
+
+  filter.empty?
 end
 
 def game_main_sequence(array_of_cards, drawing_numbers)
