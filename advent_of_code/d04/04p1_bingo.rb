@@ -1,8 +1,8 @@
 require_relative '04_data'
 require 'pry'
 require 'ap'
-# require 'awesome_print'
-data = CAL_DATA
+
+data = BIN_DATA
 drawing_numbers = data.shift.split(',')
 card_raw_data = data
 class Card
@@ -17,48 +17,41 @@ class Card
     @col_sums = [0, 0, 0, 0, 0]
   end
 
-  def cross_nums_in_card(magic_num)
-    card_nums.each do |card_num|
-      if card_num.num == magic_num
-        p card_num
-        p "xxxxxx ---> crossing #{magic_num}" if card_num.cross
-      end
-    end
-    self
-  end
-
   def bingo_check(magic_num)
     if line_sums.include?(5) || col_sums.include?(5)
-      puts '________________________________'
-      puts "bingo!!! YOLOOO. card# #{id} won. magic num was: #{magic_num}"
-      puts '________________________________'
+      sum_unmarked_numbers = 0
+
+      card_nums.each do |card_num|
+        sum_unmarked_numbers += card_num.num.to_i unless card_num.crossed
+      end
+
+      raise "BINGOOO!!! . card# #{id} won. magic num was: #{magic_num}" +
+            '====' +
+            "YOLO000! Final score: #{sum_unmarked_numbers * magic_num.to_i}"
+
     end
   end
 
-  def update_line_and_col_sum_trackers(_magic_number)
+  def cross_and_update_line_and_col_sum_trackers(magic_number)
     5.times do |x|
       5.times do |y|
         this_loop_card_num = card_nums.select do |element|
-          element.x == x && element.y == y && element.crossed
+          element.x == x && element.y == y && element.num == magic_number
         end
 
         next if this_loop_card_num.empty?
 
-        # puts "looping x: #{x}, y: #{y}"
+        break unless this_loop_card_num.first.cross
 
-        # binding.pry
-
-        # TODO: double up calc issue
-        # binding.pry
+        puts "looping x: #{x}, y: #{y}"
+        puts 'crossing '
+        p this_loop_card_num.first
         line_sums[x] += 1
         col_sums[y] += 1
+        p line_sums
+        p col_sums
       end
     end
-
-    # binding.pry
-    p line_sums
-    p col_sums
-    # break
   end
 end
 
@@ -74,6 +67,8 @@ class CardNum
   end
 
   def cross
+    return if crossed
+
     self.crossed = true
   end
 end
@@ -100,13 +95,11 @@ def merge_nums_to_cards(data)
   cards
 end
 
+# _________________
 def assess_cards(array_of_cards, magic_num)
   array_of_cards.each do |card|
     p "assessing card: #{card.id}"
-    card.cross_nums_in_card(magic_num)
-
-    card.update_line_and_col_sum_trackers(magic_num)
-
+    card.cross_and_update_line_and_col_sum_trackers(magic_num)
     card.bingo_check(magic_num)
   end
 end
