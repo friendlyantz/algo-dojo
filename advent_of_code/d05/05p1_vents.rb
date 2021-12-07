@@ -78,6 +78,7 @@ def diagonal_check(coord)
   x_pair.max - x_pair.min == y_pair.max - y_pair.min
 end
 
+
 def horizontal_mapping(coord, vent_map)
   p coord
   y = coord[1]
@@ -96,17 +97,36 @@ end
 
 def vertical_mapping(coord, vent_map)
   p coord
-  x = coord[0]
+  x_a = coord[0]
   y_coord = coord[1]
   y_stop = coord[3]
   if operator = y_stop <=> y_coord
     length = [y_stop, y_coord].max - [y_stop, y_coord].min + 1
     length.times do
-      vent_map.find_on_map_and_mark(x, y_coord)
+      vent_map.find_on_map_and_mark(x_a, y_coord)
       y_coord += operator
     end
   else
     raise 'cant determine direction'
+  end
+end
+
+def diag_mapping(coord, vent_map)
+  p coord
+  x_a = coord[0]
+  y_a = coord[1]
+  x_b = coord[2]
+  y_b = coord[3]
+
+  operator_x = x_b <=> x_a
+  operator_y = y_b <=> y_a 
+
+  length = [y_b, y_a].max - [y_b, y_a].min + 1
+
+  length.times do
+    vent_map.find_on_map_and_mark(x_a, y_a)
+    x_a += operator_x
+    y_a += operator_y
   end
 end
 
@@ -120,8 +140,7 @@ def mark_points(line_data, vent_map)
       vertical_mapping(coord, vent_map)
     elsif diagonal_check(coord)
       p 'mapping dia'
-      # TODO
-      # vertical_mapping(coord, vent_map)
+      diag_mapping(coord, vent_map)
     else
       puts 'error, no case found----------------'
     end
