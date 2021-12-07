@@ -20,7 +20,8 @@ class VentMap
   end
 
   def find_overlaps
-    ap map_points.select { |pt| pt.overlap_stat > 1 }
+    ap selection = map_points.select { |pt| pt.overlap_stat > 1 }
+    ap selection.length
   end
 end
 
@@ -55,14 +56,26 @@ def filter_horiz_vert_lines(data)
   filtered_array
 end
 
-def line_direction_check(coord)
-  if coord[0] == coord[2]
-    'vertical'
-  elsif coord[1] == coord[3]
-    'horizontal'
-  else
-    puts 'error'
+# def filter_horiz_vert_and_dia_lines(data)
+#   filtered_array = []
+#   data.each do |line|
+#     coord = line.scan(/\d+/).map(&:to_i)
+#     filtered_array << coord.map(&:to_i) if coord[0] == coord[2] || coord[1] == coord[3] || diagonal_check(coord)
+#   end
+#   filtered_array
+# end
+
+def convert_to_i(data)
+  data.map do |line|
+    line.scan(/\d+/).map!(&:to_i)
   end
+end
+
+def diagonal_check(coord)
+  x_pair = [coord[0], coord[2]]
+  y_pair = [coord[1], coord[3]]
+
+  x_pair.max - x_pair.min == y_pair.max - y_pair.min
 end
 
 def horizontal_mapping(coord, vent_map)
@@ -70,20 +83,11 @@ def horizontal_mapping(coord, vent_map)
   y = coord[1]
   x = coord[0]
   x_stop = coord[2]
-  if x < x_stop
-    length = x_stop - x + 1
-    p '➡️ - right'
+  if operator = x_stop <=> x
+    length = [x_stop, x].max - [x_stop, x].min + 1
     length.times do
       vent_map.find_on_map_and_mark(x, y)
-      x += 1
-    end
-  elsif x > x_stop
-    length = x - x_stop + 1
-    p '⬅️ - left'
-
-    length.times do
-      vent_map.find_on_map_and_mark(x, y)
-      x -= 1
+      x += operator
     end
   else
     raise 'cant determine direction for hor mapping'
@@ -95,19 +99,11 @@ def vertical_mapping(coord, vent_map)
   x = coord[0]
   y_coord = coord[1]
   y_stop = coord[3]
-  if y_coord < y_stop
-    length = y_stop - y_coord + 1
-    p '⬇️ - descending, depth ++'
+  if operator = y_stop <=> y_coord
+    length = [y_stop, y_coord].max - [y_stop, y_coord].min + 1
     length.times do
       vent_map.find_on_map_and_mark(x, y_coord)
-      y_coord += 1
-    end
-  elsif y_coord > y_stop
-    length = y_coord - y_stop + 1
-    p '⬆️ - ascending, depth --'
-    length.times do
-      vent_map.find_on_map_and_mark(x, y_coord)
-      y_coord -= 1
+      y_coord += operator
     end
   else
     raise 'cant determine direction'
@@ -115,16 +111,19 @@ def vertical_mapping(coord, vent_map)
 end
 
 def mark_points(line_data, vent_map)
-  line_data.each do |line|
-    case line_direction_check(line)
-    when 'horizontal'
+  line_data.each do |coord|
+    if coord[1] == coord[3]
       p 'mapping horizontal'
-      horizontal_mapping(line, vent_map)
-    when 'vertical'
+      horizontal_mapping(coord, vent_map)
+    elsif coord[0] == coord[2]
       p 'mapping vertical'
-      vertical_mapping(line, vent_map)
+      vertical_mapping(coord, vent_map)
+    elsif diagonal_check(coord)
+      p 'mapping dia'
+      # TODO
+      # vertical_mapping(coord, vent_map)
     else
-      p 'error'
+      puts 'error, no case found----------------'
     end
   end
 end
@@ -132,7 +131,9 @@ end
 def main_sequence(raw_data)
   vent_map = VentMap.new
   data = raw_data_preparation(raw_data)
-  processed_data = filter_horiz_vert_lines(data)
+  # processed_data = filter_horiz_vert_lines(data)
+  # processed_data = filter_horiz_vert_and_dia_lines(data)
+  processed_data = convert_to_i(data)
   mark_points(processed_data, vent_map)
   vent_map.find_overlaps
 end
