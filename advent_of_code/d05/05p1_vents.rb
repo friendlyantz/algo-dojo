@@ -6,25 +6,21 @@ class VentMap
   attr_reader :map_points
 
   def initialize
-    @map_points = init_map_points
+    @map_points = []
   end
 
   def find_on_map_and_mark(x, y)
-    map_points.find { |pt| pt.x == x && pt.y == y }.mark
+    point = map_points.find { |pt| pt.x == x && pt.y == y }
+
+    if point
+      point.mark
+    else
+      map_points << MapPoint.new(x, y)
+    end
   end
 
   def find_overlaps
     ap map_points.select { |pt| pt.overlap_stat > 1 }
-  end
-
-  def init_map_points
-    map_points_array = []
-    1000.times do |x|
-      1000.times do |y|
-        map_points_array << MapPoint.new(x, y)
-      end
-    end
-    map_points_array
   end
 end
 
@@ -35,7 +31,7 @@ class MapPoint
   def initialize(x, y)
     @x = x
     @y = y
-    @overlap_stat = 0
+    @overlap_stat = 1
   end
 
   def mark
@@ -137,9 +133,9 @@ def main_sequence(raw_data)
   vent_map = VentMap.new
   data = raw_data_preparation(raw_data)
   processed_data = filter_horiz_vert_lines(data)
-  array_of_point = mark_points(processed_data, vent_map)
+  mark_points(processed_data, vent_map)
   vent_map.find_overlaps
 end
 
 # main_sequence(CAL_DATA)
-main_sequence(CAL_DATA)
+main_sequence(BIN_DATA)
