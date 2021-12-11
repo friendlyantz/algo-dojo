@@ -11,39 +11,45 @@ RSpec.describe 'Day 9 Smoke' do
 "
   end
 
+  let(:matrix) do
+    [[2, 1, 9, 9, 9, 4, 3, 2, 1, 0],
+     [3, 9, 8, 7, 8, 9, 4, 9, 2, 1],
+     [9, 8, 5, 6, 7, 8, 9, 8, 9, 2],
+     [8, 7, 6, 7, 8, 9, 6, 7, 8, 9],
+     [9, 8, 9, 9, 9, 6, 5, 6, 7, 8]]
+  end
+  let(:array_of_lines) do
+    [2_199_943_210,
+     3_987_894_921,
+     9_856_789_892,
+     8_767_896_789,
+     9_899_965_678]
+  end
+
   describe 'data_prep' do
-    subject { data_prep(cal_data) }
-    it 'breaks down data into lines' do
-      expect(subject).to eq([2_199_943_210,
-                             3_987_894_921,
-                             9_856_789_892,
-                             8_767_896_789,
-                             9_899_965_678])
+    it '# data_prep breaks down data into lines' do
+      expect(data_prep(cal_data)).to eq([2_199_943_210,
+                                         3_987_894_921,
+                                         9_856_789_892,
+                                         8_767_896_789,
+                                         9_899_965_678])
+    end
+
+    it '# generate_mtrix breaks down data into 2d matrix' do
+      expect(generate_mtrix(cal_data).size).to eq(5)
+      expect(generate_mtrix(cal_data).first.size).to eq(10)
+      expect(generate_mtrix(cal_data)).to eq(matrix)
     end
   end
 
   describe 'low points' do
-    let(:array_of_lines) do
-      [2_199_943_210,
-       3_987_894_921,
-       9_856_789_892,
-       8_767_896_789,
-       9_899_965_678]
-    end
-    subject do
-      find_low_points(array_of_lines)
+    it ' first_line_scan(first_line, second_line) finds low points' do
+      expect(first_line_scan([5, 6, 3, 2], [7, 3, 3, 4])).to eq [5, 2]
+      expect(first_line_scan(matrix[0], matrix[1])).to eq [1, 0]
     end
 
     it 'find_low_points outputs array of low point values' do
-      expect(subject).to eq [1, 0, 5, 5]
-    end
-
-    it 'find_low_points_of_line outputs array of low point values' do
-      expect(find_low_points_of_line(2_199_943_210)).to eq [1, 0]
-      expect(find_low_points_of_line(3_987_894_921)).to eq []
-      expect(find_low_points_of_line(9_856_789_892)).to eq [5]
-      expect(find_low_points_of_line(8_767_896_789)).to eq []
-      expect(find_low_points_of_line(9_899_965_678)).to eq [5]
+      expect(find_low_points(matrix)).to eq [1, 0, 5, 5]
     end
 
     it 'calculates the sum of risk factors of low points' do
