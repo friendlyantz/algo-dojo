@@ -10,31 +10,34 @@ RSpec.describe 'Day 9 Smoke' do
 9899965678
 "
   end
-  
-  describe 'data prep' do
+
+  describe 'data_prep' do
     subject { data_prep(cal_data) }
-    
     it 'breaks down data into lines' do
-      expect(subject).to eq([2199943210,
-3987894921,
-9856789892,
-8767896789,
-9899965678,
-])
+      expect(subject).to eq([2_199_943_210,
+                             3_987_894_921,
+                             9_856_789_892,
+                             8_767_896_789,
+                             9_899_965_678])
     end
   end
 
-  describe 'example' do
-    subject { 5 } # refer explicit_subject_spec.rb. This is no_name subject with block providing Integer '5' as a return
-
-    context 'with classic syntax' do
-      it 'should equal 5' do
-        expect(subject).to eq(5)
-      end
+  describe 'low points' do
+    let(:array_of_lines) { [2_199_943_210,
+                       3_987_894_921,
+                       9_856_789_892,
+                       8_767_896_789,
+                       9_899_965_678] } 
+    subject do
+      find_low_points(array_of_lines)
     end
 
-    context 'with one line syntax' do
-      it { is_expected.to eq(5) } # rspec helper generates test text (green/red) - only works with subject
+    it 'find_low_points outputs array of low point values' do
+      expect(subject).to eq [1, 0, 5, 5]
+    end
+
+    it 'calculates the sum of risk factors of low points' do
+      expect(low_points_risk_factor([1, 0, 5, 5])).to eq 16
     end
   end
 end
