@@ -14,7 +14,12 @@ end
 def find_low_points(matrix)
   low_points = []
   matrix.each_with_index do |_line, i|
-    this_line_low_pts = this_line_scan(matrix[i - 1], matrix[i], matrix[i + 1])
+    case i
+    when 0
+      this_line_low_pts = this_line_scan(nil, matrix[i], matrix[i + 1])
+    else
+      this_line_low_pts = this_line_scan(matrix[i - 1], matrix[i], matrix[i + 1])
+    end
     low_points += this_line_low_pts
   end
   low_points
@@ -37,3 +42,11 @@ end
 def low_points_risk_factor(array_of_low_points)
   array_of_low_points.map! {|el| el += 1}.sum
 end
+
+def main_sequence_pt1(data)
+  matrix = generate_mtrix(data)
+  low_points = find_low_points(matrix)
+  low_points_risk_factor(low_points)
+end
+
+ap main_sequence_pt1(BIN_DATA)
