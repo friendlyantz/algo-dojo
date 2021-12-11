@@ -27,14 +27,6 @@ RSpec.describe 'Day 9 Smoke' do
   end
 
   describe 'data_prep' do
-    it '# data_prep breaks down data into lines' do
-      expect(data_prep(cal_data)).to eq([2_199_943_210,
-                                         3_987_894_921,
-                                         9_856_789_892,
-                                         8_767_896_789,
-                                         9_899_965_678])
-    end
-
     it '# generate_mtrix breaks down data into 2d matrix' do
       expect(generate_mtrix(cal_data).size).to eq(5)
       expect(generate_mtrix(cal_data).first.size).to eq(10)
@@ -43,9 +35,20 @@ RSpec.describe 'Day 9 Smoke' do
   end
 
   describe 'low points' do
-    it ' first_line_scan(first_line, second_line) finds low points' do
-      expect(first_line_scan([5, 6, 3, 2], [7, 3, 3, 4])).to eq [5, 2]
-      expect(first_line_scan(matrix[0], matrix[1])).to eq [1, 0]
+    describe 'low_points of line' do
+      context 'when scanning first two lines' do
+        specify do
+          expect(this_line_scan(nil, [5, 6, 3, 2], [7, 3, 3, 4])).to eq [5, 2]
+          expect(this_line_scan(nil, matrix[0], matrix[1])).to eq [1, 0]
+        end
+      end
+
+      context 'when scanning last two lines' do
+        specify do
+          expect(this_line_scan([6, 6, 3, 2], [2, 3, 1, 4], nil)).to eq [2, 1]
+          expect(this_line_scan(matrix[-2], matrix[-1], nil)).to eq [5]
+        end
+      end
     end
 
     it 'find_low_points outputs array of low point values' do
