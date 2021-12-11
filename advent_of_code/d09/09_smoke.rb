@@ -34,4 +34,6 @@ def this_line_scan(above_line, this_line, below_line)
   result
 end
 
-def low_points_risk_factor(array_of_low_points); end
+def low_points_risk_factor(array_of_low_points)
+  array_of_low_points.map! {|el| el += 1}.sum
+end

@@ -56,7 +56,7 @@ RSpec.describe 'Day 9 Smoke' do
     end
 
     it 'calculates the sum of risk factors of low points' do
-      expect(low_points_risk_factor([1, 0, 5, 5])).to eq 16
+      expect(low_points_risk_factor([1, 0, 5, 5])).to eq 15
     end
   end
 end
