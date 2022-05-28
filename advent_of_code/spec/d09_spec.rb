@@ -1,5 +1,4 @@
-# require_relative '../d09/09_smoke'
-require_relative '../d09/09_smoke'
+require './d09/09_pt1_smoke'
 
 RSpec.describe 'Day 9 Smoke' do
   let(:cal_data) do
@@ -34,19 +33,25 @@ RSpec.describe 'Day 9 Smoke' do
     end
   end
 
-  describe 'low points' do
+  describe 'Part One: low points' do
     describe 'low_points of line' do
       context 'when scanning first two lines' do
         specify do
-          expect(this_line_scan(nil, [5, 6, 3, 2], [7, 3, 3, 4])).to eq [5, 2]
-          expect(this_line_scan(nil, matrix[0], matrix[1])).to eq [1, 0]
+          expect(this_line_scan(nil, [5, 6, 3, 2], [7, 3, 3, 4])[:array_of_low_pts]).to eq [5, 2]
+          expect(this_line_scan(nil, matrix[0], matrix[1])[:array_of_low_pts]).to eq [1, 0]
+
+          expect(this_line_scan(nil, [5, 6, 3, 2], [7, 3, 3, 4], 0)[:array_of_low_pts_x_y]).to eq [[0, 0], [3, 0]]
+          expect(this_line_scan(nil, matrix[0], matrix[1], 0)[:array_of_low_pts_x_y]).to eq [[1, 0], [9, 0]]
         end
       end
 
       context 'when scanning last two lines' do
         specify do
-          expect(this_line_scan([6, 6, 3, 2], [2, 3, 1, 4], nil)).to eq [2, 1]
-          expect(this_line_scan(matrix[-2], matrix[-1], nil)).to eq [5]
+          expect(this_line_scan([6, 6, 3, 2], [2, 3, 1, 4], nil)[:array_of_low_pts]).to eq [2, 1]
+          expect(this_line_scan(matrix[-2], matrix[-1], nil)[:array_of_low_pts]).to eq [5]
+
+          expect(this_line_scan([6, 6, 3, 2], [2, 3, 1, 4], nil, 88)[:array_of_low_pts_x_y]).to eq [[0, 88], [2, 88]]
+          expect(this_line_scan(matrix[-2], matrix[-1], nil, 88)[:array_of_low_pts_x_y]).to eq [[6, 88]]
         end
       end
     end
@@ -60,7 +65,7 @@ RSpec.describe 'Day 9 Smoke' do
     end
   end
 
-  describe 'main_sequence' do
+  describe 'final result' do
     it 'PART #1 calculates the sum of risk factors of low points with CAL_DATA' do
       expect(main_sequence_pt1(cal_data)).to eq 15
     end
