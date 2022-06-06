@@ -5,13 +5,23 @@ SCORES = {
   ')' => 3,
   ']' => 57,
   '}' => 1197,
-  '>' => 25137
+  '>' => 25_137
+}
+
+INCOMPLETE_SCORES = {
+  '(' => 1,
+  '[' => 2,
+  '{' => 3,
+  '<' => 4
 }
 
 def solve_puzzle
   read_data
     .map { |data| squeeze_corrupted(data) }
     .then { |data| calc_score_of_corrupted(data) }
+    .then { |data| filter_incomplete(data) }
+    .map { |data| fill_incomplete_and_calc_line_scores(data) }
+    .then { |data| find_incomple_score(data) }
 end
 
 def read_data
@@ -23,7 +33,7 @@ def squeeze_corrupted(data)
   data.split('').each do |char|
     if find_closing_char_for(stack.last) == char
       stack.pop
-    elsif [')',']','}','>'].any? char
+    elsif [')', ']', '}', '>'].any? char
       return char
     else
       stack << char
@@ -53,7 +63,32 @@ def find_closing_char_for(starting_char)
   end
 end
 
-p solve_puzzle
+def filter_incomplete(data)
+  data
+    .find_all { |element| element.size != 1 }
+end
+
+def fill_incomplete_and_calc_line_scores(data)
+  stack = []
+  data.each_with_index do |char, _i|
+    if find_closing_char_for(stack.last) == char
+      stack.pop
+    else
+      stack << char
+    end
+  end
+  score = 0
+  stack.reverse.each do |element|
+    score = (5 * score) + INCOMPLETE_SCORES[element]
+  end
+  score
+end
+
+def find_incomple_score(data)
+  p data.sort[data.size / 2]
+end
+
+solve_puzzle
 
 __END__
 {<{<[{<[<([[(<<>[]>[<>()]){(()<>){<>{}}}]<{<{}<>){()<>}}[[()[]]{(){}}]>]{<([[]][{}<>]){<{}<>>{[]<>}}><[(
