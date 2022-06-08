@@ -305,21 +305,34 @@ include MyColorize
 
 def solve_puzzle
   @counter = 0
+  @bingo_steps = []
   read_data
     .map { prep_data(_1) }
     .then do |data|
-      100.times do
-        display(data)
+      400.times do |step|
+        puts "step_#{step}"
         flash_lights(data)
+        display(data)
+        check_bingo_step(data, step)
       end
     end
-  p @counter
+  p 'counter:'.concat 32, @counter.to_s
+  p 'bingo steps:'.concat 32, @bingo_steps.to_s
 end
 
 def display(data)
   x = data.map { _1.map { |i| i[:value] } }
   MyColorize.print_out(x)
   8.times { puts '' }
+end
+
+def check_bingo_step(data, step)
+  x = data.map { _1.map { |i| i[:value] } }
+  if x.flatten.tally == { 0 => x.flatten.length }
+    puts '=====ZAAAAAAAAP====='
+    sleep 3
+    @bingo_steps << step
+  end
 end
 
 def read_data
@@ -360,6 +373,7 @@ def increment_cell(data, i, j)
   data[i][j][:value] += 1
 
   display(data)
+  sleep 0.003
   flash_cell(data, i, j) if data[i][j][:value] > 9
 end
 
