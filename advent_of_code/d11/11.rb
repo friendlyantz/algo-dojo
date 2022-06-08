@@ -300,8 +300,10 @@
 
 require 'pry'
 require './lib/colorize'
+require './lib/neighbour_check'
 
 include MyColorize
+include NeighbourCheck
 
 def solve_puzzle
   @counter = 0
@@ -373,7 +375,7 @@ def increment_cell(data, i, j)
   data[i][j][:value] += 1
 
   display(data)
-  sleep 0.003
+  sleep 0.001
   flash_cell(data, i, j) if data[i][j][:value] > 9
 end
 
@@ -386,16 +388,7 @@ def flash_cell(data, i, j)
 end
 
 def increment_neighbours(data, i, j)
-  neighbours = []
-
-  neighbours << [i - 1, j] if i > 0 # top
-  neighbours << [i - 1, j - 1] if i > 0 && j > 0 # top-left
-  neighbours << [i - 1, j + 1] if i > 0 && j < data.first.length - 1 # top-right
-  neighbours << [i + 1, j] if i < data.length - 1 # bottom
-  neighbours << [i + 1, j - 1] if i < data.length - 1 && j > 0 # bottom-left
-  neighbours << [i + 1, j + 1] if i < data.length - 1 && j < data.first.length - 1 # bottom-right
-  neighbours << [i, j - 1] if j > 0 # left
-  neighbours << [i, j + 1] if j < data.first.length - 1 # right
+  neighbours = NeighbourCheck.all(data, i, j)
 
   neighbours.each do |a, b|
     increment_cell(data, a, b)
