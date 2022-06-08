@@ -1,4 +1,3 @@
-
 # --- Day 11: Dumbo Octopus ---
 
 # You enter a large cavern full of rare bioluminescent dumbo octopuses! They seem to not like the Christmas lights on your submarine, so you turn them off for now.
@@ -382,12 +381,10 @@ def increment_neighbours(data, i, j)
   neighbours << [i + 1, j - 1] if i < data.length - 1 && j > 0 # bottom-left
   neighbours << [i + 1, j + 1] if i < data.length - 1 && j < data.first.length - 1 # bottom-right
   neighbours << [i, j - 1] if j > 0 # left
-  neighbours << [i, j + 1] if j < data.first.length - 1 # && data[i][j + 1][:value] == 9 # right
+  neighbours << [i, j + 1] if j < data.first.length - 1 # right
 
   neighbours.each do |a, b|
     increment_cell(data, a, b)
-
-    flash_cell(data, a, b) if data[a][b][:value] > 9
   end
 end
 
