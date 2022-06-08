@@ -16,7 +16,7 @@ module Colorize
       6 => :yellow,
       7 => :light_magenta,
       8 => :magenta,
-      9 => :red
+      9 => :light_red
     }[num]
   end
 
@@ -24,7 +24,19 @@ module Colorize
     output = data_for_clr
     output.each_with_index do |row, i|
       row.each_with_index do |_col, j|
-        output[i][j] = '█'.colorize(gradient(output[i][j]))
+        value = output[i][j] > 9 ? 'x' : output[i][j].to_s
+
+        output[i][j] = if value == 'x'
+                         value.colorize(
+                           color: :black,
+                           background: :red
+                         )
+                       else
+                         value.colorize(
+                           color: gradient(output[i][j] - 1 ),
+                           background: gradient(output[i][j])
+                         )
+                       end
       end
     end
     output.each do |row|
@@ -341,17 +353,18 @@ def solve_puzzle
   read_data
     .map { prep_data(_1) }
     .then do |data|
-      100.times do |index|
+      100.times do
         display(data)
         flash_lights(data)
       end
     end
-    p @counter
+  p @counter
 end
 
 def display(data)
   x = data.map { _1.map { |i| i[:value] } }
-  Colorize.print_out(x); 8.times {puts ""}
+  Colorize.print_out(x)
+  8.times { puts '' }
 end
 
 def read_data
