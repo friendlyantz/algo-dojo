@@ -159,7 +159,19 @@
 # just the first fold instruction on your
 # transparent paper?
 class TransparentOrigami
+  attr_reader :instructions, :coordinates
+
+  def initialize(input)
+    @coordinates = input.lines.partition { |e| e.start_with?(/[0-9]/) }.first.map(&:strip)
+    @instructions = input.lines.partition { |e| e.start_with?(/[0-9]/) }[1].map(&:strip).reject(&:empty?)
+  end
+
   def solution
     p 'hey'
+  end
+
+  def prep_data
+    @input
+    # DATA.read
   end
 end
