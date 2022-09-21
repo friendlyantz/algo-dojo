@@ -181,7 +181,7 @@ class TransparentOrigami
   end
 
   def solve_puzzle_one
-    p 'hey'
+    p 'solution for 1st puzzle'
     @instructions = [@instructions.first]
     generate_empty_matrix
       .then { |data| mark_coordinates(data) }
@@ -189,6 +189,19 @@ class TransparentOrigami
       fold(data)
     end
       .then { |data| p count_dots(data) }
+  end
+
+  def solve_puzzle_two
+    p 'solution for 2nd puzzle'
+    p ' Now GOTO full-screen terminal to read'
+    p '(press ANY button to continue)'
+    gets
+    generate_empty_matrix
+      .then { |data| mark_coordinates(data) }
+      .then do |data|
+      fold(data)
+    end
+      .then { |data| pp data }
   end
 
   def generate_empty_matrix # rubocop:disable Metrics/MethodLength
@@ -264,7 +277,7 @@ class TransparentOrigami
   end
 end
 
-TransparentOrigami.new(
+origami = TransparentOrigami.new(
   '23,123
 1116,117
 60,18
@@ -1166,4 +1179,5 @@ fold along y=27
 fold along y=13
 fold along y=6'
 )
-                  .solve_puzzle_one
+origami.dup.solve_puzzle_one
+origami.dup.solve_puzzle_two
