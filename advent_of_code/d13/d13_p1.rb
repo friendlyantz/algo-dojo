@@ -204,4 +204,51 @@ class TransparentOrigami
     end
     matrix
   end
+
+  def fold(matrix) # rubocop:disable Metrics/AbcSize
+    @instructions.each do |instruction|
+      fold_line = instruction[/\d+/].to_i - 1
+
+      if instruction.include?('x=')
+        matrix.each_with_index do |line, i|
+          first_half = line[0..fold_line]
+          second_half = line[(fold_line + 2)..]
+          sm_half = compare(first_half, second_half).first
+          lg_half = compare(first_half, second_half).last
+
+          sm_half.each_with_index do |char, j|
+            lg_half[-1 - j] = char if char.eql?('#')
+          end
+          matrix[i] = lg_half
+        end
+        matrix
+
+      elsif instruction.include?('y=')
+        first_half =  matrix[0..fold_line]
+        second_half = matrix[(fold_line + 2)..]
+
+        sm_half = compare(first_half, second_half).first
+        lg_half = compare(first_half, second_half).last
+
+        sm_half.each_with_index do |line, i|
+          line.each_with_index do |char, j|
+            lg_half.reverse[i][j] = char if char.eql?('#')
+          end
+        end
+        matrix = lg_half
+      end
+    end
+    matrix
+  end
+
+  def compare(first_half, second_half)
+    if first_half.size >= second_half.size
+      sm_half = second_half
+      lg_half = first_half
+    else
+      sm_half = first_half
+      lg_half = second_half
+    end
+    [sm_half, lg_half]
+  end
 end
