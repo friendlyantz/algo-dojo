@@ -197,4 +197,11 @@ class TransparentOrigami
     end
     matrix_array
   end
+
+  def mark_coordinates(matrix)
+    @coordinates.each do |coord|
+      matrix[coord.first][coord.last] = '#'
+    end
+    matrix
+  end
 end
