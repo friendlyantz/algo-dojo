@@ -161,17 +161,40 @@
 class TransparentOrigami
   attr_reader :instructions, :coordinates
 
-  def initialize(input)
-    @coordinates = input.lines.partition { |e| e.start_with?(/[0-9]/) }.first.map(&:strip)
-    @instructions = input.lines.partition { |e| e.start_with?(/[0-9]/) }[1].map(&:strip).reject(&:empty?)
+  def initialize(input) # rubocop:disable Metrics/MethodLength
+    partitioned_input = input
+                        .lines
+                        .partition { |e| e.start_with?(/[0-9]/) }
+
+    @coordinates = partitioned_input
+                   .first
+                   .map(&:strip)
+                   .map do |string|
+      string.split(',')
+            .map(&:to_i)
+    end
+
+    @instructions = partitioned_input
+                    .last
+                    .map(&:strip)
+                    .reject(&:empty?)
   end
 
   def solution
     p 'hey'
   end
 
-  def prep_data
-    @input
-    # DATA.read
+  def generate_empty_matrix # rubocop:disable Metrics/MethodLength
+    width = @coordinates.map(&:first).max + 1
+    height = @coordinates.map(&:last).max + 1
+    matrix_array = []
+    height.times do
+      line = []
+      width.times do
+        line << '.'
+      end
+      matrix_array << line
+    end
+    matrix_array
   end
 end
