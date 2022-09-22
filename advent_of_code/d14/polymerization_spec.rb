@@ -24,7 +24,7 @@ RSpec.describe Polymerization do
       BB -> N
       BC -> B
       CC -> N
-      CN -> klj
+      CN -> C
     HEREDOC
   end
 
@@ -47,7 +47,7 @@ RSpec.describe Polymerization do
        %w[BB N],
        %w[BC B],
        %w[CC N],
-       %w[CN klj]]
+       %w[CN C]]
     end
 
     it 'initializes the object with correct variables' do
@@ -69,6 +69,14 @@ RSpec.describe Polymerization do
 
       it 'returns NCNBCHB after 1st step' do
         expect(poly.template).to eq 'NCNBCHB'
+      end
+    end
+
+    context 'with two steps specified' do
+      before { poly.steps(2) }
+
+      it 'returns NBCCNBBBCBHCB after 1st step' do
+        expect(poly.template).to eq 'NBCCNBBBCBHCB'
       end
     end
   end

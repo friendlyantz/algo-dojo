@@ -86,6 +86,11 @@ class Polymerization
     @rules = input.map! { _1.split ' -> ' }
   end
 
+  def steps(number)
+    number.times do
+      step
+    end
+  end
   def step
     find_matching_rules
       .then { |instructions| follow(instructions) }
