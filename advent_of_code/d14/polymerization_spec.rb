@@ -79,5 +79,21 @@ RSpec.describe Polymerization do
         expect(poly.template).to eq 'NBCCNBBBCBHCB'
       end
     end
+
+    context 'with three steps specified' do
+      before { poly.steps(3) }
+
+      it 'returns NBBBCNCCNBBNBNBBCHBHHBCHB after 1st step' do
+        expect(poly.template).to eq 'NBBBCNCCNBBNBNBBCHBHHBCHB'
+      end
+    end
+
+    context 'with four steps specified' do
+      before { poly.steps(4) }
+
+      it 'returns NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB after 1st step' do
+        expect(poly.template).to eq 'NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB'
+      end
+    end
   end
 end
