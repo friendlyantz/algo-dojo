@@ -193,15 +193,12 @@ class TransparentOrigami
 
   def solve_puzzle_two
     p 'solution for 2nd puzzle'
-    p ' Now GOTO full-screen terminal to read'
-    p '(press ANY button to continue)'
-    gets
     generate_empty_matrix
       .then { |data| mark_coordinates(data) }
       .then do |data|
       fold(data)
     end
-      .then { |data| pp data }
+      .then { |data| print(data) }
   end
 
   def generate_empty_matrix # rubocop:disable Metrics/MethodLength
@@ -274,6 +271,12 @@ class TransparentOrigami
 
   def count_dots(matrix)
     matrix.flatten.count('#')
+  end
+
+  def print(matrix)
+    r = matrix.map do |line|
+      p line.map { |c| c.eql?('#') ? '█' : '.' }.join
+    end
   end
 end
 
