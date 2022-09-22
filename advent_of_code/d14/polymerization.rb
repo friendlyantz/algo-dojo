@@ -123,3 +123,9 @@ class Polymerization
     @template = poly.flatten.join
   end
 end
+
+if __FILE__ == $0
+  input = File.read(ARGV.first)
+  poly = Polymerization.new(input)
+  puts poly.solve_part_one
+end
