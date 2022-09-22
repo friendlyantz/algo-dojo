@@ -95,5 +95,12 @@ RSpec.describe Polymerization do
         expect(poly.template).to eq 'NBBNBNBBCCNBCNCCNBBNBBNBBBNBBNBBCBHCBHHNHCBBCBHCB'
       end
     end
+
+  end
+
+  describe 'puzzle one solution' do
+    it 'after 10 steps quantity of the most common element(1749) and subtract the quantity of the least common element(161) returns 1588' do
+      expect(poly.solve_part_one).to eq 1588
+    end
   end
 end

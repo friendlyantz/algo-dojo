@@ -86,6 +86,11 @@ class Polymerization
     @rules = input.map! { _1.split ' -> ' }
   end
 
+  def solve_part_one
+    steps(10)
+    @template.split('').tally.values.max - @template.split('').tally.values.min
+  end
+
   def steps(number)
     number.times do
       step
