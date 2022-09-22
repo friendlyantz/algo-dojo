@@ -1,0 +1,11 @@
+require:
+  - rubocop-rspec
+
+AllCops:
+    NewCops: enable
+
+Metrics/BlockLength:
+  Enabled: false
+
+RSpec/MultipleExpectations:
+  Enabled: false
