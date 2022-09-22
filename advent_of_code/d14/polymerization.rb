@@ -87,12 +87,24 @@ class Polymerization
   end
 
   def solve_part_one
-    steps(10)
+    polymerize(10)
+  end
+
+  def solve_part_two
+    polymerize(40)
+  end
+
+  def polymerize(times)
+    steps(times)
     @template.split('').tally.values.max - @template.split('').tally.values.min
   end
 
   def steps(number)
+    require 'ruby-progressbar'
+    progress = ProgressBar.create(total: number)
+
     number.times do
+      progress.increment
       step
     end
   end
@@ -108,8 +120,6 @@ class Polymerization
   end
 
   def follow(instructions)
-    #   i = template.index(instruction.first) + 1
-    #   template.insert(i, instruction.last)
     poly = []
     @template.split('').each_cons(2).with_index do |pair, i|
       if char = instructions.find { _1.first.eql?(pair.join) }.last
@@ -128,4 +138,5 @@ if __FILE__ == $0
   input = File.read(ARGV.first)
   poly = Polymerization.new(input)
   puts poly.solve_part_one
+  puts poly.solve_part_two
 end
