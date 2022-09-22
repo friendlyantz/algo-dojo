@@ -76,6 +76,8 @@
 # you take the quantity of the most common element and subtract the
 # quantity of the least common element?
 #
+require 'ruby-progressbar'
+
 class Polymerization
   attr_reader :template, :rules
 
@@ -100,11 +102,8 @@ class Polymerization
   end
 
   def steps(number)
-    require 'ruby-progressbar'
-    progress = ProgressBar.create(total: number)
-
-    number.times do
-      progress.increment
+    number.times do |i|
+      puts "progressing with step: #{i + 1}"
       step
     end
   end
@@ -120,6 +119,8 @@ class Polymerization
   end
 
   def follow(instructions)
+    progress = ProgressBar.create(total: @template.size + 1, title: 'instruction')
+    puts "following 1 instruction for the whole chain, size: #{@template.size}"
     poly = []
     @template.split('').each_cons(2).with_index do |pair, i|
       if char = instructions.find { _1.first.eql?(pair.join) }.last
@@ -128,6 +129,7 @@ class Polymerization
 
       pair.shift unless i.zero?
 
+      progress.increment
       poly << pair
     end
     @template = poly.flatten.join
