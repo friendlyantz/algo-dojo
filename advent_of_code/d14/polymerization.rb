@@ -102,11 +102,11 @@ class Polymerization
   end
 
   def steps(number)
-    number.times do |i|
-      puts "progressing with step: #{i + 1}"
+    number.times do
       step
     end
   end
+
   def step
     find_matching_rules
       .then { |instructions| follow(instructions) }
@@ -120,7 +120,6 @@ class Polymerization
 
   def follow(instructions)
     progress = ProgressBar.create(total: @template.size + 1, title: 'instruction')
-    puts "following 1 instruction for the whole chain, size: #{@template.size}"
     poly = []
     @template.split('').each_cons(2).with_index do |pair, i|
       if char = instructions.find { _1.first.eql?(pair.join) }.last
@@ -136,9 +135,75 @@ class Polymerization
   end
 end
 
+class FastPolymerization < Polymerization
+  def initialize(input)
+    input = input.lines.map(&:chomp)
+    @template = input.shift.split('').each_cons(2).tally
+    input.shift
+    @rules = input.map! { _1.split ' -> ' }
+  end
+
+  def step
+    count_matching_rules
+      .then { |instructions| follow(instructions) }
+  end
+
+  def count_matching_rules
+    rules.select do |r|
+      if  num = template[r.first.split('')]
+        r.size.eql?(3) ? r[2] = num : r << num
+
+      end
+    end
+  end
+
+  def follow(instructions)
+    poly = {}
+    @template.each do |k, _v|
+      if hash_material = instructions.find { _1.first.eql?(k.join) }
+
+        if poly[[k.first, hash_material[1]]]
+          poly[[k.first, hash_material[1]]] += hash_material.last
+        else
+          poly[[k.first, hash_material[1]]] = hash_material.last
+        end
+
+        if poly[[hash_material[1], k.last]]
+          poly[[hash_material[1], k.last]] += hash_material.last
+        else
+          poly[[hash_material[1], k.last]] = hash_material.last
+        end
+      end
+    end
+    @template = poly
+  end
+
+  def polymerize(times)
+    steps(times)
+
+    poly = {}
+    @template.each_with_index do |hash, i|
+      if i.zero?
+        poly[hash.first.first] = hash.last
+        poly[hash.first.last] = hash.last
+      elsif poly[hash.first.last]
+        poly[hash.first.last] += hash.last
+      else
+        poly[hash.first.last] = hash.last
+      end
+    end
+
+    poly.values.max - poly.values.min
+  end
+end
+
 if __FILE__ == $0
   input = File.read(ARGV.first)
   poly = Polymerization.new(input)
+  puts 'legacy poly'
   puts poly.solve_part_one
-  puts poly.solve_part_two
+  fast_poly = FastPolymerization.new(input)
+  puts 'fast poly'
+  puts fast_poly.dup.solve_part_one
+  puts fast_poly.dup.solve_part_two
 end
