@@ -1,0 +1,4 @@
+source "https://rubygems.org"
+
+gem 'super_diff/rspec'
+gem 'ruby-progressbar'

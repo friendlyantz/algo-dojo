@@ -1,0 +1,68 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    actionview (7.0.4)
+      activesupport (= 7.0.4)
+      builder (~> 3.1)
+      erubi (~> 1.4)
+      rails-dom-testing (~> 2.0)
+      rails-html-sanitizer (~> 1.1, >= 1.2.0)
+    activesupport (7.0.4)
+      concurrent-ruby (~> 1.0, >= 1.0.2)
+      i18n (>= 1.6, < 2)
+      minitest (>= 5.1)
+      tzinfo (~> 2.0)
+    ast (2.4.2)
+    better_html (2.0.1)
+      actionview (>= 6.0)
+      activesupport (>= 6.0)
+      ast (~> 2.0)
+      erubi (~> 1.4)
+      parser (>= 2.4)
+      smart_properties
+    builder (3.2.4)
+    concurrent-ruby (1.1.10)
+    constant_resolver (0.2.0)
+    crass (1.0.6)
+    digest (3.1.0)
+    erubi (1.11.0)
+    i18n (1.12.0)
+      concurrent-ruby (~> 1.0)
+    loofah (2.19.0)
+      crass (~> 1.0.2)
+      nokogiri (>= 1.5.9)
+    minitest (5.16.3)
+    nokogiri (1.13.8-arm64-darwin)
+      racc (~> 1.4)
+    packwerk (2.2.0)
+      activesupport (>= 5.2)
+      ast
+      better_html
+      bundler
+      constant_resolver (>= 0.2.0)
+      digest
+      parallel
+      parser
+      sorbet-runtime (>= 0.5.9914)
+    parallel (1.22.1)
+    parser (3.1.2.1)
+      ast (~> 2.4.1)
+    racc (1.6.0)
+    rails-dom-testing (2.0.3)
+      activesupport (>= 4.2.0)
+      nokogiri (>= 1.6)
+    rails-html-sanitizer (1.4.3)
+      loofah (~> 2.3)
+    smart_properties (1.17.0)
+    sorbet-runtime (0.5.10448)
+    tzinfo (2.0.5)
+      concurrent-ruby (~> 1.0)
+
+PLATFORMS
+  arm64-darwin-21
+
+DEPENDENCIES
+  packwerk
+
+BUNDLED WITH
+   2.3.16
