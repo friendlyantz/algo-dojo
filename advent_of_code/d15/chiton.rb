@@ -47,11 +47,11 @@
 # The total risk of this path is 40 (the starting position is never entered, so its risk is not counted).
 #
 # What is the lowest total risk of any path from the top left to the bottom right?
-class Chiton
+class LegacyChiton
   attr_reader :map, :nodes
 
   def initialize(input)
-    @map = input.split.map { _1.split('').map(&:to_i) }
+    @map = input.split.map { _1.chars.map(&:to_i) }
     @nodes = {}
     list_nodes
     @min_risk_score = 999
@@ -138,9 +138,43 @@ class Chiton
     end
   end
 end
+
+require 'pqueue' # https://en.wikipedia.org/wiki/Priority_queue#Dijkstra's_algorithm
+require 'set'
+# https://github.com/seanhandley/adventofcode2021/blob/master/ruby/day_15/advent15.1.rb
+
+class PriorityQueueChiton < LegacyChiton
+  #   def each_neighbour(grid = @map, (x, y))
+  #     binding.pry
+  #     yield [x - 1, y] if x > 0
+  #     yield [x + 1, y] if x + 1 < grid[y].size
+  #     yield [x, y - 1] if y > 0
+  #     yield [x, y + 1] if y + 1 < grid.size
+  #   end
+  #
+  def find_path(grid = @map)
+    start = [0, 0]
+    finish = [grid[0].size - 1, grid.size - 1]
+
+    visited = Set.new
+    heap = PQueue.new([[start, risk = 0]]) { |a, b| a.last < b.last }
+
+    until heap.empty?
+      position, risk = heap.pop # NOTE: `a, b = [0,0],0` assignment
+
+      next unless visited.add?(position)
+      return risk if position == finish
+
+      nodes[position].each do |x, y|
+        heap.push([[x, y], risk + grid[y][x]])
+      end
+    end
+  end
+end
+
 if __FILE__ == $PROGRAM_NAME
   input = File.read(ARGV.first)
-  object = Chiton.new(input)
+  object = PriorityQueueChiton.new(input)
   puts 'Puzzle One solution'
-  puts object.dup.solve_puzzle_one
+  puts object.find_path
 end
