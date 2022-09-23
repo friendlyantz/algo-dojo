@@ -48,11 +48,99 @@
 #
 # What is the lowest total risk of any path from the top left to the bottom right?
 class Chiton
-  attr_reader :map
+  attr_reader :map, :nodes
 
   def initialize(input)
     @map = input.split.map { _1.split('').map(&:to_i) }
+    @nodes = {}
+    list_nodes
+    @min_risk_score = 999
   end
 
-  def solve_puzzle_one; end
+  def filter_paths
+    path = []
+    build_paths
+      .flatten.compact
+      .each_slice(2).to_a
+      .chunk { _1.eql?(['#', '#']) }
+      .each do |_eql, arr|
+        next if arr == [['#', '#']]
+
+        path << arr
+      end
+    path
+  end
+
+  def map_paths(paths)
+    paths.map do |path|
+      map_path(path)
+    end
+  end
+
+  def map_path(path)
+    path.map do |i|
+      map[i.first][i.last]
+    end
+  end
+
+  def calc_paths(paths)
+    map_paths(paths).map(&:sum)
+  end
+
+  def calc_path(path)
+    map_path(path).sum
+  end
+
+  def calc_risk(key)
+    map[key.first][key.last]
+  end
+
+  def solve_puzzle_one
+    filter_paths
+      .then { |data| calc_paths(data) }
+      .then { |data| data.min + @map[-1][-1] - @map[0][0] }
+  end
+
+  private
+
+  def list_nodes
+    map.each_with_index do |line, i|
+      line.each_with_index do |_char, j|
+        nodes[[i, j]] ||= []
+        # top
+        # nodes[[i, j]] << [i - 1, j] if i > 0
+        # bottom
+        nodes[[i, j]] << [i + 1, j] if i < @map.length - 1
+        # left
+        # nodes[[i, j]] << [i, j - 1] if j > 0
+        # right
+        nodes[[i, j]] << [i, j + 1] if j < @map.first.length - 1
+      end
+    end
+  end
+
+  def build_paths(key = [0, 0], path_so_far = [], risk = 0)
+    risk += calc_risk(key)
+    return nil if risk >= @min_risk_score
+
+    if key == [@map.first.size - 1, @map.size - 1]
+      @min_risk_score = risk if risk < @min_risk_score
+      return path_so_far + ['#', '#']
+    end
+
+    connections = nodes[key]
+
+    connections.map do |name|
+      next if name == [0, 0]
+      next if path_so_far.include?(name)
+
+      build_paths(name, path_so_far + [key], risk)
+    end
+  end
+end
+if __FILE__ == $PROGRAM_NAME
+  input = File.read(ARGV.first)
+  object = Chiton.new(input)
+  puts 'Puzzle One solution'
+  puts object.dup.solve_puzzle_one
 end

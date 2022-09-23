@@ -3,41 +3,51 @@
 require_relative 'chiton'
 require 'pry'
 
-RSpec.describe Chiton do # rubocop:disable Metrics/BlockLength
-  let(:input) do
-    <<~INPUT
-      1163751742
-      1381373672
-      2136511328
-      3694931569
-      7463417111
-      1319128137
-      1359912421
-      3125421639
-      1293138521
-      2311944581
-    INPUT
+RSpec.describe Chiton do
+  context 'example input' do
+    let(:input) do
+      <<~INPUT
+        1163751742
+        1381373672
+        2136511328
+        3694931569
+        7463417111
+        1319128137
+        1359912421
+        3125421639
+        1293138521
+        2311944581
+      INPUT
+    end
+
+    let(:chilton) { described_class.new(input) }
+
+    it 'solves puzzle one' do
+      expect(chilton.solve_puzzle_one).to eq 40
+    end
   end
 
-  let(:chiton) { described_class.new(input) }
+  context 'simple' do
+    let(:input) do
+      <<~INPUT
+        123
+        111
+        456
+      INPUT
+    end
 
-  it 'inits' do
-    expect(chiton).to be_an_instance_of described_class
-    expect(chiton.map).to eq(
-      [[1, 1, 6, 3, 7, 5, 1, 7, 4, 2],
-       [1, 3, 8, 1, 3, 7, 3, 6, 7, 2],
-       [2, 1, 3, 6, 5, 1, 1, 3, 2, 8],
-       [3, 6, 9, 4, 9, 3, 1, 5, 6, 9],
-       [7, 4, 6, 3, 4, 1, 7, 1, 1, 1],
-       [1, 3, 1, 9, 1, 2, 8, 1, 3, 7],
-       [1, 3, 5, 9, 9, 1, 2, 4, 2, 1],
-       [3, 1, 2, 5, 4, 2, 1, 6, 3, 9],
-       [1, 2, 9, 3, 1, 3, 8, 5, 2, 1],
-       [2, 3, 1, 1, 9, 4, 4, 5, 8, 1]]
-    )
-  end
+    let(:chilton) { described_class.new(input) }
+    let(:paths) do
+      [[[0, 0], [1, 0], [2, 0], [2, 1]],
+       [[0, 0], [1, 0], [1, 1], [2, 1]],
+       [[0, 0], [1, 0], [1, 1], [1, 2]]]
+    end
+    it 'filters paths' do
+      expect(chilton.filter_paths).to eq(paths)
+    end
 
-  it 'solves puzzle one' do
-    expect(chiton.solve_puzzle_one).to eq 40
+    it 'solves puzzle one' do
+      expect(chilton.solve_puzzle_one).to eq 9
+    end
   end
 end
