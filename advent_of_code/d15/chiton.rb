@@ -47,6 +47,8 @@
 # The total risk of this path is 40 (the starting position is never entered, so its risk is not counted).
 #
 # What is the lowest total risk of any path from the top left to the bottom right?
+require 'ruby-progressbar'
+
 class LegacyChiton
   attr_reader :map, :nodes
 
@@ -55,6 +57,7 @@ class LegacyChiton
     @nodes = {}
     list_nodes
     @min_risk_score = 999
+    @shortcut = [[0, 0]]
   end
 
   def filter_paths
@@ -139,34 +142,76 @@ class LegacyChiton
   end
 end
 
+require 'colorize'
 require 'pqueue' # https://en.wikipedia.org/wiki/Priority_queue#Dijkstra's_algorithm
 require 'set'
 # https://github.com/seanhandley/adventofcode2021/blob/master/ruby/day_15/advent15.1.rb
-
 class PriorityQueueChiton < LegacyChiton
-  #   def each_neighbour(grid = @map, (x, y))
-  #     binding.pry
-  #     yield [x - 1, y] if x > 0
-  #     yield [x + 1, y] if x + 1 < grid[y].size
-  #     yield [x, y - 1] if y > 0
-  #     yield [x, y + 1] if y + 1 < grid.size
-  #   end
-  #
+  def neighbours(grid = @map, (x, y))
+    yield [x - 1, y] if x > 0
+    yield [x + 1, y] if x + 1 < grid[y].size
+    yield [x, y - 1] if y > 0
+    yield [x, y + 1] if y + 1 < grid.size
+  end
+
   def find_path(grid = @map)
     start = [0, 0]
     finish = [grid[0].size - 1, grid.size - 1]
 
     visited = Set.new
-    heap = PQueue.new([[start, risk = 0]]) { |a, b| a.last < b.last }
+    heap = PQueue.new([[start, risk = 0]]) do |a, b|
+      a.last < b.last
+    end
 
     until heap.empty?
       position, risk = heap.pop # NOTE: `a, b = [0,0],0` assignment
-
       next unless visited.add?(position)
-      return risk if position == finish
+      if position == finish
+        return risk
+      end
 
-      nodes[position].each do |x, y|
+      neighbours(@map, position) do |x, y| # NOTE: the risk of using instance variables that can wreck havoc on puzzle two if you pass '@map' instead of 'grid'
         heap.push([[x, y], risk + grid[y][x]])
+      end
+    end
+  end
+
+  def print_path
+    map = @map.dup
+    @shortcut.entries.each do |x, y|
+      map[x][y] = map[x][y].to_s.colorize(background: :blue)
+    end
+    @map.each { |e| puts e.join }
+    nil
+  end
+
+  def solve_puzzle_two
+    discover_map
+    find_path
+    # print_path
+  end
+
+  def discover_map
+    incremented_og_map = @map
+
+    # 4 y expansions
+    4.times do
+      incremented_og_map = increment_map_copy(incremented_og_map)
+      @map += incremented_og_map
+    end
+
+    # 4 x expansions
+    incremented_og_map = @map.dup
+    4.times do
+      incremented_og_map = increment_map_copy(incremented_og_map)
+      @map = @map.map.with_index { |el, i| el + incremented_og_map[i] }
+    end
+  end
+
+  def increment_map_copy(our_map)
+    our_map.map do
+      _1.map do |e|
+        e.eql?(9) ? e = 1 : e += 1
       end
     end
   end
@@ -176,5 +221,6 @@ if __FILE__ == $PROGRAM_NAME
   input = File.read(ARGV.first)
   object = PriorityQueueChiton.new(input)
   puts 'Puzzle One solution'
-  puts object.find_path
+  puts object.dup.find_path
+  puts object.dup.solve_puzzle_two
 end
