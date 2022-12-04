@@ -105,10 +105,10 @@ RSpec.describe PriorityQueueChiton do
     describe 'Priority Queue interface' do
       context 'when Puzzle One' do
         it 'solves puzzle one with example input' do
-          expect(chilton.find_path).to eq 40
+          expect(chilton.solve_puzzle_one).to eq 40
         end
 
-        it 'solves puzzle one' do
+        it 'solves puzzle one with puzzle input via Ruby runner' do
           print PriorityQueueChiton.new(File.read('input')).find_path.eql?(363) ? '😀' : '😔'
         end
       end
@@ -169,11 +169,12 @@ RSpec.describe PriorityQueueChiton do
           INPUT
         end
 
-        let(:explored_chilton) { described_class.new(explored_input) }
-        it 'still solves puzzle one with larger input' do
-          expect(chilton.find_path).to eq 40
-          expect(explored_chilton.find_path).to eq 315
-          print PriorityQueueChiton.new(File.read('input')).find_path.eql?(315) ? '🚀' : '🗿'
+        context 'with larger input' do
+          let(:explored_chilton) { described_class.new(explored_input) }
+          it 'still solves puzzle one with larger input' do
+            expect(explored_chilton.find_path).to eq 315
+            print PriorityQueueChiton.new(File.read('input')).find_path.eql?(315) ? '🚀' : '🗿'
+          end
         end
 
         it '.increment_map_copy generates incremented map copy' do

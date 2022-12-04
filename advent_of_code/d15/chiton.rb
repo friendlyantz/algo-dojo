@@ -160,13 +160,18 @@ class PriorityQueueChiton < LegacyChiton
 
     visited = Set.new
     heap = PQueue.new([[start, risk = 0]]) do |a, b|
+      binding.pry
       a.last < b.last
     end
 
     until heap.empty?
       position, risk = heap.pop # NOTE: `a, b = [0,0],0` assignment
       next unless visited.add?(position)
+
       if position == finish
+        h = heap.dup
+        h.each_pop { |e| @shortcut << e.first }
+        binding.pry
         return risk
       end
 
@@ -181,14 +186,23 @@ class PriorityQueueChiton < LegacyChiton
     @shortcut.entries.each do |x, y|
       map[x][y] = map[x][y].to_s.colorize(background: :blue)
     end
-    @map.each { |e| puts e.join }
+    map.each { |e| puts e.join }
     nil
+  end
+
+  def solve_puzzle_one
+    solution = find_path
+    print_path
+
+    solution
   end
 
   def solve_puzzle_two
     discover_map
-    find_path
-    # print_path
+    solution = find_path
+    print_path
+
+    solution
   end
 
   def discover_map
@@ -214,6 +228,36 @@ class PriorityQueueChiton < LegacyChiton
         e.eql?(9) ? e = 1 : e += 1
       end
     end
+  end
+end
+
+class Algorithm
+  INFINITY = 1 << 32
+
+  def self.dijkstra(source, edges, weights, n)
+    visited = Array.new(n, false)
+    shortest_distances = Array.new(n, INFINITY)
+    previous = Array.new(n, nil)
+    pq = PQueue.new(proc { |x, y| shortest_distances[x] < shortest_distances[y] })
+
+    pq.push(source)
+    visited[source] = true
+    shortest_distances[source] = 0
+
+    while pq.size != 0
+      v = pq.pop
+      visited[v] = true
+      next unless edges[v]
+
+      edges[v].each do |w|
+        next unless !visited[w] and shortest_distances[w] > shortest_distances[v] + weights[v][w]
+
+        shortest_distances[w] = shortest_distances[v] + weights[v][w]
+        previous[w] = v
+        pq.push(w)
+      end
+    end
+    [shortest_distances, previous]
   end
 end
 
