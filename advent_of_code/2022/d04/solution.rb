@@ -26,6 +26,12 @@ def full_overlap?(array_of_ranges)
   overlap.eql?(range_one) || overlap.eql?(range_two)
 end
 
+def partial_overlap?(array_of_ranges)
+  range_one = array_of_ranges.map(&:to_a).first
+  range_two = array_of_ranges.map(&:to_a).last
+  (range_one & range_two).any? ? true : false
+end
+
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
     raise 'please provide input file destination as an argument following script name when executing this file'
