@@ -22,6 +22,12 @@ OUR_HAND_MAPPING = {
   'Z' => :scissors
 }
 
+OUR_STRATEGY_MAPPING = {
+  'X' => :loss,
+  'Y' => :draw,
+  'Z' => :win
+}
+
 RULES = {
   rock: {
     rock: :draw,
@@ -47,9 +53,11 @@ def solution_pt1(input)
     .then { |data| data.sum }
 end
 
-def solution_pt2(_input)
-  'implementation'
-  # .then { |data| binding.pry }
+def solution_pt2(input)
+  input
+    .then { |data| prep(data) }
+    .map { |data| calc_round_outcome_pt2(data) }
+    .then { |data| data.sum }
 end
 
 def prep(data)
@@ -66,4 +74,20 @@ def win_loss_or_draw?(data)
   opponent_hand = OPPONENT_HAND_MAPPING[data.first]
   our_hand = OUR_HAND_MAPPING[data.last]
   RULES[our_hand][opponent_hand]
+end
+
+def calc_round_outcome_pt2(data)
+  SHAPE_WEIGHT[our_hand_to_play(data)] + OUTCOME_WEIGHT[do_we_need_to_loose_win_or_draw?(data)]
+end
+
+def do_we_need_to_loose_win_or_draw?(data)
+  OUR_STRATEGY_MAPPING[data.last]
+end
+
+def our_hand_to_play(data)
+  opponent_hand = OPPONENT_HAND_MAPPING[data.first]
+  our_strategy = OUR_STRATEGY_MAPPING[data.last]
+  RULES.find do |k, v|
+    v[opponent_hand] == our_strategy 
+  end.first
 end
