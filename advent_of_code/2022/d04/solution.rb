@@ -6,8 +6,12 @@ def solution_pt1(input)
     .then { |data| data.count true }
 end
 
-def solution_pt2(_input)
-  'implementation'
+def solution_pt2(input)
+  input
+    .lines
+    .map { |data| prep(data) }
+    .map { |data| partial_overlap?(data) }
+    .then { |data| data.count true }
 end
 
 def prep(input)
