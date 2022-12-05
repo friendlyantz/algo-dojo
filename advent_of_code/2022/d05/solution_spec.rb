@@ -19,10 +19,10 @@ RSpec.describe 'Solutions' do
 
     # They do, however, have a drawing of the starting stacks of crates and the rearrangement procedure (your puzzle input). For example:
 
-    #     [D]    
-    # [N] [C]    
+    #     [D]
+    # [N] [C]
     # [Z] [M] [P]
-    #  1   2   3 
+    #  1   2   3
 
     # move 1 from 2 to 1
     # move 3 from 1 to 3
@@ -33,10 +33,10 @@ RSpec.describe 'Solutions' do
 
     # Then, the rearrangement procedure is given. In each step of the procedure, a quantity of crates is moved from one stack to a different stack. In the first step of the above rearrangement procedure, one crate is moved from stack 2 to stack 1, resulting in this configuration:
 
-    # [D]        
-    # [N] [C]    
+    # [D]
+    # [N] [C]
     # [Z] [M] [P]
-    #  1   2   3 
+    #  1   2   3
 
     # In the second step, three crates are moved from stack 1 to stack 3. Crates are moved one at a time, so the first crate to be moved (D) ends up below the second and third crates:
 
@@ -66,10 +66,28 @@ RSpec.describe 'Solutions' do
 
     # After the rearrangement procedure completes, what crate ends up on top of each stack?
 
-    #
+    it 'input gets separates into two parts' do
+      expected_start_stack = "    [D]    \n[N] [C]    \n[Z] [M] [P]\n 1   2   3 "
+
+      expected_moves =
+        <<~MOVES
+          move 1 from 2 to 1
+          move 3 from 1 to 3
+          move 2 from 2 to 1
+          move 1 from 1 to 2
+        MOVES
+      expect(separate_inputs(example_input)).to eq(
+        [
+          expected_start_stack,
+          expected_moves
+        ]
+      )
+    end
+
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
+          pending 'pt1 implementation'
           expect(solution_pt1(example_input)).to eq 'CMZ'
         end
       end

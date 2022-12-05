@@ -7,6 +7,10 @@ def solution_pt2(input)
   # .then { |data| binding.pry }
 end
 
+def separate_inputs(input)
+  input.split("\n\n")
+end
+
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
     raise 'please provide input file destination as an argument following script name when executing this file'
