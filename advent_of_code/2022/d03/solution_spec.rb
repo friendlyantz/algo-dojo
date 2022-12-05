@@ -50,10 +50,19 @@ RSpec.describe 'Solutions' do
         expect(breakdown_rucksack('jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL')).to eq %w[jqHRNqRjqzjGDLGL rsFMfFZSrLrFZsSL]
         expect(breakdown_rucksack('PmmdzqPrVvPwwTWBwg')).to eq %w[PmmdzqPrV vPwwTWBwg]
       end
+
       it 'finds overlaps' do
         expect(find_overlaps('vJrwpWtwJgWr', 'hcsFMMfFFhFp')).to eq ['p']
         expect(find_overlaps('jqHRNqRjqzjGDLGL', 'rsFMfFZSrLrFZsSL')).to eq ['L']
         expect(find_overlaps('PmmdzqPrV', 'vPwwTWBwg')).to eq ['P']
+      end
+
+      it 'gets priority scores correctly' do
+        expect(get_priority_score('p')).to eq 16
+        expect(get_priority_score('P')).to eq 42
+        expect(get_priority_score('v')).to eq 22
+        expect(get_priority_score('t')).to eq 20
+        expect(get_priority_score('s')).to eq 19
       end
     end
 
@@ -66,8 +75,7 @@ RSpec.describe 'Solutions' do
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq 'test input'
+          expect(solution_pt1(custom_input)).to eq 8139
         end
       end
     end
