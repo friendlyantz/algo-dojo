@@ -7,7 +7,6 @@ def power(n, p)
   # begin
   n**p
   raise 'n and p should be non-negative' if (n | p).negative?
-
 end
 
-puts power(-2,4)
+puts power(-2, 4)

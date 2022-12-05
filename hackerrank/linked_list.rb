@@ -10,36 +10,34 @@ end
 
 # --------- SOLUTION
 class Solution
-
-def insert(head, value)
-  # Complete this method
-  if !head.nil?
-    # puts @data
-    node = head
-    node = node.next until node.next.nil?
-    node.next = Node.new(value)
-  else
-    head = Node.new(value)
+  def insert(head, value)
+    # Complete this method
+    if !head.nil?
+      # puts @data
+      node = head
+      node = node.next until node.next.nil?
+      node.next = Node.new(value)
+    else
+      head = Node.new(value)
+    end
+    head
   end
-  head
+
+  # ------ DISPLAY METHOD
+  def display(head)
+    current = head
+    while current
+      print current.data, ' '
+      current = current.next
+    end
+  end
 end
 
-
-# ------ DISPLAY METHOD
-	def display(head)
-       current = head
-       while current 
-          print current.data," "
-          current = current.next
-       end
-   end
-end
-       
-mylist= Solution.new
-head=nil
-T=gets.to_i
+mylist = Solution.new
+head = nil
+T = gets.to_i
 for i in 1..T
-    data=gets.to_i
-    head=mylist.insert(head,data)
+  data = gets.to_i
+  head = mylist.insert(head, data)
 end
 mylist.display(head)

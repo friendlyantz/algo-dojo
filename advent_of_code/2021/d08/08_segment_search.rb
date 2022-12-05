@@ -61,9 +61,7 @@ def investigate_single_digit(one_four_seven_eight_hash, tested_digit)
     p 'not 1478'
     false
   end
-  
 end
-
 
 def investigate_four_digits_for_matches(one_four_seven_eight_hash, four_digits_array)
   num_of_decoced_digits_in_this_line = 0
@@ -74,7 +72,7 @@ def investigate_four_digits_for_matches(one_four_seven_eight_hash, four_digits_a
   end
 
   ap num_of_decoced_digits_in_this_line
-  return num_of_decoced_digits_in_this_line
+  num_of_decoced_digits_in_this_line
 end
 
 def breakdown_each_line(line)

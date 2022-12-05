@@ -160,19 +160,18 @@ class FastPolymerization < Polymerization
   def follow(instructions)
     poly = {}
     @template.each do |k, _v|
-      if hash_material = instructions.find { _1.first.eql?(k.join) }
+      next unless hash_material = instructions.find { _1.first.eql?(k.join) }
 
-        if poly[[k.first, hash_material[1]]]
-          poly[[k.first, hash_material[1]]] += hash_material.last
-        else
-          poly[[k.first, hash_material[1]]] = hash_material.last
-        end
+      if poly[[k.first, hash_material[1]]]
+        poly[[k.first, hash_material[1]]] += hash_material.last
+      else
+        poly[[k.first, hash_material[1]]] = hash_material.last
+      end
 
-        if poly[[hash_material[1], k.last]]
-          poly[[hash_material[1], k.last]] += hash_material.last
-        else
-          poly[[hash_material[1], k.last]] = hash_material.last
-        end
+      if poly[[hash_material[1], k.last]]
+        poly[[hash_material[1], k.last]] += hash_material.last
+      else
+        poly[[hash_material[1], k.last]] = hash_material.last
       end
     end
     @template = poly

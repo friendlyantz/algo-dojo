@@ -1,11 +1,10 @@
+# !/usr/bin/env ruby
 
-#!/usr/bin/env ruby
-
-require_relative "./09_pt2.rb"
-require "colorize"
+require_relative './09_pt2'
+require 'colorize'
 
 def colors
-  String.colors.reject { |c| [:white, :black, :default].include?(c) }.shuffle.cycle
+  String.colors.reject { |c| %i[white black default].include?(c) }.shuffle.cycle
 end
 
 def gradient(num)
@@ -26,8 +25,8 @@ end
 def print_out
   output = @data.dup
   output.each_with_index do |row, i|
-    row.each_with_index do |col, j|
-      output[i][j] = "█".colorize(gradient(output[i][j][0]))
+    row.each_with_index do |_col, j|
+      output[i][j] = '█'.colorize(gradient(output[i][j][0]))
     end
   end
   output.each do |row|

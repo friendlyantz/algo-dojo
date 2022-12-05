@@ -41,10 +41,8 @@ def filtering(data, bit_criteria)
     break if data.length == 1
   end
   puts "dec filtered result for #{bit_criteria}: #{data.first.to_i(2)}"
-  return data.first.to_i(2)
+  data.first.to_i(2)
 end
-
-
 
 oxy = filtering(BIN_DATA, 'oxy')
 co2 = filtering(BIN_DATA, 'co2')

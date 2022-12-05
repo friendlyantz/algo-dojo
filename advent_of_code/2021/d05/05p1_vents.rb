@@ -78,7 +78,6 @@ def diagonal_check(coord)
   x_pair.max - x_pair.min == y_pair.max - y_pair.min
 end
 
-
 def horizontal_mapping(coord, vent_map)
   p coord
   y = coord[1]
@@ -119,7 +118,7 @@ def diag_mapping(coord, vent_map)
   y_b = coord[3]
 
   operator_x = x_b <=> x_a
-  operator_y = y_b <=> y_a 
+  operator_y = y_b <=> y_a
 
   length = [y_b, y_a].max - [y_b, y_a].min + 1
 

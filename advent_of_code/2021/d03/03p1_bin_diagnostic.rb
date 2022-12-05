@@ -5,7 +5,7 @@ def power_consumption
   gamma_rate * epsilon_rate
 end
 
-def most_common_bit(bit_hash, bit_criteria=nil)
+def most_common_bit(bit_hash, bit_criteria = nil)
   if bit_hash[:zero_count] < bit_hash[:one_count]
     '1'
   elsif bit_hash[:zero_count] > bit_hash[:one_count]
@@ -13,7 +13,7 @@ def most_common_bit(bit_hash, bit_criteria=nil)
   elsif bit_hash[:zero_count] == bit_hash[:one_count]
     most_common_bit_tie(bit_criteria)
   else
-    puts "error in calculating most common bit"
+    puts 'error in calculating most common bit'
   end
 end
 
@@ -27,7 +27,6 @@ def most_common_bit_tie(scenario)
     puts 'ties calc scenario error'
   end
 end
-
 
 def bits_counter(bits_column)
   hash = {

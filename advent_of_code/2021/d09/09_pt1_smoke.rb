@@ -60,29 +60,26 @@ def find_low_points_coord(matrix)
   low_points = []
   matrix.each_with_index do |_line, y|
     this_line_low_pts_coordinates = case y
-                        when 0
-                          this_line_scan(nil, matrix[y], matrix[y + 1], y)[:array_of_low_pts_x_y]
-                        else
-                          this_line_scan(matrix[y - 1], matrix[y], matrix[y + 1], y)[:array_of_low_pts_x_y]
-                        end
+                                    when 0
+                                      this_line_scan(nil, matrix[y], matrix[y + 1], y)[:array_of_low_pts_x_y]
+                                    else
+                                      this_line_scan(matrix[y - 1], matrix[y], matrix[y + 1], y)[:array_of_low_pts_x_y]
+                                    end
     low_points += this_line_low_pts_coordinates
   end
   low_points
 end
 
-def find_pool_coords(bottom_coord, matrix)
+def find_pool_coords(_bottom_coord, _matrix)
   check_left
   check
 end
-
 
 def main_sequence_pt2(data)
   matrix = generate_mtrix(data)
   low_points = find_low_points_coord(matrix)
 
   binding.pry
-
-
 end
 
 ap main_sequence_pt1(BIN_DATA)

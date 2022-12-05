@@ -43,6 +43,7 @@ RSpec.describe LegacyChiton do
        [[0, 0], [1, 0], [1, 1], [2, 1]],
        [[0, 0], [1, 0], [1, 1], [1, 2]]]
     end
+
     it 'filters paths' do
       expect(chilton.filter_paths).to eq(paths)
     end
@@ -93,6 +94,7 @@ RSpec.describe PriorityQueueChiton do
          [[0, 0], [1, 0], [1, 1], [2, 1]],
          [[0, 0], [1, 0], [1, 1], [1, 2]]]
       end
+
       it 'filters paths' do
         expect(chilton.filter_paths).to eq(paths)
       end
@@ -171,6 +173,7 @@ RSpec.describe PriorityQueueChiton do
 
         context 'with larger input' do
           let(:explored_chilton) { described_class.new(explored_input) }
+
           it 'still solves puzzle one with larger input' do
             expect(explored_chilton.find_path).to eq 315
             print PriorityQueueChiton.new(File.read('input')).find_path.eql?(315) ? '🚀' : '🗿'
@@ -200,6 +203,7 @@ RSpec.describe PriorityQueueChiton do
             explored_input.split.map { _1.chars.map(&:to_i) }
           )
         end
+
         it 'solves puzzle two' do
           expect(chilton.solve_puzzle_two).to eq 315
         end

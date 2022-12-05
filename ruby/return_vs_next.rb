@@ -23,7 +23,7 @@ RSpec.describe 'check' do
     expect(check(arg)).to eq ['hello from return']
   end
 
-  it "'next' skips only 1 loop step " do
+  it "'next' skips only 1 loop step" do
     arg = 'next'
     expect(check(arg)).to eq ['hello from next', 'hello from next', 'hello from next']
   end

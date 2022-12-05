@@ -49,9 +49,9 @@ require 'pry'
 # What do you get if you multiply together the sizes of the three largest basins?
 
 def input
-  @input ||= DATA.read.
-               split("\n").
-               map { |line| line.chars.map { |n| [n.to_i, nil]} }
+  @input ||= DATA.read
+                 .split("\n")
+                 .map { |line| line.chars.map { |n| [n.to_i, nil] } }
 end
 
 @data = input.dup
@@ -78,6 +78,7 @@ def mark_basins
   @data.each_with_index do |rows, i|
     rows.each_with_index do |_cols, j|
       next if @data[i][j][1]
+
       basin(i, j, id)
       id += 1
     end

@@ -1,8 +1,7 @@
 require_relative '08_data'
-require_relative '08p2_seven_digit_map.rb'
+require_relative '08p2_seven_digit_map'
 require 'pry'
 require 'awesome_print'
-
 
 def main_sequence(data)
   array_of_lines = raw_data_process(data)
@@ -38,7 +37,6 @@ def grab_four_encoded_digits(words_array)
   end
   four_digits_array
 end
-
 
 def breakdown_each_line(line)
   words_array = line.scan(/\w+/)

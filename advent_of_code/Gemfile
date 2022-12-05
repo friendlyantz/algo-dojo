@@ -1,5 +1,5 @@
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-gem 'super_diff'
-gem 'ruby-progressbar'
 gem 'pqueue'
+gem 'ruby-progressbar'
+gem 'super_diff'
