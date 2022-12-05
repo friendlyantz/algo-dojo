@@ -7,8 +7,13 @@ def solution_pt1(input)
     .flatten.sum
 end
 
-def solution_pt2(_input)
-  'implementation'
+def solution_pt2(input)
+  input
+    .then { |data| separate_into_groups_of_three(data) }
+    .map { |data| find_overlaps(data) }
+    .flatten
+    .map { |letter| get_priority_score(letter) }
+    .sum
 end
 
 def breakdown_rucksack(input)
