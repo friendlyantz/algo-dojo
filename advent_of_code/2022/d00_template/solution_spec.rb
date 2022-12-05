@@ -1,4 +1,5 @@
 require File.join(__dir__, 'solution')
+
 require 'pry'
 require 'awesome_print'
 
