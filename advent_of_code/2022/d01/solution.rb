@@ -5,6 +5,10 @@ def solution_pt1(input)
     .then { |data| p data.max }
 end
 
+def solution_pt2(_input)
+  'implementation'
+end
+
 def prep_and_condense(data)
   data
     .split("\n\n")
