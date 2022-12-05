@@ -52,9 +52,9 @@ RSpec.describe 'Solutions' do
       end
 
       it 'finds overlaps' do
-        expect(find_overlaps('vJrwpWtwJgWr', 'hcsFMMfFFhFp')).to eq ['p']
-        expect(find_overlaps('jqHRNqRjqzjGDLGL', 'rsFMfFZSrLrFZsSL')).to eq ['L']
-        expect(find_overlaps('PmmdzqPrV', 'vPwwTWBwg')).to eq ['P']
+        expect(find_overlaps(%w[vJrwpWtwJgWr hcsFMMfFFhFp])).to eq ['p']
+        expect(find_overlaps(%w[jqHRNqRjqzjGDLGL rsFMfFZSrLrFZsSL])).to eq ['L']
+        expect(find_overlaps(%w[PmmdzqPrV vPwwTWBwg])).to eq ['P']
       end
 
       it 'gets priority scores correctly' do
@@ -123,6 +123,20 @@ RSpec.describe 'Solutions' do
                CrZsJsPPZsGzwwsLwLmpwMDw]
           ]
         )
+      end
+
+      it 'finds overlaps within each group' do
+        expect(find_overlaps(
+                 %w[vJrwpWtwJgWrhcsFMMfFFhFp
+                    jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+                    PmmdzqPrVvPwwTWBwg]
+               )).to eq ['r']
+
+        expect(find_overlaps(
+                 %w[wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+                    ttgJtRGJQctTZtZT
+                    CrZsJsPPZsGzwwsLwLmpwMDw]
+               )).to eq ['Z']
       end
     end
 

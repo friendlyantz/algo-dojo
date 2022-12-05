@@ -2,7 +2,7 @@ def solution_pt1(input)
   input
     .split
     .map { |data| breakdown_rucksack(data) }
-    .map { |data| find_overlaps(data.first, data.last) }
+    .map { |data| find_overlaps(data) }
     .map { |data| data.map { |letter| get_priority_score(letter) } }
     .flatten.sum
 end
@@ -18,8 +18,13 @@ def breakdown_rucksack(input)
     .map(&:join)
 end
 
-def find_overlaps(item_1, item_2)
-  item_1.chars & item_2.chars
+def find_overlaps(data_array)
+  case data_array.size
+  when 2
+    data_array.first.chars & data_array.last.chars
+  when 3
+    data_array[0].chars & data_array[1].chars & data_array[2].chars
+  end
 end
 
 def get_priority_score(letter)
