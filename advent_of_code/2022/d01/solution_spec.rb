@@ -39,24 +39,16 @@ RSpec.describe 'Solutions' do
   let(:example_input) { File.read(File.join(__dir__, 'ie_input')) }
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
 
-  describe 'implementation' do
-    it 'The first Elf is carrying food with 1000, 2000, and 3000 Calories, a total of 6000 Calories' do
-      expect(total_caloried_for_elf(0)).to eq 6000
-    end
-  end
-
   describe 'final result for pt1' do
     context 'example input data' do
       it 'return correct result' do
-        pending 'pt1 implementation'
-        expect(solution_pt1(example_input)).to eq 'lala'
+        expect(solution_pt1(example_input)).to eq 24000
       end
     end
 
     context 'custom input data' do
       it 'return correct result' do
-        pending 'pt1 implementation'
-        expect(solution_pt1(custom_input)).to eq 'test input'
+        expect(solution_pt1(custom_input)).to eq 69528
       end
     end
   end
