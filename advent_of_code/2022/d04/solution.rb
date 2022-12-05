@@ -1,5 +1,9 @@
 def solution_pt1(input)
   input
+    .lines
+    .map { |data| prep(data) }
+    .map { |data| full_overlap?(data) }
+    .then { |data| data.count true }
 end
 
 def solution_pt2(_input)
