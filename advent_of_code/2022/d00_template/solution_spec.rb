@@ -11,9 +11,16 @@ RSpec.describe 'Solutions' do
     #
     # DESCRIPTION Part 1
     #
+    describe 'implementation' do
+      it 'description' do
+        pending
+      end
+    end
+
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
+          pending 'pt1 implementation'
           expect(solution_pt1(example_input)).to eq 'sample_input'
         end
       end
