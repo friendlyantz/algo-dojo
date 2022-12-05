@@ -87,7 +87,19 @@ end
 def our_hand_to_play(data)
   opponent_hand = OPPONENT_HAND_MAPPING[data.first]
   our_strategy = OUR_STRATEGY_MAPPING[data.last]
-  RULES.find do |k, v|
-    v[opponent_hand] == our_strategy 
+  RULES.find do |_k, v|
+    v[opponent_hand] == our_strategy
   end.first
+end
+
+if __FILE__ == $PROGRAM_NAME
+  raise 'please provide input file destination' if ARGV.empty?
+
+  input = File.read(ARGV.first)
+  puts 'part 1 solution'
+  puts solution_pt1(input)
+
+  puts '==============='
+  puts 'part 2 solution'
+  puts solution_pt2(input)
 end
