@@ -63,6 +63,15 @@ RSpec.describe 'Solutions' do
         expect(prep('6-6,4-6')).to eq([6..6, 4..6])
         expect(prep('2-6,4-8')).to eq([2..6, 4..8])
       end
+
+      it 'tests for full overlap' do
+        expect(full_overlap?([2..4, 6..8])).to eq false
+        expect(full_overlap?([2..3, 4..5])).to eq false
+        expect(full_overlap?([5..7, 7..9])).to eq false
+        expect(full_overlap?([2..8, 3..7])).to eq true
+        expect(full_overlap?([6..6, 4..6])).to eq true
+        expect(full_overlap?([2..6, 4..8])).to eq false
+      end
     end
 
     describe 'final result for pt1' do

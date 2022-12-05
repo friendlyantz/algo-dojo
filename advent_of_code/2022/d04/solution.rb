@@ -15,6 +15,13 @@ def prep(input)
     end
 end
 
+def full_overlap?(array_of_ranges)
+  range_one = array_of_ranges.map(&:to_a).first
+  range_two = array_of_ranges.map(&:to_a).last
+  overlap = range_one & range_two
+  overlap.eql?(range_one) || overlap.eql?(range_two)
+end
+
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
     raise 'please provide input file destination as an argument following script name when executing this file'
