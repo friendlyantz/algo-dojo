@@ -8,10 +8,13 @@ RSpec.describe 'Solutions' do
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
 
   describe 'Part 1' do
+    #
+    # DECRIPTION Part 1
+    #
     describe 'final result for pt1' do
       context 'example input data' do
         it 'return correct result' do
-          expect(solution_pt2(example_input)).to eq 24_000
+          expect(solution_pt2(example_input)).to eq 'sample_input'
         end
       end
 
@@ -24,7 +27,10 @@ RSpec.describe 'Solutions' do
     end
   end
 
-  describe 'final result for pt2' do
+  describe 'Part 2' do
+    #
+    # DECRIPTION Part 2
+    #
     context 'example input data' do
       it 'return correct result' do
         pending 'pt2 implementation'
