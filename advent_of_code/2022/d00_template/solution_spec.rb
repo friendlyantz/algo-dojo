@@ -9,7 +9,7 @@ RSpec.describe 'Solutions' do
 
   describe 'Part 1' do
     #
-    # DECRIPTION Part 1
+    # DESCRIPTION Part 1
     #
     describe 'final result for pt1' do
       context 'example input data' do
@@ -29,7 +29,7 @@ RSpec.describe 'Solutions' do
 
   describe 'Part 2' do
     #
-    # DECRIPTION Part 2
+    # DESCRIPTION Part 2
     #
     context 'example input data' do
       it 'returns correct result' do
