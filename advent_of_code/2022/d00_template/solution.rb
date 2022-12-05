@@ -2,8 +2,9 @@ def solution_pt1(input)
   input
 end
 
-def solution_pt2(_input)
-  'implementation'
+def solution_pt2(input)
+  # input
+  # .then { |data| binding.pry }
 end
 
 if __FILE__ == $PROGRAM_NAME
