@@ -5,8 +5,11 @@ def solution_pt1(input)
     .then { |data| p data.max }
 end
 
-def solution_pt2(_input)
-  'implementation'
+def solution_pt2(input)
+  input
+    .then { |data| prep_and_condense(data) }
+    .then { |data| calculate_cals_per_elf(data) }
+    .then { |data| p data.max(3).sum }
 end
 
 def prep_and_condense(data)

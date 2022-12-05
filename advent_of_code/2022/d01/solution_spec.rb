@@ -42,13 +42,13 @@ RSpec.describe 'Solutions' do
   describe 'final result for pt1' do
     context 'example input data' do
       it 'return correct result' do
-        expect(solution_pt1(example_input)).to eq 24000
+        expect(solution_pt1(example_input)).to eq 24_000
       end
     end
 
     context 'custom input data' do
       it 'return correct result' do
-        expect(solution_pt1(custom_input)).to eq 69528
+        expect(solution_pt1(custom_input)).to eq 69_528
       end
     end
   end
@@ -56,14 +56,13 @@ RSpec.describe 'Solutions' do
   describe 'final result for pt2' do
     context 'example input data' do
       it 'return correct result' do
-        expect(solution_pt2(example_input)).to eq 'solution for part 2'
+        expect(solution_pt2(example_input)).to eq 45_000
       end
     end
 
     context 'custom input data' do
       it 'return correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq 'solution for part 2'
+        expect(solution_pt2(custom_input)).to eq 206_152
       end
     end
   end
