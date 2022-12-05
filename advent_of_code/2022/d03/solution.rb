@@ -13,6 +13,11 @@ def breakdown_rucksack(input)
     .map(&:join)
 end
 
+def find_overlaps(item_1, item_2)
+  item_1.chars & item_2.chars
+end
+
+
 if __FILE__ == $PROGRAM_NAME
   raise 'please provide input file destination' if ARGV.empty?
 

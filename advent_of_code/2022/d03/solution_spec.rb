@@ -50,6 +50,11 @@ RSpec.describe 'Solutions' do
         expect(breakdown_rucksack('jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL')).to eq %w[jqHRNqRjqzjGDLGL rsFMfFZSrLrFZsSL]
         expect(breakdown_rucksack('PmmdzqPrVvPwwTWBwg')).to eq %w[PmmdzqPrV vPwwTWBwg]
       end
+      it 'finds overlaps' do
+        expect(find_overlaps('vJrwpWtwJgWr', 'hcsFMMfFFhFp')).to eq ['p']
+        expect(find_overlaps('jqHRNqRjqzjGDLGL', 'rsFMfFZSrLrFZsSL')).to eq ['L']
+        expect(find_overlaps('PmmdzqPrV', 'vPwwTWBwg')).to eq ['P']
+      end
     end
 
     describe 'final result for pt1' do

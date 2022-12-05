@@ -29,3 +29,8 @@ also this would be hard to distinguish between files and Ruby `gems`
 # Other solutions
 https://github.com/seanhandley/adventofcode2022
 https://github.com/astley92/advent_of_code/tree/main/2022
+
+# Learnings
+
+## D3
+overlapping `item_1.chars & item_2.chars` - find common items in Arrays
