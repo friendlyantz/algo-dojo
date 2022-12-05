@@ -29,6 +29,20 @@ def get_priority_score(letter)
   map[letter]
 end
 
+def separate_into_groups_of_three(input)
+  groups = []
+  group_buffer = []
+  input.split.each_with_index do |line, i|
+    group_buffer << line
+    if (i + 1) % 3 == 0
+      groups << group_buffer
+      group_buffer = []
+    end
+  end
+
+  groups
+end
+
 if __FILE__ == $PROGRAM_NAME
   raise 'please provide input file destination' if ARGV.empty?
 

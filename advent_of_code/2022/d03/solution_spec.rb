@@ -111,6 +111,21 @@ RSpec.describe 'Solutions' do
 
     # Find the item type that corresponds to the badges of each three-Elf group. What is the sum of the priorities of those item types?
 
+    describe 'implementation' do
+      it 'breaks down input into groups of three' do
+        expect(separate_into_groups_of_three(example_input)).to eq(
+          [
+            %w[vJrwpWtwJgWrhcsFMMfFFhFp
+               jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL
+               PmmdzqPrVvPwwTWBwg],
+            %w[wMqvLMZHhHMvwLHjbvcjnnSBnvTQFn
+               ttgJtRGJQctTZtZT
+               CrZsJsPPZsGzwwsLwLmpwMDw]
+          ]
+        )
+      end
+    end
+
     context 'example input data' do
       it 'returns correct result' do
         pending 'pt2 implementation'
