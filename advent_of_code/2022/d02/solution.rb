@@ -23,7 +23,7 @@ OUR_HAND_MAPPING = {
 }
 
 RULES = {
-  rock:  {
+  rock: {
     rock: :draw,
     paper: :loss,
     scissors: :win
@@ -44,11 +44,12 @@ def solution_pt1(input)
   input
     .then { |data| prep(data) }
     .map { |data| calc_round_outcome(data) }
-  # .then { |data| binding.pry }
+    .then { |data| data.sum }
 end
 
 def solution_pt2(_input)
   'implementation'
+  # .then { |data| binding.pry }
 end
 
 def prep(data)
@@ -58,11 +59,11 @@ def prep(data)
 end
 
 def calc_round_outcome(data)
-   SHAPE_WEIGHT[OUR_HAND_MAPPING[data.last]] + OUTCOME_WEIGHT[win_loss_or_draw?(data)]
+  SHAPE_WEIGHT[OUR_HAND_MAPPING[data.last]] + OUTCOME_WEIGHT[win_loss_or_draw?(data)]
 end
 
 def win_loss_or_draw?(data)
   opponent_hand = OPPONENT_HAND_MAPPING[data.first]
-  our_hand =  OUR_HAND_MAPPING[data.last]
+  our_hand = OUR_HAND_MAPPING[data.last]
   RULES[our_hand][opponent_hand]
 end

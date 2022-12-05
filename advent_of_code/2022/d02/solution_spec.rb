@@ -40,15 +40,14 @@ RSpec.describe 'Solutions' do
 
     describe 'final result for pt1' do
       context 'example input data' do
-        it 'return correct result' do
+        it 'returns correct result' do
           expect(solution_pt1(example_input)).to eq 15
         end
       end
 
       context 'custom input data' do
-        it 'return correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq 'test input'
+        it 'returns correct result' do
+          expect(solution_pt1(custom_input)).to eq 13_526
         end
       end
     end
@@ -56,14 +55,14 @@ RSpec.describe 'Solutions' do
 
   describe 'final result for pt2' do
     context 'example input data' do
-      it 'return correct result' do
+      it 'returns correct result' do
         pending 'pt2 implementation'
         expect(solution_pt2(example_input)).to eq 'solution for part 2'
       end
     end
 
     context 'custom input data' do
-      it 'return correct result' do
+      it 'returns correct result' do
         pending 'pt2 implementation'
         expect(solution_pt2(custom_input)).to eq 'solution for part 2'
       end
