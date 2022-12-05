@@ -44,6 +44,14 @@ RSpec.describe 'Solutions' do
 
     # Find the item type that appears in both compartments of each rucksack. What is the sum of the priorities of those item types?
 
+    describe 'implementation' do
+      it 'breaks down compartments' do
+        expect(breakdown_rucksack('vJrwpWtwJgWrhcsFMMfFFhFp')).to eq %w[vJrwpWtwJgWr hcsFMMfFFhFp]
+        expect(breakdown_rucksack('jqHRNqRjqzjGDLGLrsFMfFZSrLrFZsSL')).to eq %w[jqHRNqRjqzjGDLGL rsFMfFZSrLrFZsSL]
+        expect(breakdown_rucksack('PmmdzqPrVvPwwTWBwg')).to eq %w[PmmdzqPrV vPwwTWBwg]
+      end
+    end
+
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
