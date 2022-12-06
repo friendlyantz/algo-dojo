@@ -1,43 +1,23 @@
 def solution_pt1(input)
   input
     .chomp
-    .then { |data| find_packets(data) }
+    .then { |data| find_packets(data, 4) }
 end
 
 def solution_pt2(input)
   input
     .chomp
-    .then { |data| find_long_packets(data) }
+    .then { |data| find_packets(data, 14) }
 end
 
-def find_long_packets(data)
-  int = 0
+def find_packets(data, packet_size)
   stack = ''
   data.chars.each_with_index do |char, i|
-    stack = stack[1..-1] if stack.size.eql?(14)
+    stack = stack[1..-1] if stack.size.eql?(packet_size)
     stack << char
 
-    if stack.chars.uniq.size.eql? 14
-      int = i + 1
-      break
-    end
+    return i + 1 if stack.chars.uniq.size.eql? packet_size
   end
-  int
-end
-
-def find_packets(data)
-  int = 0
-  stack = ''
-  data.chars.each_with_index do |char, i|
-    stack = stack[1..-1] if stack.size.eql?(4)
-    stack << char
-
-    if stack.chars.uniq.size.eql? 4
-      int = i + 1
-      break
-    end
-  end
-  int
 end
 
 if __FILE__ == $PROGRAM_NAME
