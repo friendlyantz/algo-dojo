@@ -25,6 +25,12 @@ def translate_crate_stack(input)
   hash
 end
 
+def move_crates(stack, instruction)
+  cargo = stack[instruction[:start]].pop(instruction[:size])
+  stack[instruction[:finish]] += cargo.reverse
+  stack
+end
+
 def translate_moves(moves)
   moves
     .lines

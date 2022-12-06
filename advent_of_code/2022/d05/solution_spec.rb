@@ -94,9 +94,7 @@ RSpec.describe 'Solutions' do
 
     it 'converts start stack input to a correct data structure' do
       stack = "    [D]    \n[N] [C]    \n[Z] [M] [P]\n 1   2   3 "
-      expect(translate_crate_stack(stack)).to eq(
-        starting_stack
-      )
+      expect(translate_crate_stack(stack)).to eq(starting_stack)
     end
 
     let(:translated_move_instructions) do
@@ -117,8 +115,17 @@ RSpec.describe 'Solutions' do
           move 1 from 1 to 2
         MOVES
 
-      expect(translate_moves(string_move_instructions)).to eq(
-        translated_move_instructions
+      expect(translate_moves(string_move_instructions)).to eq(translated_move_instructions)
+    end
+
+    it 'produces correct stack map after a one move' do
+      instruction = translated_move_instructions.first
+      expect(move_crates(starting_stack, instruction)).to eq(
+        {
+          1 => %w[Z N D],
+          2 => %w[M C],
+          3 => %w[P]
+        }
       )
     end
 
