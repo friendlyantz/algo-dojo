@@ -13,7 +13,7 @@ RSpec.describe 'Solutions' do
     #
     describe 'implementation' do
       it 'description' do
-        pending
+        expect(subject).to eq
       end
     end
 
