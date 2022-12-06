@@ -1,17 +1,21 @@
 def solution_pt1(input)
   input
     .then { |data| separate_inputs(data) }
-    .then { |stack, moves| 
-    [translate_crate_stack(stack),translate_moves(moves) ]
-    }
-    # .then { |data| binding.pry }
+    .then do |stack, moves|
+      [translate_crate_stack(stack), translate_moves(moves)]
+    end
     .then { |stack, moves| execute_moves(stack, moves) }
     .then { |data| find_top_crates(data) }
 end
 
 def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
+  input
+    .then { |data| separate_inputs(data) }
+    .then do |stack, moves|
+      [translate_crate_stack(stack), translate_moves(moves)]
+    end
+    .then { |stack, moves| execute_moves_by_new_crate_mover(stack, moves) }
+    .then { |data| find_top_crates(data) }
 end
 
 def separate_inputs(input)
@@ -29,8 +33,9 @@ def translate_crate_stack(input)
       hash[i] = hash[i].insert(0, c)
     end
   end
-  
-  hash = hash.sort_by { |key| key }.to_h # hash keys are not sorted by default and are in order which they were originally created
+
+  hash = # hash keys are not sorted by default and are in order which they were originally created
+    hash.sort.to_h
 end
 
 def translate_moves(moves)
@@ -44,6 +49,22 @@ end
 def move_crates(stack, instruction)
   cargo = stack[instruction[:start]].pop(instruction[:size])
   stack[instruction[:finish]] += cargo.reverse
+  stack
+end
+
+def move_crates_by_new_crate_mover(stack, instruction)
+  cargo = stack[instruction[:start]].pop(instruction[:size])
+  stacked_cargo = cargo.reverse.each_slice(3).to_a.reverse
+  stacked_cargo.each do |cargo|
+    stack[instruction[:finish]] += cargo.reverse
+  end
+  stack
+end
+
+def execute_moves_by_new_crate_mover(stack, insts)
+  insts.each do |instruction|
+    move_crates_by_new_crate_mover(stack, instruction)
+  end
   stack
 end
 
