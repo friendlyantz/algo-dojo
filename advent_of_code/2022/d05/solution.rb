@@ -11,7 +11,7 @@ def separate_inputs(input)
   input.split("\n\n")
 end
 
-def translate_to_data_structure(input)
+def translate_crate_stack(input)
   hash = {}
   input.lines.each do |line|
     line.chars.each_with_index do |c, i|

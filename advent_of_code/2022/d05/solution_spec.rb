@@ -84,14 +84,18 @@ RSpec.describe 'Solutions' do
       )
     end
 
+    let(:starting_stack) do
+      {
+        1 => %w[Z N],
+        2 => %w[M C D],
+        3 => %w[P]
+      }
+    end
+
     it 'converts start stack input to a correct data structure' do
       stack = "    [D]    \n[N] [C]    \n[Z] [M] [P]\n 1   2   3 "
-      expect(translate_to_data_structure(stack)).to eq(
-        {
-          1 => %w[Z N],
-          2 => %w[M C D],
-          3 => %w[P]
-        }
+      expect(translate_crate_stack(stack)).to eq(
+        starting_stack
       )
     end
 
