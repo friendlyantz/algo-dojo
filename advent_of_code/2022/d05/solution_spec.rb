@@ -129,6 +129,17 @@ RSpec.describe 'Solutions' do
       )
     end
 
+    it 'produces correct stack map after a two moves' do
+      instructions = translated_move_instructions.shift 2
+      expect(execute_moves(starting_stack, instructions)).to eq(
+        {
+          1 => %w[],
+          2 => %w[M C],
+          3 => %w[P D N Z]
+        }
+      )
+    end
+
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do

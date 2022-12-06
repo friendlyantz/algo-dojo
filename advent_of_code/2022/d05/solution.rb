@@ -31,6 +31,13 @@ def move_crates(stack, instruction)
   stack
 end
 
+def execute_moves(stack, insts)
+  insts.each do |instruction|
+    move_crates(stack, instruction) 
+  end
+  stack
+end
+
 def translate_moves(moves)
   moves
     .lines
