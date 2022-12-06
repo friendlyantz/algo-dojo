@@ -34,3 +34,6 @@ https://github.com/astley92/advent_of_code/tree/main/2022
 
 ## D3
 overlapping `item_1.chars & item_2.chars` - find common items in Arrays
+
+## D4-5
+pure TDD implementation is extremely rewarding!
