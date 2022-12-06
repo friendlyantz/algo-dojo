@@ -1,6 +1,12 @@
 def solution_pt1(input)
   input
+    .then { |data| separate_inputs(data) }
+    .then { |stack, moves| 
+    [translate_crate_stack(stack),translate_moves(moves) ]
+    }
     # .then { |data| binding.pry }
+    .then { |stack, moves| execute_moves(stack, moves) }
+    .then { |data| find_top_crates(data) }
 end
 
 def solution_pt2(input)
@@ -23,14 +29,15 @@ def translate_crate_stack(input)
       hash[i] = hash[i].insert(0, c)
     end
   end
-  hash
+  
+  hash = hash.sort_by { |key| key }.to_h # hash keys are not sorted by default and are in order which they were originally created
 end
 
 def translate_moves(moves)
   moves
     .lines
     .map(&:chomp)
-    .map { |instruction| instruction.scan(/[0-9]/).map(&:to_i) }
+    .map { |instruction| instruction.scan(/\d+/).map(&:to_i) }
     .map { |data| { start: data[1], finish: data[2], size: data[0] } }
 end
 

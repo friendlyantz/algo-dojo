@@ -164,8 +164,7 @@ RSpec.describe 'Solutions' do
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq 'test input'
+          expect(solution_pt1(custom_input)).to eq 'RFFFWBPNS'
         end
       end
     end
