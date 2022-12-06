@@ -84,6 +84,17 @@ RSpec.describe 'Solutions' do
       )
     end
 
+    it 'converts start stack input to a correct data structure' do
+      stack = "    [D]    \n[N] [C]    \n[Z] [M] [P]\n 1   2   3 "
+      expect(translate_to_data_structure(stack)).to eq(
+        {
+          1 => %w[Z N],
+          2 => %w[M C D],
+          3 => %w[P]
+        }
+      )
+    end
+
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
