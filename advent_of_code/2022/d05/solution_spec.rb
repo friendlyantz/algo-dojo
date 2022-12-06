@@ -95,21 +95,26 @@ RSpec.describe 'Solutions' do
       )
     end
 
+    let(:translated_move_instructions) do
+      [
+        { start: 2, finish: 1, size: 1 },
+        { start: 1, finish: 3, size: 3 },
+        { start: 2, finish: 1, size: 2 },
+        { start: 1, finish: 2, size: 1 }
+      ]
+    end
+
     it 'converts move instructions to a correct data set' do
-      moves =
+      string_move_instructions =
         <<~MOVES
           move 1 from 2 to 1
           move 3 from 1 to 3
           move 2 from 2 to 1
           move 1 from 1 to 2
         MOVES
-      expect(translate_moves(moves)).to eq(
-        [
-          { start: 2, finish: 1, size: 1 },
-          { start: 1, finish: 3, size: 3 },
-          { start: 2, finish: 1, size: 2 },
-          { start: 1, finish: 2, size: 1 },
-        ]
+
+      expect(translate_moves(string_move_instructions)).to eq(
+        translated_move_instructions
       )
     end
 
