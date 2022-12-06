@@ -5,6 +5,10 @@ require 'awesome_print'
 
 RSpec.describe 'Solutions' do
   let(:example_input) { File.read(File.join(__dir__, 'ie_input')) }
+  let(:example_input_one) {'bvwbjplbgvbhsrlpgdmjqwftvncz'}
+  let(:example_input_two) {'nppdvjthqldpwncqszvftbrmjlhg'}
+  let(:example_input_three) {'nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg'}
+  let(:example_input_four) {'zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw'}
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
 
   describe 'Part 1' do
@@ -42,24 +46,20 @@ RSpec.describe 'Solutions' do
 
     # How many characters need to be processed before the first start-of-packet marker is detected?
 
-    describe 'implementation' do
-      it 'description' do
-        pending
-      end
-    end
-
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(example_input)).to eq 'sample_input'
+          expect(solution_pt1(example_input)).to eq 7
+          expect(solution_pt1(example_input_one)).to eq 5
+          expect(solution_pt1(example_input_two)).to eq 6
+          expect(solution_pt1(example_input_three)).to eq 10
+          expect(solution_pt1(example_input_four)).to eq 11
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq 'test input'
+          expect(solution_pt1(custom_input)).to eq 1262
         end
       end
     end
