@@ -14,9 +14,9 @@ def find_packets(data, packet_size)
   data
     .chars
     .each_cons(packet_size)
-    .with_index do |stack, i|
-      return packet_size + i if stack.uniq.size.eql? packet_size
-    end
+    .with_index
+    .find { |chars, i| chars.uniq.length == packet_size }
+    .last + packet_size
 end
 
 if __FILE__ == $PROGRAM_NAME
