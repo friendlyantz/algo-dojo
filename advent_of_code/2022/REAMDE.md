@@ -41,7 +41,8 @@ pure TDD implementation is extremely rewarding!
 ## D6
 was a good way again to test drive it and make a simple dumb code to pass the test, which allowed for beatiful refactoring and reminded me of `each_cons` method consecutive looping
 
-refactoring:
+### refactoring:
+#### original
 ```ruby
   stack = ''
   data.chars.each_with_index do |char, i|
@@ -52,7 +53,7 @@ refactoring:
   end
 ```
 
-
+##### refactoring 1
 ```ruby
   data.chars
     .each_cons(packet_size)
@@ -60,4 +61,12 @@ refactoring:
 
       return packet_size + i if stack.uniq.size.eql? packet_size
   end
+```
+##### refactoring 2
+```ruby
+  data.chars
+    .each_cons(packet_size)
+    .with_index
+    .find { |chars, i| chars.uniq.length == packet_size }
+    .last + packet_size
 ```
