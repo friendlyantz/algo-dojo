@@ -25,6 +25,14 @@ def translate_to_data_structure(input)
   hash
 end
 
+def translate_moves(moves)
+  moves
+    .lines
+    .map(&:chomp)
+    .map { |instruction| instruction.scan(/[0-9]/).map(&:to_i) }
+    .map { |data| { start: data[1], finish: data[2], size: data[0] } }
+end
+
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
     raise 'please provide input file destination as an argument following script name when executing this file'
