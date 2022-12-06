@@ -140,14 +140,19 @@ RSpec.describe 'Solutions' do
       )
     end
 
+    let(:final_stack_state) do
+      {
+        1 => %w[C],
+        2 => %w[M],
+        3 => %w[P D N Z]
+      }
+    end
     it 'produces correct stack map after a all moves' do
-      expect(execute_moves(starting_stack, translated_move_instructions)).to eq(
-        {
-          1 => %w[C],
-          2 => %w[M],
-          3 => %w[P D N Z]
-        }
-      )
+      expect(execute_moves(starting_stack, translated_move_instructions)).to eq(final_stack_state)
+    end
+
+    it 'finds top crates from each stack' do
+      expect(find_top_crates(final_stack_state)).to eq 'CMZ'
     end
 
     describe 'final result for pt1' do

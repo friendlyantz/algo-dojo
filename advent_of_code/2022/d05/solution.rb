@@ -33,7 +33,7 @@ end
 
 def execute_moves(stack, insts)
   insts.each do |instruction|
-    move_crates(stack, instruction) 
+    move_crates(stack, instruction)
   end
   stack
 end
@@ -44,6 +44,14 @@ def translate_moves(moves)
     .map(&:chomp)
     .map { |instruction| instruction.scan(/[0-9]/).map(&:to_i) }
     .map { |data| { start: data[1], finish: data[2], size: data[0] } }
+end
+
+def find_top_crates(stack)
+  top_crates_string = ''
+  stack.each do |_k, v|
+    top_crates_string << v.pop
+  end
+  top_crates_string
 end
 
 if __FILE__ == $PROGRAM_NAME
