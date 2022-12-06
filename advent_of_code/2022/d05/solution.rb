@@ -1,5 +1,6 @@
 def solution_pt1(input)
   input
+    # .then { |data| binding.pry }
 end
 
 def solution_pt2(input)
@@ -25,6 +26,14 @@ def translate_crate_stack(input)
   hash
 end
 
+def translate_moves(moves)
+  moves
+    .lines
+    .map(&:chomp)
+    .map { |instruction| instruction.scan(/[0-9]/).map(&:to_i) }
+    .map { |data| { start: data[1], finish: data[2], size: data[0] } }
+end
+
 def move_crates(stack, instruction)
   cargo = stack[instruction[:start]].pop(instruction[:size])
   stack[instruction[:finish]] += cargo.reverse
@@ -36,14 +45,6 @@ def execute_moves(stack, insts)
     move_crates(stack, instruction)
   end
   stack
-end
-
-def translate_moves(moves)
-  moves
-    .lines
-    .map(&:chomp)
-    .map { |instruction| instruction.scan(/[0-9]/).map(&:to_i) }
-    .map { |data| { start: data[1], finish: data[2], size: data[0] } }
 end
 
 def find_top_crates(stack)
