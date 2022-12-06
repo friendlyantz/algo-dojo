@@ -37,3 +37,27 @@ overlapping `item_1.chars & item_2.chars` - find common items in Arrays
 
 ## D4-5
 pure TDD implementation is extremely rewarding!
+
+## D6
+was a good way again to test drive it and make a simple dumb code to pass the test, which allowed for beatiful refactoring and reminded me of `each_cons` method consecutive looping
+
+refactoring:
+```ruby
+  stack = ''
+  data.chars.each_with_index do |char, i|
+    stack = stack[1..-1] if stack.size.eql?(packet_size)
+    stack << char
+
+    return i + 1 if stack.chars.uniq.size.eql? packet_size
+  end
+```
+
+
+```ruby
+  data.chars
+    .each_cons(packet_size)
+    .with_index do |stack, i|
+
+      return packet_size + i if stack.uniq.size.eql? packet_size
+  end
+```

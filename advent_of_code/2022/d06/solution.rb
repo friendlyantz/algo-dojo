@@ -11,13 +11,12 @@ def solution_pt2(input)
 end
 
 def find_packets(data, packet_size)
-  stack = ''
-  data.chars.each_with_index do |char, i|
-    stack = stack[1..-1] if stack.size.eql?(packet_size)
-    stack << char
-
-    return i + 1 if stack.chars.uniq.size.eql? packet_size
-  end
+  data
+    .chars
+    .each_cons(packet_size)
+    .with_index do |stack, i|
+      return packet_size + i if stack.uniq.size.eql? packet_size
+    end
 end
 
 if __FILE__ == $PROGRAM_NAME
