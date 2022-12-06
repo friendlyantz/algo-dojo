@@ -67,19 +67,35 @@ RSpec.describe 'Solutions' do
 
   describe 'Part 2' do
     #
-    # DESCRIPTION Part 2
+    # --- Part Two ---
+
+    # Your device's communication system is correctly detecting packets, but still isn't working. It looks like it also needs to look for messages.
+
+    # A start-of-message marker is just like a start-of-packet marker, except it consists of 14 distinct characters rather than 4.
+
+    # Here are the first positions of start-of-message markers for all of the above examples:
+
+    #     mjqjpqmgbljsphdztnvjfqwrcgsmlb: first marker after character 19
+    #     bvwbjplbgvbhsrlpgdmjqwftvncz: first marker after character 23
+    #     nppdvjthqldpwncqszvftbrmjlhg: first marker after character 23
+    #     nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg: first marker after character 29
+    #     zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw: first marker after character 26
+
+    # How many characters need to be processed before the first start-of-message marker is detected?
     #
     context 'example input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(example_input)).to eq 'solution for part 2'
+        expect(solution_pt2('mjqjpqmgbljsphdztnvjfqwrcgsmlb')).to eq 19
+        expect(solution_pt2('bvwbjplbgvbhsrlpgdmjqwftvncz')).to eq 23
+        expect(solution_pt2('nppdvjthqldpwncqszvftbrmjlhg')).to eq 23
+        expect(solution_pt2('nznrnfrfntjfmvfwmzdfjlvtqnbhcprsg')).to eq 29
+        expect(solution_pt2('zcfzfwzzqfrljwzlrfnpqdbhtmscgvjw')).to eq 26
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq 'solution for part 2'
+        expect(solution_pt2(custom_input)).to eq 3444
       end
     end
   end
