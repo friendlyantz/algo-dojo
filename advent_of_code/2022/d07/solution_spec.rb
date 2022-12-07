@@ -91,18 +91,68 @@ RSpec.describe 'Solutions' do
     # Find all of the directories with a total size of at most 100000. What is the sum of the total sizes of those directories?
 
     describe 'implementation' do
+      let(:commands) do
+        [[' cd /'],
+         [' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'],
+         [' cd a'],
+         [' ls', 'dir e', '29116 f', '2557 g', '62596 h.lst'],
+         [' cd e'],
+         [' ls', '584 i'],
+         [' cd ..'],
+         [' cd ..'],
+         [' cd d'],
+         [' ls', '4060174 j', '8033020 d.log', '5626152 d.ext', '7214296 k']]
+      end
+
       it 'breaks down commands' do
-        expect(separate_commands_with_their_outputs(example_input)).to eq(
-          [[' cd /'],
-           [' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'],
-           [' cd a'],
-           [' ls', 'dir e', '29116 f', '2557 g', '62596 h.lst'],
-           [' cd e'],
-           [' ls', '584 i'],
-           [' cd ..'],
-           [' cd ..'],
-           [' cd d'],
-           [' ls', '4060174 j', '8033020 d.log', '5626152 d.ext', '7214296 k']]
+        expect(separate_commands_with_their_outputs(example_input)).to eq commands
+      end
+
+      describe "understand 'cd' and 'ls' commands" do
+        it 'reads_first_command and creates corret root' do
+          read_command(commands.first)
+
+          expect(FSYS).to eq(
+            { '/' => {} }
+          )
+        end
+
+        it 'reads second  ls  command and creates corret root' do
+          read_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
+          FSYS =
+            {
+              '/' => {
+                'a': {
+                },
+                'b.txt' => 14_848_514,
+                'c.dat' => 8_504_156,
+                'd' => {}
+              }
+            }
+
+          expect(FSYS).to eq(
+            { '/' => {} }
+          )
+        end
+      end
+
+      it 'assuming first command always starts with root we build file system correctly line by line' do
+        # expect(FILE_SYSTEM)).to  eq(
+        #   '/'
+        # )
+      end
+
+      it 'builds correct File System' do
+        pending
+        expect(FSYS).to eq(
+          {
+            '/' => {
+              'a': {
+                'e': {},
+                'f': 29_116
+              }
+            }
+          }
         )
       end
     end

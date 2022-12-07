@@ -1,3 +1,5 @@
+FSYS = {}
+
 def solution_pt1(input)
   input
   # .then { |data| binding.pry }
@@ -13,6 +15,24 @@ def separate_commands_with_their_outputs(input)
     .split('$')
     .map(&:lines)[1..-1]
     .map! { |line| line.map(&:chomp) }
+end
+
+def read_command(command)
+  case command.first.scan(/cd|ls/).first
+  when 'cd'
+    folder = get_folder_name(command.first)
+    FSYS[folder] ||= {}
+  when 'ls'
+
+    binding.pry
+
+  end
+end
+
+def get_folder_name(command)
+  command
+    .scan(/\S+$/)
+    .first
 end
 
 if __FILE__ == $PROGRAM_NAME
