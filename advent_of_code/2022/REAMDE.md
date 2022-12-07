@@ -28,6 +28,7 @@ also this would be hard to distinguish between files and Ruby `gems`
 
 # Other solutions
 https://github.com/seanhandley/adventofcode2022
+
 https://github.com/astley92/advent_of_code/tree/main/2022
 
 # Learnings
@@ -68,5 +69,16 @@ was a good way again to test drive it and make a simple dumb code to pass the te
     .each_cons(packet_size)
     .with_index
     .find { |chars, i| chars.uniq.length == packet_size }
+    .last + packet_size
+```
+##### refactoring 3
+`==` and `.eql?` are not the same, eql also checks for type
+
+`10.eql?(10.0) => false`
+```ruby
+  data.chars
+    .each_cons(packet_size)
+    .with_index
+    .find { |chars, i| chars.uniq.eql? chars }
     .last + packet_size
 ```

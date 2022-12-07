@@ -15,7 +15,7 @@ def find_packets(data, packet_size)
     .chars
     .each_cons(packet_size)
     .with_index
-    .find { |chars, i| chars.uniq.length == packet_size }
+    .find { |chars, i| chars.uniq.eql? chars }
     .last + packet_size
 end
 
