@@ -23,16 +23,33 @@ def read_command(command)
     folder = get_folder_name(command.first)
     FSYS[folder] ||= {}
   when 'ls'
-
-    binding.pry
+    command[1..-1]
+      .each do |comm|
+      current_pos
+      case file_or_dir?(comm)
+      when ['dir']
+        dir = comm.split.last
+        current_pos[dir] ||= {}
+      else
+        current_pos[comm.split.last] = comm.split.first.to_i
+      end
+    end
 
   end
+end
+
+def file_or_dir?(input)
+  input.scan(/dir/)
 end
 
 def get_folder_name(command)
   command
     .scan(/\S+$/)
     .first
+end
+
+def current_pos
+  @current_pos ||= FSYS['/']
 end
 
 if __FILE__ == $PROGRAM_NAME

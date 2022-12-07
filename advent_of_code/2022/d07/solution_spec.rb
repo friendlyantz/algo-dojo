@@ -119,10 +119,10 @@ RSpec.describe 'Solutions' do
 
         it 'reads second  ls  command and creates corret root' do
           read_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
-          FSYS =
+          expected =
             {
               '/' => {
-                'a': {
+                'a' => {
                 },
                 'b.txt' => 14_848_514,
                 'c.dat' => 8_504_156,
@@ -131,7 +131,7 @@ RSpec.describe 'Solutions' do
             }
 
           expect(FSYS).to eq(
-            { '/' => {} }
+            expected
           )
         end
       end
