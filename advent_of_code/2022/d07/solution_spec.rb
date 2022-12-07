@@ -6,6 +6,9 @@ require 'awesome_print'
 RSpec.describe 'Solutions' do
   let(:example_input) { File.read(File.join(__dir__, 'ie_input')) }
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
+  before do
+    ROOT = Node.new('/')
+  end
 
   describe 'Part 1' do
     #
@@ -89,21 +92,20 @@ RSpec.describe 'Solutions' do
     # To begin, find all of the directories with a total size of at most 100000, then calculate the sum of their total sizes. In the example above, these directories are a and e; the sum of their total sizes is 95437 (94853 + 584). (As in this example, this process can count files more than once!)
 
     # Find all of the directories with a total size of at most 100000. What is the sum of the total sizes of those directories?
+    let(:commands) do
+      [[' cd /'],
+       [' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'],
+       [' cd a'],
+       [' ls', 'dir e', '29116 f', '2557 g', '62596 h.lst'],
+       [' cd e'],
+       [' ls', '584 i'],
+       [' cd ..'],
+       [' cd ..'],
+       [' cd d'],
+       [' ls', '4060174 j', '8033020 d.log', '5626152 d.ext', '7214296 k']]
+    end
 
     describe 'implementation' do
-      let(:commands) do
-        [[' cd /'],
-         [' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'],
-         [' cd a'],
-         [' ls', 'dir e', '29116 f', '2557 g', '62596 h.lst'],
-         [' cd e'],
-         [' ls', '584 i'],
-         [' cd ..'],
-         [' cd ..'],
-         [' cd d'],
-         [' ls', '4060174 j', '8033020 d.log', '5626152 d.ext', '7214296 k']]
-      end
-
       it 'breaks down commands' do
         expect(separate_commands_with_their_outputs(example_input)).to eq commands
       end
@@ -144,11 +146,24 @@ RSpec.describe 'Solutions' do
           expect(cursor.children.size).to eq 4
         end
       end
+    end
 
+    describe 'all steps exectured' do
       it 'builds correct File System after executing all styeps' do
-        pending
-        # expect(subject).to
-        expect(ROOT).to eq false
+        expect(ROOT.children.size).to eq 0
+        commands
+          .each do |command|
+          execute_command(command)
+        end
+
+        expect(ROOT.children.size).to eq 4
+        # TODO
+        binding.pry
+        # expect(
+        #   ROOT.children
+        #    .first.size
+        # ).to eq 4
+        # binding.pry
       end
     end
 
