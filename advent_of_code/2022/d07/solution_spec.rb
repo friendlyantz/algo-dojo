@@ -149,21 +149,37 @@ RSpec.describe 'Solutions' do
     end
 
     describe 'all steps exectured' do
-      it 'builds correct File System after executing all styeps' do
+      before do
         expect(ROOT.children.size).to eq 0
         commands
           .each do |command|
           execute_command(command)
         end
+      end
 
+      it 'builds correct File System after executing all styeps' do
         expect(ROOT.children.size).to eq 4
-        # TODO
-        binding.pry
-        # expect(
-        #   ROOT.children
-        #    .first.size
-        # ).to eq 4
-        # binding.pry
+        # TODO: assert deeper level
+      end
+      it 'finds folder and return found folder Object' do
+        filename = 'a'
+        @cursor = ROOT
+        found_node = get_node(filename)
+        expect(found_node).to be_a Node
+        expect(found_node.data).to eq 'a'
+        @cursor = found_node
+        expect(get_node('e').data).to eq 'e'
+      end
+
+      it 'return total size of file content of this folder' do
+        expect(total_size_of_children(@cursor)).to eq 24_933_642
+        @cursor = ROOT
+        @cursor = get_node('a')
+        @cursor = get_node('e')
+        expect(total_size_of_children(@cursor)).to eq 584
+        @cursor = @cursor.parent
+        expect(total_size_of_children(@cursor)).to eq 94_853
+        expect(total_size_of_children(ROOT)).to eq 48_381_165
       end
     end
 

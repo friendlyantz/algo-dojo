@@ -41,6 +41,26 @@ def execute_command(command)
   end
 end
 
+def get_node(filename)
+  @cursor.children.find { |c| c.data.eql? filename }
+end
+
+def total_size_of_children(dir)
+  size = 0
+  dir.children.each do |item|
+    size += if item.children.empty?
+              get_size(item)
+            else
+              total_size_of_children(item)
+            end
+  end
+  size
+end
+
+def get_size(node)
+  node.data.scan(/^\d+/).first.to_i
+end
+
 def go_to(folder)
   case folder
   when '/'
