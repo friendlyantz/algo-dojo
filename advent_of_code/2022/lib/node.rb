@@ -1,5 +1,5 @@
 class Node
-  attr_accessor :data, :children
+  attr_accessor :data, :children, :parent
 
   def initialize(data)
     @data = data
@@ -12,7 +12,8 @@ class Stacker
     if parent.nil?
       Node.new(data)
     else
-      parent.children << Node.new(data)
+      parent.children << node = Node.new(data)
+      node
     end
   end
 end

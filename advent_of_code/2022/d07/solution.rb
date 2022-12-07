@@ -1,4 +1,6 @@
-FSYS = {}
+require File.join(__dir__, '../lib/node')
+
+ROOT = Node.new('/')
 
 def solution_pt1(input)
   input
@@ -17,25 +19,41 @@ def separate_commands_with_their_outputs(input)
     .map! { |line| line.map(&:chomp) }
 end
 
-def read_command(command)
+def execute_command(command)
   case command.first.scan(/cd|ls/).first
   when 'cd'
     folder = get_folder_name(command.first)
-    FSYS[folder] ||= {}
+    go_to(folder)
   when 'ls'
     command[1..-1]
       .each do |comm|
-      current_pos
       case file_or_dir?(comm)
       when ['dir']
         dir = comm.split.last
-        current_pos[dir] ||= {}
+        unless already_exists?(dir)
+          new_dir = Stacker.new.insert(cursor, dir)
+          new_dir.parent = cursor
+        end
       else
-        current_pos[comm.split.last] = comm.split.first.to_i
+        Stacker.new.insert(cursor, comm) unless already_exists?(comm)
       end
     end
-
   end
+end
+
+def go_to(folder)
+  case folder
+  when '/'
+    cursor = ROOT
+  when '..'
+    @cursor = @cursor.parent
+  else
+    @cursor = @cursor.children.find { |c| c.data.eql? folder }
+  end
+end
+
+def already_exists?(name)
+  cursor.children.find { |c| c.data.eql? name } ? true : false
 end
 
 def file_or_dir?(input)
@@ -48,8 +66,8 @@ def get_folder_name(command)
     .first
 end
 
-def current_pos
-  @current_pos ||= FSYS['/']
+def cursor
+  @cursor ||= ROOT
 end
 
 if __FILE__ == $PROGRAM_NAME

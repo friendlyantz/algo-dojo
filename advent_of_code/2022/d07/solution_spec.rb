@@ -109,51 +109,46 @@ RSpec.describe 'Solutions' do
       end
 
       describe "understand 'cd' and 'ls' commands" do
-        it 'reads_first_command and creates corret root' do
-          read_command(commands.first)
+        it 'reads_first `cd` command and creates corret root' do
+          execute_command(commands.first)
 
-          expect(FSYS).to eq(
-            { '/' => {} }
+          expect(ROOT.data).to eq(
+            '/'
           )
+          expect(cursor.data).to eq '/'
         end
 
         it 'reads second  ls  command and creates corret root' do
-          read_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
-          expected =
-            {
-              '/' => {
-                'a' => {
-                },
-                'b.txt' => 14_848_514,
-                'c.dat' => 8_504_156,
-                'd' => {}
-              }
-            }
+          execute_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
+          expect(ROOT.children.count).to eq 4
+          expect(ROOT.children.map(&:data)).to eq ['a', '14848514 b.txt', '8504156 c.dat', 'd']
+        end
 
-          expect(FSYS).to eq(
-            expected
-          )
+        it "reads previous two commands followed by 'cd a') and navigates to this dir" do
+          execute_command(commands.first)
+          execute_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
+          execute_command([' cd a'])
+
+          expect(cursor.data).to eq('a')
+
+          expect(cursor.children).to eq([])
+        end
+
+        it "understands 'cd ..'" do
+          execute_command(commands.first)
+          execute_command([' ls', 'dir a', '14848514 b.txt', '8504156 c.dat', 'dir d'])
+          execute_command([' cd a'])
+          execute_command([' cd ..'])
+
+          expect(cursor.data).to eq('/')
+          expect(cursor.children.size).to eq 4
         end
       end
 
-      it 'assuming first command always starts with root we build file system correctly line by line' do
-        # expect(FILE_SYSTEM)).to  eq(
-        #   '/'
-        # )
-      end
-
-      it 'builds correct File System' do
+      it 'builds correct File System after executing all styeps' do
         pending
-        expect(FSYS).to eq(
-          {
-            '/' => {
-              'a': {
-                'e': {},
-                'f': 29_116
-              }
-            }
-          }
-        )
+        # expect(subject).to
+        expect(ROOT).to eq false
       end
     end
 
