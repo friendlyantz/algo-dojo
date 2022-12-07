@@ -1,10 +1,18 @@
 def solution_pt1(input)
   input
+  # .then { |data| binding.pry }
 end
 
 def solution_pt2(input)
   # input
   # .then { |data| binding.pry }
+end
+
+def separate_commands_with_their_outputs(input)
+  input
+    .split('$')
+    .map(&:lines)[1..-1]
+    .map! { |line| line.map(&:chomp) }
 end
 
 if __FILE__ == $PROGRAM_NAME
