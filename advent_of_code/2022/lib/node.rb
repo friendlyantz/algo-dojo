@@ -1,8 +1,18 @@
 class Node
-  attr_accessor :data, :next
+  attr_accessor :data, :children
 
   def initialize(data)
     @data = data
-    @next = nil
+    @children = []
+  end
+end
+
+class Stacker
+  def insert(parent, data)
+    if parent.nil?
+      Node.new(data)
+    else
+      parent.children << Node.new(data)
+    end
   end
 end
