@@ -42,9 +42,10 @@ RSpec.describe 'Solutions' do
     # Consider your map; how many trees are visible from outside the grid?
 
     describe 'implementation' do
+      let(:tree_map) { TreeMap.new(example_input) }
       it 'generates map with correct heights' do
-        result = generate_map(example_input)
-                 .map { _1.map { |i| i[:value] } }
+        result = tree_map.matrix
+                         .map { _1.map { |i| i[:value] } }
         expect(result).to eq(
           [[3, 0, 3, 7, 3, 0],
            [2, 5, 5, 1, 2, 0],
@@ -52,6 +53,20 @@ RSpec.describe 'Solutions' do
            [3, 3, 5, 4, 9, 0],
            [3, 5, 3, 9, 0, 0]]
         )
+      end
+      describe 'scans horizontally' do
+        it 'scannin from left the line with index 1 marks top left "5" as visible' do
+          result = scan_left(tree_map, 1)
+                   .matrix
+                   .map { _1.map { |i| i[:visible?] } }
+          expect(result).to eq(
+            [[false, false, false, false, false, false],
+             [false, true, false, false, false, false],
+             [false, false, false, false, false, false],
+             [false, false, false, false, false, false],
+             [false, false, false, false, false, false]]
+          )
+        end
       end
     end
 
