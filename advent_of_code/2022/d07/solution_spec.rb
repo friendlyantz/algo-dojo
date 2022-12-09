@@ -183,7 +183,7 @@ RSpec.describe 'Solutions' do
       end
 
       it 'get a list of total sizes for each folder in the system' do
-        expect(get_folder_sizes_incl_children).to eq [94_853, 584, 24933642]
+        expect(get_folder_sizes_incl_children).to eq [94_853, 584, 24_933_642, 48_381_165]
       end
     end
 
@@ -223,7 +223,6 @@ RSpec.describe 'Solutions' do
 
     # Find the smallest directory that, if deleted, would free up enough space on the filesystem to run the update. What is the total size of that directory?
 
-    #
     context 'example input data' do
       it 'returns correct result' do
         pending 'pt2 implementation'

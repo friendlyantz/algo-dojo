@@ -98,7 +98,7 @@ end
 def get_folder_sizes_incl_children
   @cursor = ROOT
 
-  get_list_of_all_subdir_sizes(@cursor, [])
+  get_list_of_all_subdir_sizes(@cursor, []) << total_size_of_children(@cursor)
 end
 
 def get_list_of_all_subdir_sizes(current_node, stack_so_far)
