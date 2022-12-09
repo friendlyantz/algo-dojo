@@ -4,7 +4,9 @@ ROOT = Node.new('/')
 
 def solution_pt1(input)
   input
-  # .then { |data| binding.pry }
+    .then { |data| separate_commands_with_their_outputs(data) }
+    .each { |data|  execute_command(data) }
+    .then { get_folder_sizes_incl_children_under_100k.sum }
 end
 
 def solution_pt2(input)
@@ -103,7 +105,7 @@ def get_list_of_all_subdir_sizes(current_node, stack_so_far)
 
     get_list_of_all_subdir_sizes(subdir, stack_so_far)
   end
- stack_so_far
+  stack_so_far
 end
 
 def no_more_folders?(folder)

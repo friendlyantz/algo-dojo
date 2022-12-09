@@ -190,15 +190,13 @@ RSpec.describe 'Solutions' do
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
           expect(solution_pt1(example_input)).to eq 95_437
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq 'test input'
+          expect(solution_pt1(custom_input)).to eq 1_297_683
         end
       end
     end
