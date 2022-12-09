@@ -6,7 +6,11 @@ def solution_pt1(input)
   input
     .then { |data| separate_commands_with_their_outputs(data) }
     .each { |data|  execute_command(data) }
-    .then { get_folder_sizes_incl_children_under_100k.sum }
+    .then do
+      get_folder_sizes_incl_children
+        .find_all { |i| i < 100_000 }
+        .sum
+    end
 end
 
 def solution_pt2(input)
@@ -91,11 +95,10 @@ def cursor
   @cursor ||= ROOT
 end
 
-def get_folder_sizes_incl_children_under_100k
+def get_folder_sizes_incl_children
   @cursor = ROOT
 
   get_list_of_all_subdir_sizes(@cursor, [])
-    .find_all { |i| i < 100_000 }
 end
 
 def get_list_of_all_subdir_sizes(current_node, stack_so_far)
