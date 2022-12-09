@@ -42,8 +42,16 @@ RSpec.describe 'Solutions' do
     # Consider your map; how many trees are visible from outside the grid?
 
     describe 'implementation' do
-      it 'description' do
-        expect(subject).to eq true
+      it 'generates map with correct heights' do
+        result = generate_map(example_input)
+                 .map { _1.map { |i| i[:value] } }
+        expect(result).to eq(
+          [[3, 0, 3, 7, 3, 0],
+           [2, 5, 5, 1, 2, 0],
+           [6, 5, 3, 3, 2, 0],
+           [3, 3, 5, 4, 9, 0],
+           [3, 5, 3, 9, 0, 0]]
+        )
       end
     end
 
