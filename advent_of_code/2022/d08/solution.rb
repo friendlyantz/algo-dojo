@@ -52,6 +52,23 @@ def scan_left(tree_map, line_num)
   end
 end
 
+
+def scan_right(tree_map, line_num)
+  stack = []
+  max_height = hight_of_the_tallest_tree_in_line(tree_map.matrix[line_num])
+  tree_map.matrix[line_num].reverse
+          .each_cons(2)
+          .with_index do |(prev_cell, next_cell), i|
+    if (stack.max || 0).eql?(max_height) && (stack.max || 0) >= next_cell[:value]
+      prev_cell[:visible?] = true
+      return tree_map
+    end
+
+    stack << next_cell[:value]
+    stack << prev_cell[:value] if i.eql? 0
+  end
+end
+
 def hight_of_the_tallest_tree_in_line(line)
   line.map { _1[:value] }.max
 end

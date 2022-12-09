@@ -67,6 +67,19 @@ RSpec.describe 'Solutions' do
              [false, false, false, false, false, false]]
           )
         end
+
+        it 'scannin from right the line with index 1 marks top left "5" as visible' do
+          result = scan_right(tree_map, 1)
+                   .matrix
+                   .map { _1.map { |i| i[:visible?] } }
+          expect(result).to eq(
+            [[false, false, false, false, false, false],
+             [false, false, true, false, false, false],
+             [false, false, false, false, false, false],
+             [false, false, false, false, false, false],
+             [false, false, false, false, false, false]]
+          )
+        end
       end
     end
 
