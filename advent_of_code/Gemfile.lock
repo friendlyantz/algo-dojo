@@ -2,6 +2,7 @@ GEM
   remote: https://rubygems.org/
   specs:
     attr_extras (6.2.5)
+    colorize (0.8.1)
     diff-lcs (1.5.0)
     optimist (3.0.1)
     patience_diff (1.2.0)
@@ -17,6 +18,7 @@ PLATFORMS
   arm64-darwin-21
 
 DEPENDENCIES
+  colorize
   pqueue
   ruby-progressbar
   super_diff
