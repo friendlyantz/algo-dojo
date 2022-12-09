@@ -91,18 +91,19 @@ end
 
 def get_folder_sizes_incl_children_under_100k
   @cursor = ROOT
-  stack = []
-  @cursor.children.each do |node|
-    stack << total_size_of_children(node) unless total_size_of_children(node) == 0
-    next if no_more_folders? node
 
-    node.children.each do |node|
-      stack << total_size_of_children(node) unless total_size_of_children(node) == 0
-    end
-    node
+  get_list_of_all_subdir_sizes(@cursor, [])
+    .find_all { |i| i < 100_000 }
+end
+
+def get_list_of_all_subdir_sizes(current_node, stack_so_far)
+  current_node.children.each do |subdir|
+    stack_so_far << total_size_of_children(subdir) unless total_size_of_children(subdir) == 0
+    next if no_more_folders? subdir
+
+    get_list_of_all_subdir_sizes(subdir, stack_so_far)
   end
-
-  stack.find_all { |i| i < 100_000 }
+ stack_so_far
 end
 
 def no_more_folders?(folder)
