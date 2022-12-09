@@ -23,19 +23,18 @@ def execute_command(command)
   case command.first.scan(/cd|ls/).first
   when 'cd'
     folder = get_folder_name(command.first)
-    go_to(folder)
+    cd_to(folder)
   when 'ls'
     command[1..-1]
       .each do |comm|
-      case file_or_dir?(comm)
-      when ['dir']
+      if file?(comm)
+        Stacker.new.insert(cursor, comm) unless already_exists?(comm)
+      else
         dir = comm.split.last
         unless already_exists?(dir)
           new_dir = Stacker.new.insert(cursor, dir)
           new_dir.parent = cursor
         end
-      else
-        Stacker.new.insert(cursor, comm) unless already_exists?(comm)
       end
     end
   end
@@ -61,7 +60,7 @@ def get_size(node)
   node.data.scan(/^\d+/).first.to_i
 end
 
-def go_to(folder)
+def cd_to(folder)
   case folder
   when '/'
     cursor = ROOT
@@ -76,8 +75,8 @@ def already_exists?(name)
   cursor.children.find { |c| c.data.eql? name } ? true : false
 end
 
-def file_or_dir?(input)
-  input.scan(/dir/)
+def file?(input)
+  input.match?(/^\d+/)
 end
 
 def get_folder_name(command)
@@ -88,6 +87,26 @@ end
 
 def cursor
   @cursor ||= ROOT
+end
+
+def get_folder_sizes_incl_children_under_100k
+  @cursor = ROOT
+  stack = []
+  @cursor.children.each do |node|
+    stack << total_size_of_children(node) unless total_size_of_children(node) == 0
+    next if no_more_folders? node
+
+    node.children.each do |node|
+      stack << total_size_of_children(node) unless total_size_of_children(node) == 0
+    end
+    node
+  end
+
+  stack.find_all { |i| i < 100_000 }
+end
+
+def no_more_folders?(folder)
+  return false if folder.children.find { |i| i.data.match?(/^\D+$/) }
 end
 
 if __FILE__ == $PROGRAM_NAME

@@ -181,6 +181,10 @@ RSpec.describe 'Solutions' do
         expect(total_size_of_children(@cursor)).to eq 94_853
         expect(total_size_of_children(ROOT)).to eq 48_381_165
       end
+
+      it 'finds folders that are at most 100000 in size' do
+        expect(get_folder_sizes_incl_children_under_100k).to eq [94_853, 584]
+      end
     end
 
     describe 'final result for pt1' do
