@@ -183,7 +183,7 @@ RSpec.describe 'Solutions' do
       end
 
       it 'get a list of total sizes for each folder in the system' do
-        expect(get_folder_sizes_incl_children).to eq [94_853, 584, 24_933_642, 48_381_165]
+        expect(get_folder_sizes_incl_children).to eq [94_853, 584, 24_933_642, 48_381_165 ]
       end
     end
 
@@ -225,15 +225,13 @@ RSpec.describe 'Solutions' do
 
     context 'example input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(example_input)).to eq 'solution for part 2'
+        expect(solution_pt2(example_input)).to eq 24933642
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq 'solution for part 2'
+        expect(solution_pt2(custom_input)).to eq 5756764
       end
     end
   end

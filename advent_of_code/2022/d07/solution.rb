@@ -14,8 +14,18 @@ def solution_pt1(input)
 end
 
 def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
+  input
+    .then { |data| separate_commands_with_their_outputs(data) }
+    .each { |data|  execute_command(data) }
+    .then {  get_folder_sizes_incl_children }
+    .then do |data|
+      acceptable_sizes = []
+      data.each do |size|
+        acceptable_sizes << size if 70_000_000 - data[-1] + size > 30_000_000
+      end
+      acceptable_sizes
+    end
+    .then &:min
 end
 
 def separate_commands_with_their_outputs(input)
