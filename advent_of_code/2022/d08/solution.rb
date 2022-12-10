@@ -68,18 +68,18 @@ end
 #     .then { |value| value * 2 }
 # end
 
-def scan(line, start_coordinate, max_height)
+def scan(line, scan_below = false, max_height)
   stack = []
   max_height ||= hight_of_the_tallest_tree_in_line(line)
-  line[start_coordinate..]
+  line
     .each_cons(2)
     .with_index do |(prev_cell, next_cell), i|
     if i.eql? 0
-      stack << prev_cell[:value] unless start_coordinate != 0
+      stack << prev_cell[:value] unless scan_below
       prev_cell[:visible?] = true
     end
 
-    if start_coordinate != 0
+    if scan_below
       next_cell[:visible?] = true if next_cell[:value] < max_height
     else
       visible_above(next_cell, stack)
@@ -97,25 +97,22 @@ end
 
 def scan_top(column_num, max_height = nil, line_num = 0)
   line = tree.matrix.transpose[column_num]
-  scan(line, line_num, max_height)
+  scan(line, max_height)
 end
 
 def scan_bottom(column_num, max_height = nil, line_num = 0)
   line = tree.matrix.transpose[column_num].reverse
-  scan(line, line_num, max_height)
+  scan(line, max_height)
 end
 
-def scan_left(line_num, max_height = nil, column_num = 0)
-  
-  # binding.pry
-  
-  line = tree.matrix[line_num]
-  scan(line, column_num, max_height)
+def scan_left(line_num, max_height = nil, start = 0)
+  line = tree.matrix[line_num][start..]
+  scan(line, max_height)
 end
 
 def scan_right(line_num, max_height = nil, column_num = 0)
   line = tree.matrix[line_num].reverse
-  scan(line, column_num, max_height)
+  scan(line, max_height)
 end
 
 def hight_of_the_tallest_tree_in_line(line)

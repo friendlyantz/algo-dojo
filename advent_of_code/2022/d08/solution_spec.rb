@@ -100,7 +100,7 @@ RSpec.describe 'Solutions' do
       end
 
       describe 'scans vertically' do
-                before do
+        before do
           @tree = tree_map
         end
         it 'scannin from top the line with index 1 marks correct cells visible' do
