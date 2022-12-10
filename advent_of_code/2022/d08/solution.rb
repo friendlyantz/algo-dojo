@@ -19,12 +19,16 @@ def solution_pt1(input)
       end
       map
     end
-    .then { |data| data.matrix.flatten.map { _1[:visible?] }.tally[true] }
+    .then { |data| tally_visible(data) }
 end
 
 def solution_pt2(input)
   # input
   # .then { |data| binding.pry }
+end
+
+def tally_visible(data)
+  data.matrix.flatten.map { _1[:visible?] }.tally[true]
 end
 
 class TreeMap
