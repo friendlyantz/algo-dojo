@@ -46,9 +46,22 @@ class TreeMap
   end
 end
 
-def scan(line, tree_map)
+def scenic_score(line, column, tree_map)
+  tree_map
+    .then do |map|
+      max_height = map.matrix[line][column][:value]
+      scan_visible_trees_left(map, line, column, max_height)
+    end
+    .then { |value| value * 2 }
+end
+
+def scan_visible_trees_left(map, line, column, max_height)
+  binding.pry
+end
+
+def scan(line, tree_map, _start_coordinate, max_height)
   stack = []
-  max_height = hight_of_the_tallest_tree_in_line(line)
+  max_height ||= hight_of_the_tallest_tree_in_line(line)
   line
     .each_cons(2)
     .with_index do |(prev_cell, next_cell), i|
@@ -65,24 +78,24 @@ def scan(line, tree_map)
   tree_map
 end
 
-def scan_top(tree_map, column_num)
+def scan_top(tree_map, column_num, max_height = nil, line_num = 0)
   line = tree_map.matrix.transpose[column_num]
-  scan(line, tree_map)
+  scan(line, tree_map, line_num, max_height)
 end
 
-def scan_bottom(tree_map, column_num)
+def scan_bottom(tree_map, column_num, max_height = nil, line_num = 0)
   line = tree_map.matrix.transpose[column_num].reverse
-  scan(line, tree_map)
+  scan(line, tree_map, line_num, max_height)
 end
 
-def scan_left(tree_map, line_num)
+def scan_left(tree_map, line_num, max_height = nil, column_num = 0)
   line = tree_map.matrix[line_num]
-  scan(line, tree_map)
+  scan(line, tree_map, column_num, max_height)
 end
 
-def scan_right(tree_map, line_num)
+def scan_right(tree_map, line_num, max_height = nil, column_num = 0)
   line = tree_map.matrix[line_num].reverse
-  scan(line, tree_map)
+  scan(line, tree_map, column_num, max_height)
 end
 
 def hight_of_the_tallest_tree_in_line(line)
