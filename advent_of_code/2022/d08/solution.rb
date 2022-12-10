@@ -31,7 +31,7 @@ class TreeMap
   end
 end
 
-def scan_horizontally(line, tree_map)
+def scan(line, tree_map)
   stack = []
   max_height = hight_of_the_tallest_tree_in_line(line)
   line
@@ -50,14 +50,19 @@ def scan_horizontally(line, tree_map)
   tree_map
 end
 
+def scan_top(tree_map, column_num)
+  line = tree_map.matrix.transpose[column_num]
+  scan(line, tree_map)
+end
+
 def scan_left(tree_map, line_num)
   line = tree_map.matrix[line_num]
-  scan_horizontally(line, tree_map)
+  scan(line, tree_map)
 end
 
 def scan_right(tree_map, line_num)
   line = tree_map.matrix[line_num].reverse
-  scan_horizontally(line, tree_map)
+  scan(line, tree_map)
 end
 
 def hight_of_the_tallest_tree_in_line(line)

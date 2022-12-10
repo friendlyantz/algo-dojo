@@ -96,7 +96,7 @@ RSpec.describe 'Solutions' do
       end
 
       describe 'scans vertically' do
-        it 'scannin from left the line with index 1 marks correct cells visible' do
+        it 'scannin from top the line with index 1 marks correct cells visible' do
           result = scan_top(tree_map, 1)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
@@ -109,7 +109,7 @@ RSpec.describe 'Solutions' do
           )
         end
 
-        it 'scannin from left the line with index 3 marks correct cells visible' do
+        it 'scannin from top the line with index 3 marks correct cells visible' do
           result = scan_top(tree_map, 3)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
@@ -122,21 +122,22 @@ RSpec.describe 'Solutions' do
           )
         end
 
-        it 'scannin from right the line with index 1 marks all visible trees' do
+        it 'scannin from bottom the line with index 1 marks all visible trees' do
           pending
           result = scan_bottom(tree_map, 1)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
-            [[false, false, false, false, false],
-             [false, false, true, false, true],
+             [[false, false, false, true, false],
              [false, false, false, false, false],
              [false, false, false, false, false],
-             [false, false, false, false, false]]
+             [false, false, false, false, false],
+             [false, false, false, true, false]]
           )
         end
-        it 'scannin from right the line with index 2 marks all visible trees' do
-          result = scan_right(tree_map, 2)
+        it 'scannin from bottom the line with index 2 marks all visible trees' do
+          pending
+          result = scan_bottom(tree_map, 2)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
