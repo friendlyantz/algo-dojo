@@ -3,8 +3,23 @@ require File.join(__dir__, '../lib/colorize')
 include MyColorize
 
 def solution_pt1(input)
-  # input
-  # .then { |data| generate_map(data) }
+  input
+    .then { |data| TreeMap.new(data) }
+    .then do |map|
+      height = map.matrix.size
+      width = map.matrix.first.length
+      height.times do |i|
+        scan_left(map, i)
+        scan_right(map, i)
+      end
+
+      width.times do |i|
+        scan_top(map, i)
+        scan_bottom(map, i)
+      end
+      map
+    end
+    .then { |data| data.matrix.flatten.map { _1[:visible?] }.tally[true] }
 end
 
 def solution_pt2(input)
