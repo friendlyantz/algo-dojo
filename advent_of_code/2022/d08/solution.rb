@@ -55,6 +55,11 @@ def scan_top(tree_map, column_num)
   scan(line, tree_map)
 end
 
+def scan_bottom(tree_map, column_num)
+  line = tree_map.matrix.transpose[column_num].reverse
+  scan(line, tree_map)
+end
+
 def scan_left(tree_map, line_num)
   line = tree_map.matrix[line_num]
   scan(line, tree_map)

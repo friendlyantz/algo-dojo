@@ -123,29 +123,27 @@ RSpec.describe 'Solutions' do
         end
 
         it 'scannin from bottom the line with index 1 marks all visible trees' do
-          pending
           result = scan_bottom(tree_map, 1)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
-             [[false, false, false, true, false],
+             [[false, false, false, false, false],
              [false, false, false, false, false],
              [false, false, false, false, false],
              [false, false, false, false, false],
-             [false, false, false, true, false]]
+             [false, true, false, false, false]]
           )
         end
         it 'scannin from bottom the line with index 2 marks all visible trees' do
-          pending
           result = scan_bottom(tree_map, 2)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
             [[false, false, false, false, false],
              [false, false, false, false, false],
-             [true, true, false, true, true],
              [false, false, false, false, false],
-             [false, false, false, false, false]]
+             [false, false, true, false, false],
+             [false, false, true, false, false]]
           )
         end
       end
