@@ -20,7 +20,7 @@ class TreeMap
   end
 
   def generate_map(data)
-    data.lines.map do |line|
+    data.lines.map(&:strip).map do |line|
       line.chars.map do |n|
         {
           value: n.to_i,
@@ -31,42 +31,33 @@ class TreeMap
   end
 end
 
-def scan_horizontally(_matrix, _line_num)
-  scan_left
-  # scan right
+def scan_horizontally(line, tree_map)
+  stack = []
+  max_height = hight_of_the_tallest_tree_in_line(line)
+  line
+    .each_cons(2)
+    .with_index do |(prev_cell, next_cell), i|
+      if i.eql? 0
+        stack << prev_cell[:value]
+        prev_cell[:visible?] = true
+      end
+
+      next_cell[:visible?] = true if next_cell[:value] > stack.max
+
+      stack << next_cell[:value]
+      break if stack.max.eql?(max_height)
+    end
+  tree_map
 end
 
 def scan_left(tree_map, line_num)
-  stack = []
-  max_height = hight_of_the_tallest_tree_in_line(tree_map.matrix[line_num])
-  tree_map.matrix[line_num]
-          .each_cons(2)
-          .with_index do |(prev_cell, next_cell), i|
-    if (stack.max || 0).eql?(max_height) && (stack.max || 0) >= next_cell[:value]
-      prev_cell[:visible?] = true
-      return tree_map
-    end
-
-    stack << next_cell[:value]
-    stack << prev_cell[:value] if i.eql? 0
-  end
+  line = tree_map.matrix[line_num]
+  scan_horizontally(line, tree_map)
 end
 
-
 def scan_right(tree_map, line_num)
-  stack = []
-  max_height = hight_of_the_tallest_tree_in_line(tree_map.matrix[line_num])
-  tree_map.matrix[line_num].reverse
-          .each_cons(2)
-          .with_index do |(prev_cell, next_cell), i|
-    if (stack.max || 0).eql?(max_height) && (stack.max || 0) >= next_cell[:value]
-      prev_cell[:visible?] = true
-      return tree_map
-    end
-
-    stack << next_cell[:value]
-    stack << prev_cell[:value] if i.eql? 0
-  end
+  line = tree_map.matrix[line_num].reverse
+  scan_horizontally(line, tree_map)
 end
 
 def hight_of_the_tallest_tree_in_line(line)

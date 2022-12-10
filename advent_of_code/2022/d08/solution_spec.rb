@@ -47,11 +47,11 @@ RSpec.describe 'Solutions' do
         result = tree_map.matrix
                          .map { _1.map { |i| i[:value] } }
         expect(result).to eq(
-          [[3, 0, 3, 7, 3, 0],
-           [2, 5, 5, 1, 2, 0],
-           [6, 5, 3, 3, 2, 0],
-           [3, 3, 5, 4, 9, 0],
-           [3, 5, 3, 9, 0, 0]]
+          [[3, 0, 3, 7, 3],
+           [2, 5, 5, 1, 2],
+           [6, 5, 3, 3, 2],
+           [3, 3, 5, 4, 9],
+           [3, 5, 3, 9, 0]]
         )
       end
       describe 'scans horizontally' do
@@ -60,24 +60,36 @@ RSpec.describe 'Solutions' do
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
-            [[false, false, false, false, false, false],
-             [false, true, false, false, false, false],
-             [false, false, false, false, false, false],
-             [false, false, false, false, false, false],
-             [false, false, false, false, false, false]]
+            [[false, false, false, false, false],
+             [true, true, false, false, false],
+             [false, false, false, false, false],
+             [false, false, false, false, false],
+             [false, false, false, false, false]]
           )
         end
 
-        it 'scannin from right the line with index 1 marks top left "5" as visible' do
+        it 'scannin from right the line with index 1 marks all visible trees' do
           result = scan_right(tree_map, 1)
                    .matrix
                    .map { _1.map { |i| i[:visible?] } }
           expect(result).to eq(
-            [[false, false, false, false, false, false],
-             [false, false, true, false, false, false],
-             [false, false, false, false, false, false],
-             [false, false, false, false, false, false],
-             [false, false, false, false, false, false]]
+            [[false, false, false, false, false],
+             [false, false, true, false, true],
+             [false, false, false, false, false],
+             [false, false, false, false, false],
+             [false, false, false, false, false]]
+          )
+        end
+        it 'scannin from right the line with index 2 marks all visible trees' do
+          result = scan_right(tree_map, 2)
+                   .matrix
+                   .map { _1.map { |i| i[:visible?] } }
+          expect(result).to eq(
+            [[false, false, false, false, false],
+             [false, false, false, false, false],
+             [true, true, false, true, true],
+             [false, false, false, false, false],
+             [false, false, false, false, false]]
           )
         end
       end
