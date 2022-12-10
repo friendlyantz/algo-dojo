@@ -215,7 +215,8 @@ RSpec.describe 'Solutions' do
 
     describe 'implementation' do
       it "calcs scenic score of cell '5' in the top middle" do
-        pending
+        @tree ||= TreeMap.new(example_input)
+        # pending
         expect(scenic_score(1, 2, tree_map)).to eq(
           4
         )
