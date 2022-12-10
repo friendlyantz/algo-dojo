@@ -35,6 +35,11 @@ def tally_visible(data)
   data.matrix.flatten.map { _1[:visible?] }.tally[true]
 end
 
+def tally_score(data)
+  data.matrix.flatten.map { _1[:scenic_score] }
+    .then { |data| data.filter {|i| i > 0}.inject(:*) }
+end
+
 class TreeMap
   attr_reader :matrix
 
@@ -48,7 +53,7 @@ class TreeMap
         {
           value: n.to_i,
           visible?: false,
-          scenic_score: nil
+          scenic_score: 0
         }
       end
     end
@@ -68,14 +73,13 @@ def scenic_score(line_num, column_num, tree_map)
       tree
     end
     .then do |forest|
-    # binding.pry
-    # tally_visible forest
-    # value * 2
+    tally_score(forest)
   end
 end
 
 def scan(line, params = {})
   stack = []
+  scenic_score_buffer_tree = line.last
   max_height = params[:max] || hight_of_the_tallest_tree_in_line(line)
   line
     .each_cons(2)
@@ -88,13 +92,14 @@ def scan(line, params = {})
     if params[:start]
       if next_cell[:value] <= max_height
         next_cell[:visible?] = true
-        next_cell[:scenic_score] = true
+        scenic_score_buffer_tree[:scenic_score] += 1
       end
     else
       visible_above(next_cell, stack)
     end
 
     stack << next_cell[:value]
+
     break if stack.max.eql?(max_height)
   end
   tree_map
