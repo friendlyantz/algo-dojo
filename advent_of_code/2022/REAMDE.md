@@ -87,3 +87,11 @@ was a good way again to test drive it and make a simple dumb code to pass the te
 do not skip tests! write more tests, if tests are green this doesn't mean it is 100% working
 refactor, consider 99bottle chapter 5 rules for refactoring.
 detect easiest code smell, remove it, make it open, refactor
+## D9 rope bridge
+
+```ruby 
+array.first 
+# AND
+array[0]
+```
+are not the same, you cannot mutate / assign using `.first = 'new value'`
