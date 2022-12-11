@@ -258,8 +258,11 @@ RSpec.describe 'Solutions' do
     # Simulate your complete hypothetical series of motions. How many positions does the tail of the rope visit at least once?
 
     describe 'implementation' do
-      it 'description' do
-        expect(subject).to eq true
+      let(:preped_data) do
+        [['R', 4], ['U', 4], ['L', 3], ['D', 1], ['R', 4], ['D', 1], ['L', 5], ['R', 2]]
+      end
+      it 'preps data by interpreting input lines' do
+        expect(prep_data(example_input)).to eq preped_data
       end
     end
 
