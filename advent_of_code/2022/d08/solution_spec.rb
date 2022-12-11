@@ -218,20 +218,19 @@ RSpec.describe 'Solutions' do
         @tree ||= TreeMap.new(example_input)
         expect(scenic_score(1, 2, tree_map)).to eq 4
         expect(scenic_score(3, 2, tree_map)).to eq 8
+        expect(scenic_score(1, 3, tree_map)).to eq 1
       end
     end
 
     context 'example input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
         expect(solution_pt2(example_input)).to eq 8
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq true
+        expect(solution_pt2(custom_input)).to eq 291840
       end
     end
   end

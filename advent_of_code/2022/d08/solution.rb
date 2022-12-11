@@ -23,8 +23,19 @@ def solution_pt1(input)
 end
 
 def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
+  input
+    .then { |data| tree(data) }
+    .then do |forest|
+       forest.matrix.each_with_index do |line, line_i|
+          line.each_with_index do |cell, column_i|
+            cell[:final_scenic_score] = scenic_score(line_i, column_i, forest) 
+          end
+       end
+       forest
+    end
+  .then { |data|   
+    data.matrix.flatten.map { _1[:final_scenic_score] }.max 
+  }
 end
 
 def tree(data = nil)
@@ -37,9 +48,7 @@ end
 
 def tally_score(data)
   data.matrix.flatten.map { _1[:scenic_score] }
-    .then { |data| 
-      data.compact.inject(:*) 
-    }
+    .then { |data| data.compact.inject(:*) }
 end
 
 class TreeMap
@@ -55,7 +64,8 @@ class TreeMap
         {
           value: n.to_i,
           visible?: false,
-          scenic_score: nil
+          scenic_score: nil,
+          final_scenic_score: nil
         }
       end
     end
@@ -74,7 +84,7 @@ def scenic_score(line_num, column_num, tree_map)
       tree
     end
     .then do |forest|
-      result = tally_score(forest)
+      result = tally_score(forest) == 0 ? 1 : tally_score(forest)
       cleanup_scores(forest)
       result
   end
@@ -102,8 +112,15 @@ def scan(line, params = {})
       prev_cell[:visible?] = true
     end
     if params[:start]
-      next_cell[:visible?] = true
-      scenic_score_buffer_tree[:scenic_score] += 1
+      if next_cell[:value] <= max_height
+        scenic_score_buffer_tree[:scenic_score] += 1
+        next_cell[:visible?] = true
+      elsif next_cell[:value] > max_height
+
+        scenic_score_buffer_tree[:scenic_score] += 1
+        next_cell[:visible?] = true
+        break
+      end
     else
       visible_above(next_cell, stack)
     end
