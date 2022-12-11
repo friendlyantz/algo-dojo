@@ -264,6 +264,22 @@ RSpec.describe 'Solutions' do
       it 'preps data by interpreting input lines' do
         expect(prep_data(example_input)).to eq preped_data
       end
+
+      it 'determins the width and height of future map matrix based on input' do
+        expect(determine_matrix_size(preped_data)).to  eq [5, 6]
+      end
+
+      it 'can generate matrix of the map' do
+        matrix = generate_matrix(6, 6)
+        expect(matrix).to eq [
+          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil],
+        ]
+      end
     end
 
     describe 'final result for pt1' do
