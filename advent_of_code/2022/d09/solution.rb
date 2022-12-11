@@ -2,6 +2,14 @@ require File.join(__dir__, '../lib/my_colorize')
 
 include MyColorize
 
+class Node
+  attr_accessor :visited
+
+  def initialize(visited = nil)
+    @visited = visited
+  end  
+end
+
 def solution_pt1(input)
   input
 end
@@ -54,5 +62,21 @@ def determine_matrix_size(preped_data)
 end
 
 def generate_matrix(height, width)
-  matrix = Array.new(height) { Array.new(width) }
+  @matrix = Array.new(height) { Array.new(width) }
+end
+
+def matrix
+  @matrix
+end
+
+def head
+  @head ||= Node.new
+end
+
+def tail
+  @tail ||= Node.new
+end
+
+def place_figures
+  matrix.last[0] =  [head, tail]
 end

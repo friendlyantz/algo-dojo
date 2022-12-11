@@ -277,8 +277,53 @@ RSpec.describe 'Solutions' do
           [nil, nil, nil, nil, nil, nil],
           [nil, nil, nil, nil, nil, nil],
           [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil]
         ]
+      end
+
+      describe 'movement' do
+        let(:expected) do
+          [
+            [nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil],
+            [nil, nil, nil, nil, nil, nil]
+          ]
+        end
+
+        before do
+          generate_matrix(
+            determine_matrix_size(preped_data).first,
+            determine_matrix_size(preped_data).last
+          )
+        end
+
+        describe 'field preparation and placing start figures' do
+          it '#matrix' do
+            expect(matrix).to eq expected
+          end
+
+          it 'generates HEAD and TAIL objects' do
+            expect(head).to  be_a Node
+            expect(tail).to  be_a Node
+          end
+
+          it 'places HEAD and TAIL to the bottom right corner' do
+            place_figures
+            expect(matrix.last.first).to eq(
+              [head, tail]
+            )
+          end
+        end
+
+        describe 'HEAD' do
+          it 'moves head correctly after 1st instruction' do
+            pending
+            move_head(preped_data[0])
+            expect(matrix[4][1]).to eq 'H'
+          end
+        end
       end
     end
 
