@@ -310,7 +310,7 @@ RSpec.describe 'Solutions' do
           end
 
           it 'places HEAD and TAIL to the bottom right corner' do
-            place_figures
+            place_figures_to_start
             expect(matrix.last.first).to eq(
               [head, tail]
             )
@@ -321,7 +321,15 @@ RSpec.describe 'Solutions' do
           it 'moves head correctly after 1st instruction' do
             pending
             move_head(preped_data[0])
-            expect(matrix[4][1]).to eq 'H'
+            expect(matrix).to eq(
+              [
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [tail, head, nil, nil, nil, nil]
+              ]
+            )
           end
         end
       end

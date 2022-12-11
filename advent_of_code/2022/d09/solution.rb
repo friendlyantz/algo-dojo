@@ -3,9 +3,10 @@ require File.join(__dir__, '../lib/my_colorize')
 include MyColorize
 
 class Node
-  attr_accessor :visited
+  attr_accessor :visited, :pos
 
   def initialize(visited = nil)
+    @pos = nil
     @visited = visited
   end  
 end
@@ -77,6 +78,16 @@ def tail
   @tail ||= Node.new
 end
 
-def place_figures
-  matrix.last[0] =  [head, tail]
+def place_figures_to_start
+  update_pos(head, matrix.size - 1, 0)
+  update_pos(tail, matrix.size - 1, 0)
+  update_matrix_for_start
+end
+
+def update_matrix_for_start
+  matrix[head.pos.first][head.pos.last] = [head, tail]
+end
+
+def update_pos(object, new_row, new_col)
+  object.pos = [new_row, new_col]
 end
