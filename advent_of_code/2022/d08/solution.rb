@@ -37,7 +37,9 @@ end
 
 def tally_score(data)
   data.matrix.flatten.map { _1[:scenic_score] }
-    .then { |data| data.filter {|i| i > 0}.inject(:*) }
+    .then { |data| 
+      data.compact.inject(:*) 
+    }
 end
 
 class TreeMap
@@ -53,7 +55,7 @@ class TreeMap
         {
           value: n.to_i,
           visible?: false,
-          scenic_score: 0
+          scenic_score: nil
         }
       end
     end
@@ -65,7 +67,6 @@ def scenic_score(line_num, column_num, tree_map)
     .then do |map|
       our_height = map.matrix[line_num][column_num][:value]
 
-      # binding.pry
       scan_left(line_num, { max: our_height, start: column_num })
       scan_right(line_num, { max: our_height, start: column_num })
       scan_top(column_num, { max: our_height, start: line_num })
@@ -73,13 +74,25 @@ def scenic_score(line_num, column_num, tree_map)
       tree
     end
     .then do |forest|
-    tally_score(forest)
+      result = tally_score(forest)
+      cleanup_scores(forest)
+      result
+  end
+end
+
+def cleanup_scores(tree_map)
+  tree_map.matrix.each do |line|
+    line.each do |tree|
+      tree[:scenic_score] = nil
+      tree[:visible?] = false
+    end
   end
 end
 
 def scan(line, params = {})
   stack = []
   scenic_score_buffer_tree = line.last
+  scenic_score_buffer_tree[:scenic_score] = 0
   max_height = params[:max] || hight_of_the_tallest_tree_in_line(line)
   line
     .each_cons(2)
@@ -88,12 +101,9 @@ def scan(line, params = {})
       stack << prev_cell[:value] unless params[:start]
       prev_cell[:visible?] = true
     end
-
     if params[:start]
-      if next_cell[:value] <= max_height
-        next_cell[:visible?] = true
-        scenic_score_buffer_tree[:scenic_score] += 1
-      end
+      next_cell[:visible?] = true
+      scenic_score_buffer_tree[:scenic_score] += 1
     else
       visible_above(next_cell, stack)
     end
@@ -116,8 +126,8 @@ def scan_top(column_num, params = {})
 end
 
 def scan_bottom(column_num, params = {})
-  start = params[:start] || 1
-  line = tree.matrix.transpose[column_num][..-start].reverse
+  start = params[:start] || -1
+  line = tree.matrix.transpose[column_num][..start].reverse
   scan(line, params)
 end
 
@@ -129,8 +139,8 @@ def scan_left(line_num, params = {})
 end
 
 def scan_right(line_num, params = {})
-  start = params[:start] || 1
-  line = tree.matrix[line_num][..-start].reverse
+  stop = params[:start] || -1
+  line = tree.matrix[line_num][..stop].reverse
   scan(line, params)
 end
 
