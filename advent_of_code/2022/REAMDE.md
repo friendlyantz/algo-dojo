@@ -82,3 +82,8 @@ was a good way again to test drive it and make a simple dumb code to pass the te
     .find { |chars, i| chars.uniq.eql? chars }
     .last + packet_size
 ```
+
+## D8 Tree Map
+do not skip tests! write more tests, if tests are green this doesn't mean it is 100% working
+refactor, consider 99bottle chapter 5 rules for refactoring.
+detect easiest code smell, remove it, make it open, refactor
