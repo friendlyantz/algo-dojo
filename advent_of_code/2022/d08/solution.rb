@@ -1,4 +1,4 @@
-require File.join(__dir__, '../lib/colorize')
+require File.join(__dir__, '../lib/my_colorize')
 
 include MyColorize
 
@@ -171,7 +171,7 @@ if __FILE__ == $PROGRAM_NAME
 
   input = File.read(ARGV.first)
   MyColorize.print_out(
-    generate_map(input)
+    TreeMap.new(input).matrix
     .map { _1.map { |i| i[:value] } }
   )
   puts 'part 1 solution'
