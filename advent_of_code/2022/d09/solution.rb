@@ -8,7 +8,7 @@ class Node
   def initialize(visited = nil)
     @pos = nil
     @visited = visited
-  end  
+  end
 end
 
 def solution_pt1(input)
@@ -66,9 +66,7 @@ def generate_matrix(height, width)
   @matrix = Array.new(height) { Array.new(width) }
 end
 
-def matrix
-  @matrix
-end
+attr_reader :matrix
 
 def head
   @head ||= Node.new
@@ -90,4 +88,44 @@ end
 
 def update_pos(object, new_row, new_col)
   object.pos = [new_row, new_col]
+end
+
+def move_head(instruction)
+  case instruction.first
+  when 'R'
+    move_head_right(instruction.last)
+    # when 'L'
+    #   move_left(instruction.last)
+  when 'U'
+    move_head_up(instruction.last)
+    # when 'D'
+    #   move_down(instruction.last)
+  end
+end
+
+def move_head_right(steps)
+  steps.times do
+    shift_element(head)
+    update_pos(head, head.pos.first, head.pos.last + 1)
+    insert_into_matrix(head)
+  end
+end
+
+def shift_element(element)
+  get_cell(element)
+    .shift
+  matrix[element.pos.first][element.pos.last] = nil if matrix[element.pos.first][element.pos.last].empty?
+end
+
+def insert_into_matrix(element)
+  if get_cell(element).nil?
+    matrix[element.pos.first][element.pos.last] = [element]
+  else
+    binding.pry # TODO
+    get_cell(element) << [element]
+  end
+end
+
+def get_cell(element)
+  matrix[element.pos.first][element.pos.last]
 end
