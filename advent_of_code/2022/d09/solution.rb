@@ -66,7 +66,9 @@ def generate_matrix(height, width)
   @matrix = Array.new(height) { Array.new(width) }
 end
 
-attr_reader :matrix
+def matrix # rubocop:disable Style/TrivialAccessors
+  @matrix
+end
 
 def head
   @head ||= Node.new
@@ -107,6 +109,14 @@ def move_head_right(steps)
   steps.times do
     shift_element(head)
     update_pos(head, head.pos.first, head.pos.last + 1)
+    insert_into_matrix(head)
+  end
+end
+
+def move_head_up(steps)
+  steps.times do
+    shift_element(head)
+    update_pos(head, head.pos.first - 1, head.pos.last)
     insert_into_matrix(head)
   end
 end
