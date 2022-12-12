@@ -129,17 +129,20 @@ def follow
   tail.pos[1] += head.pos[1] <=> tail.pos[1]
 end
 
+def move_tail_and_upd_matrix
+  shift_element(tail)
+  move_tail
+  insert_into_matrix(tail)
+end
+
 def move_head_right(steps)
   steps.times do
     shift_element(head)
     last_head_pos = head.pos
-    # update_pos(head, head.pos.first, head.pos.last + 1)
     head.pos[1] += 1
     insert_into_matrix(head)
 
-    shift_element(tail)
-    move_tail
-    insert_into_matrix(tail)
+    move_tail_and_upd_matrix
   end
 end
 
@@ -148,16 +151,16 @@ def move_head_up(steps)
     shift_element(head)
     last_head_pos = head.pos
 
-    # update_pos(head, head.pos.first - 1, head.pos.last)
     head.pos[0] -= 1
     insert_into_matrix(head)
+
+    move_tail_and_upd_matrix
   end
 end
 
 def move_head_left(steps)
   steps.times do
     shift_element(head)
-    # update_pos(head, head.pos.first, head.pos.last - 1)
     head.pos[1] -= 1
     insert_into_matrix(head)
   end
@@ -166,7 +169,6 @@ end
 def move_head_down(steps)
   steps.times do
     shift_element(head)
-    # update_pos(head, head.pos.first + 1, head.pos.last)
     head.pos[0] += 1
     insert_into_matrix(head)
   end

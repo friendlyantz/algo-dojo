@@ -348,7 +348,6 @@ RSpec.describe 'Solutions' do
           end
 
           it 'moves head correctly after 2nd instruction(U 4)' do
-            pending
             move_head(preped_data[0])
             move_head(preped_data[1])
             expect(matrix).to eq(
