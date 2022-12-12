@@ -1,6 +1,8 @@
 require File.join(__dir__, '../lib/my_colorize')
+require File.join(__dir__, '../lib/neighbour_check')
 
 include MyColorize
+include NeighbourCheck
 
 class Node
   attr_accessor :visited, :pos
@@ -105,18 +107,49 @@ def move_head(instruction)
   end
 end
 
+def move_tail
+  follow if move_tail?
+end
+
+def move_tail?
+  prox_cell_coords = NeighbourCheck.all(matrix, tail.pos.first, tail.pos.last)
+  prox_cell_coords.each do |coord|
+    next if matrix[coord.first][coord.last].nil?
+    return false unless matrix[coord.first][coord.last].nil?
+  end
+  true
+end
+
+def horizontal_diff_check
+  (tail.pos[1] - head.pos[1]).abs > 1
+end
+
+def follow
+  tail.pos[0] += head.pos[0] <=> tail.pos[0]
+  tail.pos[1] += head.pos[1] <=> tail.pos[1]
+end
+
 def move_head_right(steps)
   steps.times do
     shift_element(head)
-    update_pos(head, head.pos.first, head.pos.last + 1)
+    last_head_pos = head.pos
+    # update_pos(head, head.pos.first, head.pos.last + 1)
+    head.pos[1] += 1
     insert_into_matrix(head)
+
+    shift_element(tail)
+    move_tail
+    insert_into_matrix(tail)
   end
 end
 
 def move_head_up(steps)
   steps.times do
     shift_element(head)
-    update_pos(head, head.pos.first - 1, head.pos.last)
+    last_head_pos = head.pos
+
+    # update_pos(head, head.pos.first - 1, head.pos.last)
+    head.pos[0] -= 1
     insert_into_matrix(head)
   end
 end
@@ -124,7 +157,8 @@ end
 def move_head_left(steps)
   steps.times do
     shift_element(head)
-    update_pos(head, head.pos.first, head.pos.last - 1)
+    # update_pos(head, head.pos.first, head.pos.last - 1)
+    head.pos[1] -= 1
     insert_into_matrix(head)
   end
 end
@@ -132,7 +166,8 @@ end
 def move_head_down(steps)
   steps.times do
     shift_element(head)
-    update_pos(head, head.pos.first + 1, head.pos.last)
+    # update_pos(head, head.pos.first + 1, head.pos.last)
+    head.pos[0] += 1
     insert_into_matrix(head)
   end
 end
