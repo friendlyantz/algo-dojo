@@ -334,7 +334,7 @@ RSpec.describe 'Solutions' do
               ]
             )
           end
-          it 'moves head correctly after 1st instruction(R 4)' do
+          it 'moves head and tail correctly after 1st instruction(R 4)' do
             move_head(preped_data[0])
             expect(matrix).to eq(
               [
@@ -347,7 +347,7 @@ RSpec.describe 'Solutions' do
             )
           end
 
-          it 'moves head correctly after 2nd instruction(U 4)' do
+          it 'moves head and tail correctly after 2nd instruction(U 4)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
             expect(matrix).to eq(
@@ -361,7 +361,7 @@ RSpec.describe 'Solutions' do
             )
           end
 
-          it 'moves head correctly after 3rd instruction(L 3)' do
+          it 'moves head and tail correctly after 3rd instruction(L 3)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
             move_head(preped_data[2])
@@ -376,7 +376,7 @@ RSpec.describe 'Solutions' do
             )
           end
 
-          it 'moves head correctly after 4th instruction(D 1)' do
+          it 'moves head and tail correctly after 4th instruction(D 1)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
             move_head(preped_data[2])
@@ -392,7 +392,7 @@ RSpec.describe 'Solutions' do
             )
           end
 
-          it 'moves head correctly after 5th instruction(R 4)' do
+          it 'moves head and tail correctly after 5th instruction(R 4)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
             move_head(preped_data[2])
@@ -403,6 +403,63 @@ RSpec.describe 'Solutions' do
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, [tail], [head]],
                 [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil]
+              ]
+            )
+          end
+
+          it 'moves head and tail correctly after 6th instruction(D 1)' do
+            move_head(preped_data[0])
+            move_head(preped_data[1])
+            move_head(preped_data[2])
+            move_head(preped_data[3])
+            move_head(preped_data[4])
+            move_head(preped_data[5])
+            expect(matrix).to eq(
+              [
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, [tail], nil],
+                [nil, nil, nil, nil, nil, [head]],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil]
+              ]
+            )
+          end
+
+          it 'moves head and tail correctly after 7th instruction(L 5)' do
+            move_head(preped_data[0])
+            move_head(preped_data[1])
+            move_head(preped_data[2])
+            move_head(preped_data[3])
+            move_head(preped_data[4])
+            move_head(preped_data[5])
+            move_head(preped_data[6])
+            expect(matrix).to eq(
+              [
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [[head], [tail], nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil]
+              ]
+            )
+          end
+
+          it 'moves head and tail correctly after 8th instruction(R 2)' do
+            move_head(preped_data[0])
+            move_head(preped_data[1])
+            move_head(preped_data[2])
+            move_head(preped_data[3])
+            move_head(preped_data[4])
+            move_head(preped_data[5])
+            move_head(preped_data[6])
+            move_head(preped_data[7])
+            expect(matrix).to eq(
+              [
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, [tail], [head], nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil]
               ]

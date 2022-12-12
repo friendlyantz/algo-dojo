@@ -186,7 +186,7 @@ def insert_into_matrix(element)
   if get_cell(element).nil?
     matrix[element.pos.first][element.pos.last] = [element]
   else
-    binding.pry # TODO
+    # this will fly since we rely on shifting 1st element which is normal snake behaviour
     get_cell(element) << [element]
   end
 end
