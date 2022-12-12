@@ -163,6 +163,8 @@ def move_head_left(steps)
     shift_element(head)
     head.pos[1] -= 1
     insert_into_matrix(head)
+
+    move_tail_and_upd_matrix
   end
 end
 
