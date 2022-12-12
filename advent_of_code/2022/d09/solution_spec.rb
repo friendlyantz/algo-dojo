@@ -391,6 +391,23 @@ RSpec.describe 'Solutions' do
               ]
             )
           end
+
+          it 'moves head correctly after 5th instruction(R 4)' do
+            move_head(preped_data[0])
+            move_head(preped_data[1])
+            move_head(preped_data[2])
+            move_head(preped_data[3])
+            move_head(preped_data[4])
+            expect(matrix).to eq(
+              [
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, [tail], [head]],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil]
+              ]
+            )
+          end
         end
       end
     end
