@@ -322,7 +322,7 @@ RSpec.describe 'Solutions' do
             place_figures_to_start
           end
 
-          it 'moves head correctly after 1st instruction' do
+          it 'moves head correctly after 1st instruction(R 4)' do
             move_head(preped_data[0])
             expect(matrix).to eq(
               [
@@ -335,12 +335,27 @@ RSpec.describe 'Solutions' do
             )
           end
 
-          it 'moves head correctly after 2nd instruction' do
+          it 'moves head correctly after 2nd instruction(U 4)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
             expect(matrix).to eq(
               [
                 [nil, nil, nil, nil, [head], nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [nil, nil, nil, nil, nil, nil],
+                [[tail], nil, nil, nil, nil, nil]
+              ]
+            )
+          end
+
+          it 'moves head correctly after 3rd instruction(L 3)' do
+            move_head(preped_data[0])
+            move_head(preped_data[1])
+            move_head(preped_data[2])
+            expect(matrix).to eq(
+              [
+                [nil, [head], nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],
                 [nil, nil, nil, nil, nil, nil],

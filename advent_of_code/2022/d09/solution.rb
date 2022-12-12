@@ -96,8 +96,8 @@ def move_head(instruction)
   case instruction.first
   when 'R'
     move_head_right(instruction.last)
-    # when 'L'
-    #   move_left(instruction.last)
+  when 'L'
+    move_head_left(instruction.last)
   when 'U'
     move_head_up(instruction.last)
     # when 'D'
@@ -117,6 +117,14 @@ def move_head_up(steps)
   steps.times do
     shift_element(head)
     update_pos(head, head.pos.first - 1, head.pos.last)
+    insert_into_matrix(head)
+  end
+end
+
+def move_head_left(steps)
+  steps.times do
+    shift_element(head)
+    update_pos(head, head.pos.first, head.pos.last - 1)
     insert_into_matrix(head)
   end
 end
