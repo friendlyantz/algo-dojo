@@ -1,5 +1,6 @@
 require File.join(__dir__, '../lib/my_colorize')
 require File.join(__dir__, '../lib/neighbour_check')
+require 'ruby-progressbar'
 
 include MyColorize
 include NeighbourCheck
@@ -15,11 +16,33 @@ end
 
 def solution_pt1(input)
   input
+    .then { |data| prep_data(data) }
+    .then { |data| generate_matrix_and_place_figues_to_start(data) }
+    .then do |data|
+      data.each do |instruction|
+        move_head(instruction)
+      end
+    end
+    .then { |_data| tail.visited.uniq.size }
 end
 
 def solution_pt2(input)
   # input
   # .then { |data| binding.pry }
+end
+
+def generate_matrix_and_place_figues_to_start(data)
+  puts 'determing matrix size...'
+  size = determine_matrix_size(data)
+  puts 'determing matrix size COMPLETE'
+  generate_matrix(size.first, size.last) # FIXME
+  # generate_matri0x(20_000, 20_000) # FIXME
+  
+  
+  place_figures_to_start(data)
+  # binding.pry
+  puts 'generation complete'
+  data
 end
 
 if __FILE__ == $PROGRAM_NAME
@@ -80,9 +103,27 @@ def tail
   @tail ||= Node.new
 end
 
-def place_figures_to_start
-  update_pos(head, matrix.size - 1, 0)
-  update_pos(tail, matrix.size - 1, 0)
+def place_figures_to_start(data)
+  # FIXME determin start corner?
+  case data.first.first
+  when 'R' # example input placing it in the corner
+    update_pos(head, matrix.size - 1, 0)
+    update_pos(tail, matrix.size - 1, 0)
+  when 'D' # my example from top right
+    update_pos(head, 0, matrix.first.size - 1)
+    update_pos(tail, 0, matrix.first.size - 1)
+  else # generic input, doubling matrix width and height and placing Head and Tail in the middle
+    # WIP
+    binding.pry
+    
+    generate_matrix(matrix.size * 2 + 1, matrix.first.size * 2 + 1) 
+    # binding.pry
+
+    update_pos(head, matrix.size/2, matrix.first.size/2)
+    update_pos(tail, matrix.size/2, matrix.first.size/2)
+  end
+    
+  tail.visited = [tail.pos.dup]
   update_matrix_for_start
 end
 
@@ -127,6 +168,12 @@ end
 def follow
   tail.pos[0] += head.pos[0] <=> tail.pos[0]
   tail.pos[1] += head.pos[1] <=> tail.pos[1]
+  upd_tail_visited_list
+end
+
+def upd_tail_visited_list
+  visited = tail.pos.dup
+  tail.visited << visited
 end
 
 def move_tail_and_upd_matrix
@@ -187,10 +234,51 @@ def insert_into_matrix(element)
     matrix[element.pos.first][element.pos.last] = [element]
   else
     # this will fly since we rely on shifting 1st element which is normal snake behaviour
+    # binding.pry
     get_cell(element) << [element]
   end
+  # render_matrix
+  # matrix
+ end
+
+def replace_element_with_abbr(matrix_dup)
+  matrix_dup.map! { |line| line.map { |item| item = 0} }
+  
+  if tail.pos == head.pos
+    matrix_dup[tail.pos.first][tail.pos.last] = 5
+  else
+    matrix_dup[tail.pos.first][tail.pos.last] = 1
+    matrix_dup[head.pos.first][head.pos.last] = 9
+  end
+  matrix_dup
 end
 
+def render_matrix
+  matrix_dup = matrix.dup
+  replace_element_with_abbr(matrix_dup)
+  
+  MyColorize.print_out matrix_dup
+
+  puts <<~HEREDOC
+
+
+
+
+
+
+
+
+
+
+
+
+  HEREDOC
+  sleep(0.2)
+end
+
+
 def get_cell(element)
+  binding.pry unless matrix[element.pos.first]
+
   matrix[element.pos.first][element.pos.last]
 end

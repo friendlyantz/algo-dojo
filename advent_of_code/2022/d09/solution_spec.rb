@@ -310,7 +310,7 @@ RSpec.describe 'Solutions' do
           end
 
           it 'places HEAD and TAIL to the bottom right corner' do
-            place_figures_to_start
+            place_figures_to_start(preped_data)
             expect(matrix.last.first).to eq(
               [head, tail]
             )
@@ -319,7 +319,7 @@ RSpec.describe 'Solutions' do
 
         describe 'HEAD and TAIL' do
           before do
-            place_figures_to_start
+            place_figures_to_start(preped_data)
           end
 
           it 'moves head and tail correctly after instruction(R 2)' do
@@ -333,6 +333,9 @@ RSpec.describe 'Solutions' do
                 [nil, [tail], [head], nil, nil, nil]
               ]
             )
+            expect(tail.visited).to eq(
+              [[4, 0], [4, 1]]
+            )  
           end
           it 'moves head and tail correctly after 1st instruction(R 4)' do
             move_head(preped_data[0])
@@ -464,6 +467,7 @@ RSpec.describe 'Solutions' do
                 [nil, nil, nil, nil, nil, nil]
               ]
             )
+            expect(tail.visited.uniq.size).to eq 13
           end
         end
       end
@@ -472,15 +476,14 @@ RSpec.describe 'Solutions' do
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
           expect(solution_pt1(example_input)).to eq 13
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq true
+          expect(solution_pt1(custom_input)).not_to eq 5609 # too low
+          expect(solution_pt1(custom_input)).to eq false
         end
       end
     end
