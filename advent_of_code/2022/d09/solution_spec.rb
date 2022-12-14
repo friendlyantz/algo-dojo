@@ -265,188 +265,10 @@ RSpec.describe 'Solutions' do
         expect(prep_data(example_input)).to eq preped_data
       end
 
-      it 'determins the width and height of future map matrix based on input' do
-        expect(determine_matrix_size(preped_data)).to  eq [5, 6]
-      end
-
-      it 'can generate matrix of the map' do
-        matrix = generate_matrix(6, 6)
-        expect(matrix).to eq [
-          [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil]
-        ]
-      end
-
       describe 'movement' do
-        let(:expected) do
-          [
-            [nil, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, nil]
-          ]
-        end
-
-        before do
-          generate_matrix(
-            determine_matrix_size(preped_data).first,
-            determine_matrix_size(preped_data).last
-          )
-        end
-
-        describe 'field preparation and placing start figures' do
-          it '#matrix' do
-            expect(matrix).to eq expected
-          end
-
-          it 'generates HEAD and TAIL objects' do
-            expect(head).to  be_a Node
-            expect(tail).to  be_a Node
-          end
-
-          it 'places HEAD and TAIL to the bottom right corner' do
-            place_figures_to_start(preped_data)
-            expect(matrix.last.first).to eq(
-              [head, tail]
-            )
-          end
-        end
-
         describe 'HEAD and TAIL' do
           before do
-            place_figures_to_start(preped_data)
-          end
-
-          it 'moves head and tail correctly after instruction(R 2)' do
-            move_head(['R', 2])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, [tail], [head], nil, nil, nil]
-              ]
-            )
-            expect(tail.visited).to eq(
-              [[4, 0], [4, 1]]
-            )  
-          end
-          it 'moves head and tail correctly after 1st instruction(R 4)' do
-            move_head(preped_data[0])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, [tail], [head], nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 2nd instruction(U 4)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, [head], nil],
-                [nil, nil, nil, nil, [tail], nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 3rd instruction(L 3)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            move_head(preped_data[2])
-            expect(matrix).to eq(
-              [
-                [nil, [head], [tail], nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 4th instruction(D 1)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            move_head(preped_data[2])
-            move_head(preped_data[3])
-            expect(matrix).to eq(
-              [
-                [nil, nil, [tail], nil, nil, nil],
-                [nil, [head], nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 5th instruction(R 4)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            move_head(preped_data[2])
-            move_head(preped_data[3])
-            move_head(preped_data[4])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, [tail], [head]],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 6th instruction(D 1)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            move_head(preped_data[2])
-            move_head(preped_data[3])
-            move_head(preped_data[4])
-            move_head(preped_data[5])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, [tail], nil],
-                [nil, nil, nil, nil, nil, [head]],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
-          end
-
-          it 'moves head and tail correctly after 7th instruction(L 5)' do
-            move_head(preped_data[0])
-            move_head(preped_data[1])
-            move_head(preped_data[2])
-            move_head(preped_data[3])
-            move_head(preped_data[4])
-            move_head(preped_data[5])
-            move_head(preped_data[6])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [[head], [tail], nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
-            )
+            place_figures_to_start
           end
 
           it 'moves head and tail correctly after 8th instruction(R 2)' do
@@ -458,14 +280,8 @@ RSpec.describe 'Solutions' do
             move_head(preped_data[5])
             move_head(preped_data[6])
             move_head(preped_data[7])
-            expect(matrix).to eq(
-              [
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, [tail], [head], nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil],
-                [nil, nil, nil, nil, nil, nil]
-              ]
+            expect(tail.visited.uniq).to eq(
+              [[0, 0], [0, 1], [0, 2], [0, 3], [-1, 4], [-2, 4], [-3, 4], [-4, 3], [-4, 2], [-3, 3], [-2, 3], [-2, 2], [-2, 1]]
             )
             expect(tail.visited.uniq.size).to eq 13
           end
@@ -483,7 +299,7 @@ RSpec.describe 'Solutions' do
       context 'custom input data' do
         it 'returns correct result' do
           expect(solution_pt1(custom_input)).not_to eq 5609 # too low
-          expect(solution_pt1(custom_input)).to eq false
+          expect(solution_pt1(custom_input)).to eq 6311
         end
       end
     end
