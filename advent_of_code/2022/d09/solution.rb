@@ -14,7 +14,7 @@ end
 def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
-    .then { |data| generate_matrix_and_place_figues_to_start(data) }
+    .then { |data| place_head_tail_to_start; data }
     .then do |data|
       data.each do |instruction|
         move_head(instruction)
@@ -24,21 +24,26 @@ def solution_pt1(input)
 end
 
 def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
+  input
+    .then { |data| prep_data(data) }
+    .then { |data| generate_matrix_and_place_figues_to_start(data) }
+    .then do |data|
+      data.each do |instruction|
+        move_head(instruction)
+      end
+    end
+    .then { |_data| tail.visited.uniq.size }
 end
 
 def generate_matrix_and_place_figues_to_start(data)
-  place_figures_to_start
+  place_head_tail_to_start
   data
 end
-
-
-# private
 
 def prep_data(input)
   input.split("\n").map(&:split).map { |pair| [pair.first, pair.last.to_i] }
 end
+
 def head
   @head ||= Node.new
 end
@@ -47,7 +52,7 @@ def tail
   @tail ||= Node.new
 end
 
-def place_figures_to_start
+def place_head_tail_to_start
   update_pos(head, 0, 0)
   update_pos(tail, 0, 0)
 

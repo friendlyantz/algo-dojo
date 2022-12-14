@@ -5,6 +5,7 @@ require 'awesome_print'
 
 RSpec.describe 'Solutions' do
   let(:example_input) { File.read(File.join(__dir__, 'ie_input')) }
+  let(:large_example_input) { File.read(File.join(__dir__, 'ie_input_large')) }
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
 
   describe 'Part 1' do
@@ -268,7 +269,7 @@ RSpec.describe 'Solutions' do
       describe 'movement' do
         describe 'HEAD and TAIL' do
           before do
-            place_figures_to_start
+            place_head_tail_to_start
           end
 
           it 'moves head and tail correctly after 8th instruction(R 2)' do
@@ -293,6 +294,7 @@ RSpec.describe 'Solutions' do
       context 'example input data' do
         it 'returns correct result' do
           expect(solution_pt1(example_input)).to eq 13
+          expect(solution_pt1(large_example_input)).to eq 97
         end
       end
 
