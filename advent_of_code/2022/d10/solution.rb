@@ -13,6 +13,10 @@ def x_register_inc(arg)
   @x_register += arg
 end
 
+def crt
+  @crt ||= []
+end
+
 def cycle_count_inc(arg)
   @cycle_count += arg
   # puts "cycle: #{@cycle_count}, x_reg: #{@x_register}"
