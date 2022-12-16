@@ -41,6 +41,6 @@ module MyColorize
     end
     output.each do |row|
       puts row.join
-    end
+    end; nil
   end
 end

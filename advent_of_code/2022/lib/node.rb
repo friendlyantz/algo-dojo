@@ -1,5 +1,5 @@
 class Node
-  attr_accessor :data, :children, :parent
+  attr_accessor :data, :children, :parent, :next
 
   def initialize(data)
     @data = data

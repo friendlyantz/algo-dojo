@@ -1,42 +1,56 @@
 require File.join(__dir__, '../lib/my_colorize')
+require 'pry'
 
 include MyColorize
 
 class Node
-  attr_accessor :visited, :pos
+  attr_accessor :visited, :pos, :tail, :title
 
-  def initialize(visited = [])
-    @pos = nil
+  def initialize(visited: [[0, 0]], tail: nil, title: nil)
+    @pos = [0, 0]
     @visited = visited
+    @tail = tail
+    @title = title
   end
 end
 
 def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
-    .then { |data| place_head_tail_to_start; data }
+    .then { |data| generate_snake(data, 1) }
     .then do |data|
-      data.each do |instruction|
-        move_head(instruction)
-      end
+      data.each { |instruction| move_head(instruction) }
     end
-    .then { |_data| tail.visited.uniq.size }
+    .then { tail.visited.uniq.size }
 end
 
 def solution_pt2(input)
   input
     .then { |data| prep_data(data) }
-    .then { |data| generate_matrix_and_place_figues_to_start(data) }
+    .then { |data| generate_snake(data, 9) }
     .then do |data|
-      data.each do |instruction|
-        move_head(instruction)
-      end
+      data.each { |instruction| move_head(instruction) }
     end
     .then { |_data| tail.visited.uniq.size }
 end
 
-def generate_matrix_and_place_figues_to_start(data)
-  place_head_tail_to_start
+def generate_snake(data, size = 9)
+  size.downto(0) do |i|
+    if i == size
+      @tail = Node.new(title: size)
+      snake << tail
+      next
+    end
+
+    if i == 0
+      @head = Node.new(title: 10, tail: snake.last)
+      snake << @head
+      next
+    end
+
+    snake << Node.new(tail: snake.last, title: i)
+  end
+
   data
 end
 
@@ -44,8 +58,12 @@ def prep_data(input)
   input.split("\n").map(&:split).map { |pair| [pair.first, pair.last.to_i] }
 end
 
+def snake
+  @snake ||= []
+end
+
 def head
-  @head ||= Node.new
+  @head ||= Node.new(tail: tail)
 end
 
 def tail
@@ -55,12 +73,13 @@ end
 def place_head_tail_to_start
   update_pos(head, 0, 0)
   update_pos(tail, 0, 0)
-
-  upd_tail_visited_list
+  snake << head
+  snake << tail
 end
 
 def update_pos(object, new_row, new_col)
   object.pos = [new_row, new_col]
+  move_tail(object)
 end
 
 def move_head(instruction)
@@ -74,15 +93,17 @@ def move_head(instruction)
   when 'D'
     move_head_down(instruction.last)
   end
-
-  # binding.pry if matrix[head.pos.first].size > matrix[0].size
 end
 
-def move_tail
-  follow if move_tail?
+def move_tail(head)
+  follow(head) if head.tail
 end
 
-def move_tail?
+def move_tail?(head)
+  tail = head.tail
+
+  return false unless tail
+
   return true if (tail.pos.first - head.pos.first).abs > 1
   return true if (head.pos.first - tail.pos.first).abs > 1
   return true if (tail.pos.last - head.pos.last).abs > 1
@@ -91,45 +112,90 @@ def move_tail?
   false
 end
 
-def follow
-  tail.pos[0] += head.pos[0] <=> tail.pos[0]
-  tail.pos[1] += head.pos[1] <=> tail.pos[1]
-  upd_tail_visited_list
+SIZE = 100
+CTR = SIZE / 2
+
+def generate_matrix
+  a = []
+  SIZE.times do
+    a << Array.new(SIZE * 2, 0)
+  end
+  a
 end
 
-def upd_tail_visited_list
-  tail.visited << tail.pos.dup
+def render
+  matrix = generate_matrix.dup
+  snake.each do |el|
+    matrix[CTR + el.pos.first][CTR + el.pos.last] = el.title
+  end
+
+  MyColorize.print_out matrix
+  # sleep(0.2)
 end
 
-def move_tail_and_upd_matrix
-  move_tail
+def follow(head)
+  return unless move_tail?(head)
+
+  # =================
+  #  REDNERING
+  # =================
+  # render
+
+  head.tail.pos[0] += head.pos[0] <=>  head.tail.pos[0]
+  head.tail.pos[1] += head.pos[1] <=>  head.tail.pos[1]
+
+  # binding.pry if head.tail.eql? @tail
+
+  upd_visited_list if head.tail.eql? @tail
+
+  follow(head.tail)
+end
+
+def upd_visited_list
+  @tail.visited << tail.pos.dup
 end
 
 def move_head_right(steps)
   steps.times do
-    head.pos[1] += 1
-    move_tail
+    update_pos(
+      head,
+      head.pos[0],
+      head.pos[1] + 1
+    )
+    move_tail(head)
   end
 end
 
 def move_head_up(steps)
   steps.times do
-    head.pos[0] -= 1
-    move_tail
+    update_pos(
+      head,
+      head.pos[0] -= 1,
+      head.pos[1]
+    )
+    move_tail(head)
   end
 end
 
 def move_head_left(steps)
   steps.times do
-    head.pos[1] -= 1
-    move_tail
+    update_pos(
+      head,
+      head.pos[0],
+      head.pos[1] -= 1
+    )
+    move_tail(head)
   end
 end
 
 def move_head_down(steps)
   steps.times do
-    head.pos[0] += 1
-    move_tail
+    update_pos(
+      head,
+      head.pos[0] += 1,
+      head.pos[1]
+    )
+    move_tail(head)
   end
 end
 
