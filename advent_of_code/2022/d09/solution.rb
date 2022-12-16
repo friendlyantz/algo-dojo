@@ -67,9 +67,9 @@ def tail
   @tail ||= Node.new
 end
 
-def update_pos(object, new_row, new_col)
-  object.pos = [new_row, new_col]
-  move_tail(object)
+def upd_head_position(new_row, new_col)
+  head.pos = [new_row, new_col]
+  move_tail(head)
 end
 
 def move_head(instruction)
@@ -86,13 +86,11 @@ def move_head(instruction)
 end
 
 def move_tail(head)
-  follow(head) if head.tail
+  follow(head)
 end
 
 def move_tail?(head)
-  tail = head.tail
-
-  return false unless tail
+  return false unless tail = head.tail
 
   return true if (tail.pos.first - head.pos.first).abs > 1
   return true if (head.pos.first - tail.pos.first).abs > 1
@@ -102,9 +100,13 @@ def move_tail?(head)
   false
 end
 
+# =======================
+# Debugging / visualising
 SIZE = 100
 CTR = SIZE / 2
+# =======================
 
+# Debugging / visualising
 def generate_matrix
   a = []
   SIZE.times do
@@ -113,6 +115,7 @@ def generate_matrix
   a
 end
 
+# Debugging / visualising
 def render
   matrix = generate_matrix.dup
   snake.each do |el|
@@ -123,22 +126,19 @@ def render
   # sleep(0.2)
 end
 
-def follow(head)
-  return unless move_tail?(head)
+def follow(node)
+  return unless move_tail?(node)
 
   # =================
-  #  REDNERING
+  # render # REDNERING / DEBUG
   # =================
-  # render
 
-  head.tail.pos[0] += head.pos[0] <=>  head.tail.pos[0]
-  head.tail.pos[1] += head.pos[1] <=>  head.tail.pos[1]
+  node.tail.pos[0] += node.pos[0] <=>  node.tail.pos[0]
+  node.tail.pos[1] += node.pos[1] <=>  node.tail.pos[1]
 
-  # binding.pry if head.tail.eql? @tail
+  upd_visited_list if node.tail.eql? @tail
 
-  upd_visited_list if head.tail.eql? @tail
-
-  follow(head.tail)
+  follow(node.tail)
 end
 
 def upd_visited_list
@@ -147,45 +147,37 @@ end
 
 def move_head_right(steps)
   steps.times do
-    update_pos(
-      head,
+    upd_head_position(
       head.pos[0],
       head.pos[1] + 1
     )
-    move_tail(head)
   end
 end
 
 def move_head_up(steps)
   steps.times do
-    update_pos(
-      head,
+    upd_head_position(
       head.pos[0] -= 1,
       head.pos[1]
     )
-    move_tail(head)
   end
 end
 
 def move_head_left(steps)
   steps.times do
-    update_pos(
-      head,
+    upd_head_position(
       head.pos[0],
       head.pos[1] -= 1
     )
-    move_tail(head)
   end
 end
 
 def move_head_down(steps)
   steps.times do
-    update_pos(
-      head,
+    upd_head_position(
       head.pos[0] += 1,
       head.pos[1]
     )
-    move_tail(head)
   end
 end
 
