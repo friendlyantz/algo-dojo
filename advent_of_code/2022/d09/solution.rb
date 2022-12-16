@@ -34,21 +34,18 @@ def solution_pt2(input)
     .then { |_data| tail.visited.uniq.size }
 end
 
-def generate_snake(data, size = 9)
-  size.downto(0) do |i|
-    if i == size
-      @tail = Node.new(title: size)
+def generate_snake(data, tail_size)
+  tail_size.downto(0) do |i|
+    case i
+    when tail_size
+      @tail = Node.new(title: tail_size)
       snake << tail
-      next
-    end
-
-    if i == 0
+    when 0
       @head = Node.new(title: 10, tail: snake.last)
       snake << @head
-      next
+    else
+      snake << Node.new(tail: snake.last, title: i)
     end
-
-    snake << Node.new(tail: snake.last, title: i)
   end
 
   data
@@ -68,13 +65,6 @@ end
 
 def tail
   @tail ||= Node.new
-end
-
-def place_head_tail_to_start
-  update_pos(head, 0, 0)
-  update_pos(tail, 0, 0)
-  snake << head
-  snake << tail
 end
 
 def update_pos(object, new_row, new_col)

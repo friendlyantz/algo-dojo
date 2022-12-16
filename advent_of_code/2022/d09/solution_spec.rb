@@ -268,10 +268,6 @@ RSpec.describe 'Solutions' do
 
       describe 'movement' do
         describe 'HEAD and TAIL' do
-          before do
-            place_head_tail_to_start
-          end
-
           it 'moves head and tail correctly after 8th instruction(R 2)' do
             move_head(preped_data[0])
             move_head(preped_data[1])
