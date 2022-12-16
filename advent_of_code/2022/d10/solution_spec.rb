@@ -379,6 +379,12 @@ RSpec.describe 'Solutions' do
         expect(crt).to  eq []
       end
 
+      it "has a concept of 'cycle_beak_point'" do
+        expect(cycle_break_point).to eq nil
+        @cycle_break_point = 1
+        expect(cycle_break_point).to eq 1
+      end
+
       it 'draws # after fist cycle' do
         pending
         execute_cycles(1)
