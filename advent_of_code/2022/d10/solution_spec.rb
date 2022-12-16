@@ -206,10 +206,10 @@ RSpec.describe 'Solutions' do
     # Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles. What is the sum of these six signal strengths?
 
     describe 'implementation' do
-      it 'description' do
+      it 'preps data' do
         expect(prep_data(example_input)).to eq(
           [
-            nil,
+            0,
             3,
             -5
           ]
