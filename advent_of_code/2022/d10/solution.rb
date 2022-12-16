@@ -1,10 +1,54 @@
 def solution_pt1(input)
   input
+  .then { |data| prep_data(data) }
+  .then { |data| cycle_through_instructions(data) }
+  .then { |data| array_of_signals.sum } 
 end
 
 def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
+  input
+end
+
+def x_register_inc(arg)
+  @x_register += arg
+end
+
+def cycle_count_inc(arg)
+  @cycle_count += arg
+  # puts "cycle: #{@cycle_count}, x_reg: #{@x_register}"
+  check_cycle
+end
+
+def check_cycle
+  if [20, 60, 100, 140, 180, 220].include?(@cycle_count)
+    array_of_signals << @cycle_count * @x_register
+  end
+end
+
+def array_of_signals
+  @array_of_signals
+end
+
+def cycle_through_instructions(data)
+  @cycle_count = 0
+  @x_register = 1
+  @array_of_signals = []
+  data
+  .each_with_index do |arg, _i|
+    if arg == 0
+      cycle_count_inc(1)
+      next
+    end
+
+    increment_x_reg(arg)
+  end
+  nil
+end
+
+def increment_x_reg(arg)
+  cycle_count_inc(1)
+  cycle_count_inc(1)
+  x_register_inc(arg)
 end
 
 def prep_data(data)

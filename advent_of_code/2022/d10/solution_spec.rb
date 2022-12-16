@@ -205,31 +205,41 @@ RSpec.describe 'Solutions' do
 
     # Find the signal strength during the 20th, 60th, 100th, 140th, 180th, and 220th cycles. What is the sum of these six signal strengths?
 
+    it 'preps data' do
+      expect(prep_data(example_input)).to eq(
+        [
+          0,
+          3,
+          -5
+        ]
+      )
+    end
+
     describe 'implementation' do
-      it 'preps data' do
-        expect(prep_data(example_input)).to eq(
-          [
-            0,
-            3,
-            -5
-          ]
-        )
+      context '3 line example input' do
+        let(:preped_data) { [0, 3, -5] }
+
+        it 'cycles through instructions' do
+          cycle_through_instructions(preped_data)
+        end
+      end
+      it 'generates correct signal on 20th (first)cycle' do
+        cycle_through_instructions(prep_data(large_example_input))
+
+        expect(array_of_signals).to eq [420, 1140, 1800, 2940, 2880, 3960]
       end
     end
 
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          # expect(solution_pt1(example_input)).to eq 13140
           expect(solution_pt1(large_example_input)).to eq 13_140
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq true
+          expect(solution_pt1(custom_input)).to eq 10_760
         end
       end
     end
