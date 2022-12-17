@@ -1,3 +1,8 @@
+require File.join(__dir__, '../lib/my_colorize')
+require 'pry'
+
+include MyColorize
+
 def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
@@ -6,7 +11,15 @@ def solution_pt1(input)
 end
 
 def solution_pt2(input)
-  # input
+  input
+    .then { |data| prep_data(data) }
+    .then { |data| cycle_through_instructions(data) }
+    .then { colorize_to_terminal }
+end
+
+def colorize_to_terminal
+  MyColorize.print_out crt
+  'see terminal render'
 end
 
 def x_register_inc(arg)

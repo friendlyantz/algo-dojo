@@ -394,7 +394,6 @@ RSpec.describe 'Solutions' do
       end
 
       it 'renders CRT' do
-        @cycle_break_point = 1
         cycle_through_instructions(large_preped_data)
         expect(crt.first.size).to eq 40
         # rubocop:disable Layout/SpaceAfterComma
@@ -423,21 +422,32 @@ RSpec.describe 'Solutions' do
           [8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1]
         )
 
+        expect(crt).to eq(
+          [
+            [8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1],
+            [8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1],
+            [8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1],
+            [8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1],
+            [8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8],
+            [8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1],
+          ]
+        )
+
         # rubocop:enable Layout/SpaceAfterComma
       end
     end
 
     context 'example input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(example_input)).to eq true
+        expect(solution_pt2(large_example_input)).to eq(
+          'see terminal render'
+        )
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq true
+        expect(solution_pt2(custom_input)).to eq 'see terminal render'
       end
     end
   end
