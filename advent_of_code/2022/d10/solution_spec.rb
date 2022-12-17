@@ -375,19 +375,55 @@ RSpec.describe 'Solutions' do
     # Render the image given by your program. What eight capital letters appear on your CRT?
 
     describe 'CRT' do
+      let(:large_preped_data) do
+        [15, -11, 6, -3, 5, -1, -8, 13, 4, 0, -1, 5, -1, 5, -1, 5, -1, 5, -1, -35, 1, 24, -19, 1, 16, -11, 0, 0, 21, -15, 0,
+         0, -3, 9, 1, -3, 8, 1, 5, 0, 0, 0, 0, 0, -36, 0, 1, 7, 0, 0, 0, 2, 6, 0, 0, 0, 0, 0, 1, 0, 0, 7, 1, 0, -13, 13, 7, 0, 1, -33, 0, 0, 0, 2, 0, 0, 0, 8, 0, -1, 2, 1, 0, 17, -9, 1, 1, -3, 11, 0, 0, 1, 0, 1, 0, 0, -13, -19, 1, 3, 26, -30, 12, -1, 3, 1, 0, 0, 0, -9, 18, 1, 2, 0, 0, 9, 0, 0, 0, -1, 2, -37, 1, 3, 0, 15, -21, 22, -6, 1, 0, 2, 1, 0, -10, 0, 0, 20, 1, 2, 2, -6, -11, 0, 0, 0]
+      end
+
       it 'has a concept of CRT' do
-        expect(crt).to  eq []
+        expect(crt).to  eq(
+          [
+            Array.new(40, 0),
+            Array.new(40, 0),
+            Array.new(40, 0),
+            Array.new(40, 0),
+            Array.new(40, 0),
+            Array.new(40, 0)
+          ]
+        )
       end
 
-      it "has a concept of 'cycle_beak_point'" do
-        expect(cycle_break_point).to eq nil
+      it 'renders CRT' do
         @cycle_break_point = 1
-        expect(cycle_break_point).to eq 1
-      end
+        cycle_through_instructions(large_preped_data)
+        expect(crt.first.size).to eq 40
+        # rubocop:disable Layout/SpaceAfterComma
 
-      it 'draws # after fist cycle' do
-        pending
-        execute_cycles(1)
+        expect(crt.first).to eq(
+          [8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1,8,8,1,1]
+        )
+
+        expect(crt[1]).to eq(
+          [8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1,1,1,8,8,8,1]
+        )
+
+        expect(crt[2]).to eq(
+          [8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1,8,8,8,8,1,1,1,1]
+        )
+
+        expect(crt[3]).to eq(
+          [8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1,8,8,8,8,8,1,1,1,1,1]
+        )
+
+        expect(crt[4]).to eq(
+          [8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8,8,8,1,1,1,1,1,1,8,8,8,8]
+        )
+
+        expect(crt[5]).to eq(
+          [8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1,1,1,8,8,8,8,8,8,8,1,1,1,1,1]
+        )
+
+        # rubocop:enable Layout/SpaceAfterComma
       end
     end
 
