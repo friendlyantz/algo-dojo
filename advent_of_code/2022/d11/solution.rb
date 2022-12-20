@@ -13,7 +13,7 @@ def solution_pt2(input)
 end
 
 class Monkey
-  attr_reader :id, :items, :divisible_by
+  attr_reader :id, :items, :divisible_by, :operation
   attr_accessor :if_true, :if_false
 
   def initialize(id:, items:, operation:, divisible_by:, if_true:, if_false:)

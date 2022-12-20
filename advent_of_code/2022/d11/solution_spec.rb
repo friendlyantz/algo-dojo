@@ -240,10 +240,10 @@ RSpec.describe 'Solutions' do
           expect(monkeys.first).to have_attributes(
             id: 0,
             items: [79, 98],
-            operation: ['*', 19],
+            operation: ['old', '*', '19'],
             divisible_by: 23,
-            if_true: 2,
-            if_false: 3
+            if_true: monkeys[2],
+            if_false: monkeys[3]
           )
         end
       end
@@ -257,6 +257,7 @@ RSpec.describe 'Solutions' do
       describe 'Rounds' do
         it 'after round one Monkey hold correct items' do
           pending 'round implementation'
+          play_rounds(1)
           result = monkeys.map do |monkey|
             { monkey.id => monkey.items }
           end
