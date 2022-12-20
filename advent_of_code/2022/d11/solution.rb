@@ -4,7 +4,7 @@ def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
     .then { |data| genrate_moneys_from(data) }
-    .then { |data| nil}
+    .then { |_data| nil }
 end
 
 def solution_pt2(input)
@@ -43,7 +43,7 @@ def genrate_moneys_from(data)
     monkeys << Monkey.new(
       id: i,
       items: group[1].scan(/\d+/).map(&:to_i),
-      operation: interpret(group[2]),
+      operation: write_down(group[2]),
       divisible_by: group[3].scan(/\d+/).first.to_i,
       if_true: group[4].scan(/\d+/).first.to_i,
       if_false: group[5].scan(/\d+/).first.to_i
@@ -53,13 +53,39 @@ def genrate_moneys_from(data)
   map_monkey_to_monkey(monkeys)
 end
 
-def interpret(operation)
-  operation
-    .scan(/(old|[+|*|-|\/]|\d+)/)
-    .flatten
+def play_rounds(qty)
+  qty.times do
+    monkeys.each do |monkey|
+      throw_items_of(monkey)
+    end
+  end
+end
 
-    # binding.pry
+def throw_items_of(monkey)
+  monkey.items.each do |item|
+    result = interpret(monkey.operation, item)
     # TODO
+    binding.pry
+  end
+end
+
+def interpret(operation, item)
+  operation
+    .map do |op|
+      if op == 'old'
+        op = item
+      elsif op[/\d+/]
+        op.to_i 
+      elsif op[%r{[+|*|-|/]}]
+        op.to_sym 
+      end
+    end
+end
+
+def write_down(operation)
+  operation
+    .scan(%r{(old|[+|*|-|/]|\d+)})
+    .flatten
 end
 
 def map_monkey_to_monkey(monkeys)
