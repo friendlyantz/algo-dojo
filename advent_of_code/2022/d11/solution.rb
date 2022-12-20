@@ -4,6 +4,7 @@ def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
     .then { |data| genrate_moneys_from(data) }
+    .then { |data| nil}
 end
 
 def solution_pt2(input)
@@ -31,6 +32,10 @@ end
 
 def monkeys
   @monkeys ||= []
+end
+
+def worry_level
+  @worry_level ||= 0
 end
 
 def genrate_moneys_from(data)

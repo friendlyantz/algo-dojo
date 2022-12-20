@@ -229,14 +229,13 @@ RSpec.describe 'Solutions' do
     # Figure out which monkeys to chase by counting how many items they inspect over 20 rounds. What is the level of monkey business after 20 rounds of stuff-slinging simian shenanigans?
 
     describe 'implementation' do
+      before do
+        genrate_moneys_from(
+          prep_data(example_input)
+        )
+      end
 
       describe 'data prep' do
-        before do
-          genrate_moneys_from(
-            prep_data(example_input)
-          )
-        end
-
         it 'creates Monkey 0' do
           expect(monkeys.first).to have_attributes(
             id: 0,
@@ -246,7 +245,30 @@ RSpec.describe 'Solutions' do
             if_true: 2,
             if_false: 3
           )
+        end
+      end
 
+      describe 'worry level' do
+        it 'has a concept of worry_level' do
+          expect(worry_level).to eq 0
+        end
+      end
+
+      describe 'Rounds' do
+        it 'after round one Monkey hold correct items' do
+          pending 'round implementation'
+          result = monkeys.map do |monkey|
+            { monkey.id => monkey.items }
+          end
+
+          expect(result).to eq(
+            [
+              { 0 => [20, 23, 27, 26] },
+              { 1 => [2080, 25, 167, 207, 401, 1046] },
+              { 2 => [] },
+              { 3 => [] }
+            ]
+          )
         end
       end
     end
