@@ -433,17 +433,71 @@ RSpec.describe 'Solutions' do
 
     # Worry levels are no longer divided by three after each item is inspected; you'll need to find another way to keep your worry levels manageable. Starting again from the initial state in your puzzle input, what is the level of monkey business after 10000 rounds?
 
+    describe 'implemtation' do
+      before do
+        genrate_moneys_from(
+          prep_data(example_input)
+        )
+      end
+
+      it 'after 1 round Monkeys have correct inspection counters' do
+        play_rounds(1, false)
+        result = monkeys.map do |monkey|
+          { monkey.id => monkey.inspections_counter }
+        end
+
+        expect(result).to eq(
+          [
+            { 0 => 2 },
+            { 1 => 4 },
+            { 2 => 3 },
+            { 3 => 6 }
+          ]
+        )
+      end
+
+      it 'after 20 rounds Monkeys have correct inspection counters' do
+        play_rounds(20, false)
+        result = monkeys.map do |monkey|
+          { monkey.id => monkey.inspections_counter }
+        end
+
+        expect(result).to eq(
+          [
+            { 0 => 99 },
+            { 1 => 97 },
+            { 2 => 8 },
+            { 3 => 103 }
+          ]
+        )
+      end
+
+      it 'after 1000 rounds Monkeys have correct inspection counters' do
+        play_rounds(1000, false)
+        result = monkeys.map do |monkey|
+          { monkey.id => monkey.inspections_counter }
+        end
+
+        expect(result).to eq(
+          [
+            { 0 => 5204 },
+            { 1 => 4792 },
+            { 2 => 199 },
+            { 3 => 5192 }
+          ]
+        )
+      end
+    end
+
     context 'example input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
         expect(solution_pt2(example_input)).to eq 2_713_310_158
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq true
+        expect(solution_pt2(custom_input)).to eq 25_738_411_485
       end
     end
   end

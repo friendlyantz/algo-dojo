@@ -1,4 +1,5 @@
 require 'json'
+require 'ruby-progressbar'
 
 def solution_pt1(input)
   input
@@ -9,11 +10,11 @@ def solution_pt1(input)
 end
 
 def solution_pt2(input)
-  # input
-  #   .then { |data| prep_data(data) }
-  #   .then { |data| genrate_moneys_from(data) }
-  #   .then { play_rounds(10_000) }
-  #   .then { calc_monkey_business }
+  input
+    .then { |data| prep_data(data) }
+    .then { |data| genrate_moneys_from(data) }
+    .then { play_rounds(10_000, false) }
+    .then { calc_monkey_business }
 end
 
 class Monkey
@@ -59,10 +60,12 @@ def genrate_moneys_from(data)
 end
 
 def play_rounds(qty, div_by_three = true)
+  progress = ProgressBar.create(total: qty)
   qty.times do
     monkeys.each do |monkey|
       throw_items_of(monkey, div_by_three)
     end
+    progress.increment
   end
 end
 
@@ -80,9 +83,18 @@ def throw_items_of(monkey, div_by_three)
     item = monkey.items.shift
 
     operators = interpret(monkey.operation, item)
-    worry_lvl = exec(operators) / 3 if div_by_three
-    item = worry_lvl
-    if worry_lvl % monkey.divisible_by == 0
+    item = exec(operators)
+    if div_by_three
+      stabilised_stress = item / 3
+      item = stabilised_stress
+    else
+      largest_common_denominator = monkeys.map(&:divisible_by).reduce(:lcm)
+      # https://docs.ruby-lang.org/en/2.1.0/Integer.html#method-i-lcm
+
+      item = item % largest_common_denominator
+    end
+
+    if item.modulo(monkey.divisible_by).zero?
       monkey.if_true.items << item
     else
       monkey.if_false.items << item
