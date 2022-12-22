@@ -255,7 +255,7 @@ RSpec.describe 'Solutions' do
       end
 
       describe 'Rounds' do
-        it 'after round one Monkey hold correct items' do
+        it 'after round one Monkeys hold correct items' do
           play_rounds(1)
           result = monkeys.map do |monkey|
             { monkey.id => monkey.items }
@@ -265,6 +265,38 @@ RSpec.describe 'Solutions' do
             [
               { 0 => [20, 23, 27, 26] },
               { 1 => [2080, 25, 167, 207, 401, 1046] },
+              { 2 => [] },
+              { 3 => [] }
+            ]
+          )
+        end
+
+        it 'after 2 rounds Monkeys hold correct items' do
+          play_rounds(2)
+          result = monkeys.map do |monkey|
+            { monkey.id => monkey.items }
+          end
+
+          expect(result).to eq(
+            [
+              { 0 => [695, 10, 71, 135, 350] },
+              { 1 => [43, 49, 58, 55, 362] },
+              { 2 => [] },
+              { 3 => [] }
+            ]
+          )
+        end
+
+        it 'after 20 rounds Monkeys hold correct items' do
+          play_rounds(20)
+          result = monkeys.map do |monkey|
+            { monkey.id => monkey.items }
+          end
+
+          expect(result).to eq(
+            [
+              { 0 => [10, 12, 14, 26, 34] },
+              { 1 => [245, 93, 53, 199, 115] },
               { 2 => [] },
               { 3 => [] }
             ]
