@@ -304,7 +304,7 @@ RSpec.describe 'Solutions' do
           )
         end
 
-         it 'after 20 rounds Monkeys have correct inspection counters' do
+        it 'after 20 rounds Monkeys have correct inspection counters' do
           play_rounds(20)
           result = monkeys.map do |monkey|
             { monkey.id => monkey.inspections_counter }
@@ -317,6 +317,14 @@ RSpec.describe 'Solutions' do
               { 2 => 7 },
               { 3 => 105 }
             ]
+          )
+        end
+
+        it 'after 20 determins correct number of monkey bussiness' do
+          play_rounds(20)
+
+          expect(calc_monkey_business).to eq(
+            101 * 105
           )
         end
       end

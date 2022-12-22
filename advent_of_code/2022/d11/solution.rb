@@ -62,6 +62,14 @@ def play_rounds(qty)
   end
 end
 
+def calc_monkey_business
+  monkeys
+    .map { |monkey| monkey.inspections_counter }
+    .sort
+    .reverse[0..1]
+    .inject(:*)
+end
+
 def throw_items_of(monkey)
   while monkey.items.any?
     monkey.inspections_counter += 1
