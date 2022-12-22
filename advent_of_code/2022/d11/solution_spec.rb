@@ -256,7 +256,6 @@ RSpec.describe 'Solutions' do
 
       describe 'Rounds' do
         it 'after round one Monkey hold correct items' do
-          # pending 'round implementation'
           play_rounds(1)
           result = monkeys.map do |monkey|
             { monkey.id => monkey.items }

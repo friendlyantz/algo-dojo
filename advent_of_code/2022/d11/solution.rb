@@ -62,11 +62,22 @@ def play_rounds(qty)
 end
 
 def throw_items_of(monkey)
-  monkey.items.each do |item|
-    result = interpret(monkey.operation, item)
-    # TODO
-    binding.pry
+  while monkey.items.any?
+    item = monkey.items.shift
+
+    operators = interpret(monkey.operation, item)
+    worry_lvl = exec(operators) / 3
+    item = worry_lvl
+    if worry_lvl % monkey.divisible_by == 0
+      monkey.if_true.items << item
+    else
+      monkey.if_false.items << item
+    end
   end
+end
+
+def exec(operators)
+  operators[0].send(operators[1], operators[2])
 end
 
 def interpret(operation, item)
@@ -75,9 +86,9 @@ def interpret(operation, item)
       if op == 'old'
         op = item
       elsif op[/\d+/]
-        op.to_i 
+        op.to_i
       elsif op[%r{[+|*|-|/]}]
-        op.to_sym 
+        op.to_sym
       end
     end
 end
