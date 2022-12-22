@@ -4,7 +4,8 @@ def solution_pt1(input)
   input
     .then { |data| prep_data(data) }
     .then { |data| genrate_moneys_from(data) }
-    .then { |_data| nil }
+    .then { play_rounds(20) }
+    .then { calc_monkey_business }
 end
 
 def solution_pt2(input)
