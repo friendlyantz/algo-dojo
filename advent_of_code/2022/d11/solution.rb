@@ -14,7 +14,7 @@ end
 
 class Monkey
   attr_reader :id, :items, :divisible_by, :operation
-  attr_accessor :if_true, :if_false
+  attr_accessor :if_true, :if_false, :inspections_counter
 
   def initialize(id:, items:, operation:, divisible_by:, if_true:, if_false:)
     @id = id
@@ -23,6 +23,7 @@ class Monkey
     @divisible_by = divisible_by
     @if_true = if_true
     @if_false = if_false
+    @inspections_counter = 0
   end
 end
 
@@ -63,6 +64,7 @@ end
 
 def throw_items_of(monkey)
   while monkey.items.any?
+    monkey.inspections_counter += 1
     item = monkey.items.shift
 
     operators = interpret(monkey.operation, item)

@@ -243,7 +243,8 @@ RSpec.describe 'Solutions' do
             operation: ['old', '*', '19'],
             divisible_by: 23,
             if_true: monkeys[2],
-            if_false: monkeys[3]
+            if_false: monkeys[3],
+            inspections_counter: 0
           )
         end
       end
@@ -299,6 +300,22 @@ RSpec.describe 'Solutions' do
               { 1 => [245, 93, 53, 199, 115] },
               { 2 => [] },
               { 3 => [] }
+            ]
+          )
+        end
+
+         it 'after 20 rounds Monkeys have correct inspection counters' do
+          play_rounds(20)
+          result = monkeys.map do |monkey|
+            { monkey.id => monkey.inspections_counter }
+          end
+
+          expect(result).to eq(
+            [
+              { 0 => 101 },
+              { 1 => 95 },
+              { 2 => 7 },
+              { 3 => 105 }
             ]
           )
         end
