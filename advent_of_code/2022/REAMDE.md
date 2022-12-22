@@ -95,3 +95,27 @@ array.first
 array[0]
 ```
 are not the same, you cannot mutate / assign using `.first = 'new value'`
+
+## D9-10
+I was leaning towards using public methods and avoided classes, but not sure if it is a right style for Ruby / OO. It definetly does the job and can look cool for advanced coders that see everything, and object themselves as just key-value pairs.
+using public methods bit me in cases like this
+```ruby
+def some_var
+  @some_var ||= 0
+end
+
+10.times { some_var += 1}
+
+```
+but it works with arrays?
+```ruby
+def some_var
+  @some_var ||= []
+end
+
+10.times { some_var << 1}
+
+```
+## D11 Monkeys
+
+do not loose track of abstractions, side effects can steer you away from the right track
