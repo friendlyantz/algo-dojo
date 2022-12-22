@@ -1,5 +1,5 @@
 def solution_pt1(input)
-  input
+  # input
 end
 
 def solution_pt2(input)
