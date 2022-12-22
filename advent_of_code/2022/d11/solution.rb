@@ -10,7 +10,10 @@ end
 
 def solution_pt2(input)
   # input
-  # .then { |data| binding.pry }
+  #   .then { |data| prep_data(data) }
+  #   .then { |data| genrate_moneys_from(data) }
+  #   .then { play_rounds(10_000) }
+  #   .then { calc_monkey_business }
 end
 
 class Monkey
@@ -55,10 +58,10 @@ def genrate_moneys_from(data)
   map_monkey_to_monkey(monkeys)
 end
 
-def play_rounds(qty)
+def play_rounds(qty, div_by_three = true)
   qty.times do
     monkeys.each do |monkey|
-      throw_items_of(monkey)
+      throw_items_of(monkey, div_by_three)
     end
   end
 end
@@ -71,13 +74,13 @@ def calc_monkey_business
     .inject(:*)
 end
 
-def throw_items_of(monkey)
+def throw_items_of(monkey, div_by_three)
   while monkey.items.any?
     monkey.inspections_counter += 1
     item = monkey.items.shift
 
     operators = interpret(monkey.operation, item)
-    worry_lvl = exec(operators) / 3
+    worry_lvl = exec(operators) / 3 if div_by_three
     item = worry_lvl
     if worry_lvl % monkey.divisible_by == 0
       monkey.if_true.items << item
