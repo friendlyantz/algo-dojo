@@ -41,43 +41,17 @@ RSpec.describe 'Solutions' do
 
     # What is the fewest steps required to move from your current position to the location that should get the best signal?
 
-    describe 'implementation' do
-      before do
-        prep_data(example_input)
-      end
-      
-      it 'preps data generates map of the hill' do
-        expect(hill.map).to eq(
-          [
-            %w[S a b q p o n m],
-            %w[a b c r y x x l],
-            %w[a c c s z E x k],
-            %w[a c c t u v w j],
-            %w[a b d e f g h i]
-          ]
-        )
-
-        expect(hill.start).to eq [0, 0]
-        expect(hill.end).to eq [2, 5]
-      end
-    
-      it 'climbs the hill' do
-        expect(hill.climb).to eq 31
-      end
-    end
 
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
           expect(solution_pt1(example_input)).to eq 31
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq true
+          expect(solution_pt1(custom_input)).to eq 534
         end
       end
     end

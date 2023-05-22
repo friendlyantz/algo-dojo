@@ -1,109 +1,88 @@
-require 'pqueue' # https://en.wikipedia.org/wiki/Priority_queue#Dijkstra's_algorithm
-require 'set'
+# frozen_string_literal: true
+
+require 'pry'
 require File.join(__dir__, '../lib/my_colorize')
-require File.join(__dir__, '../lib/neighbour_check')
-require File.join(__dir__, '../lib/neighbour_yield')
+require File.join(__dir__, '../lib/visualisation.rb')
 
-include MyColorize
-include NeighbourCheck
-include NeighbourYield
-
-def solution_pt1(input)
-  # input
-end
-
-def solution_pt2(input)
-  # input
-  # .then { |data| binding.pry }
-end
-
-class Hill
-  attr_reader :map, :start, :end
-  attr_accessor :alt
-
-  def initialize(map:, start_pos:, end_pos:)
-    @map = map
-    @start = start_pos
-    @end = end_pos
-    @alt = 'a'
-    @shortcut = [[start]]
-  end
-
-  def climb
-    visited = Set.new
-
-    until heap.empty?
-      position, trail_length = heap.pop
-      next unless visited.add?(position)
-
-      value_of_position = get_value_of_the_cell(position)
-
-      if value_of_position == 'E'
-        h = heap.dup
-        h.each_pop { |e| @shortcut << e.first }
-
-        return trail_length
+class SolutionOne
+    def self.run(input, _)
+      map = []
+      grid = []
+      input.each_line do |line|
+        map <<
+          line.chars.map do |x|
+            if %w[S E].include?(x)
+              if x == 'S'
+                0
+              else
+                27
+              end
+            else
+              x.ord - 96
+            end
+          end
+        grid << line.chars
       end
-
-      NeighbourYield.all(map, position) do |x, y|
-        if can_step?(position, [x, y])
-          # binding.pry if value_of_position.match?(/[c-z]/)
-          heap.push([[x, y], trail_length += 1])
+      start_x = 0
+      start_y = 0
+      end_x = 0
+      end_y = 0
+      map.each_with_index do |x, idx|
+        x.each_with_index do |y, idy|
+          if y == 27
+            end_x = idx
+            end_y = idy
+          end
+          if y == 0
+            start_x = idx
+            start_y = idy
+          end
         end
       end
+      visited = {}
+      step(start_x, start_y, map, grid, 0, visited)
+      visited["#{end_x}:#{end_y}"]
     end
-  end
 
-  def can_step?(current_pos, next_pos)
-    current_alt = get_value_of_the_cell(current_pos)
-    return true if current_alt == 'S'
+    def self.step(x, y, map, grid, steps, visited)
+      return visited if !visited["#{x}:#{y}"].nil? && steps >= visited["#{x}:#{y}"]
 
-    next_alt = get_value_of_the_cell(next_pos)
-    return false if next_alt == 'S'
-    return true if next_alt == 'E'
+      visited["#{x}:#{y}"] = steps
+      current = map[x][y]
+      return visited if current == 27
 
-    return true if current_alt <= next_alt
+      grid[x][y] = '#'
+      # print(grid)
 
-    false
-  end
+      up = (y - 1 >= 0 ? map[x][y - 1] : 30)
+      down = (y + 1 <= map.first.size - 1 ? map[x][y + 1] : 30)
+      left = (x - 1 >= 0 ? map[x - 1][y] : 30)
+      right = (x + 1 <= map.size - 1 ? map[x + 1][y] : 30)
 
-  def heap
-    @heap ||= PQueue.new([[start, trail_length = 0]]) do |a, b|
-      a.last < b.last
+      visited = step(x, y - 1, map, grid, steps + 1, visited) if up - current < 2 || (current == 25 && up == 27)
+      visited = step(x, y + 1, map, grid, steps + 1, visited) if down - current < 2 || (current == 25 && down == 27)
+      visited = step(x - 1, y, map, grid, steps + 1, visited) if left - current < 2 || (current == 25 && left == 27)
+      visited = step(x + 1, y, map, grid, steps + 1, visited) if right - current < 2 || (current == 25 && right == 27)
+      grid[x][y] =
+        if map[x][y].zero?
+          'S'
+        else
+          (map[x][y] + 96).chr
+        end
+      # print(grid)
+      visited
     end
+
+    # def self.print(grid)
+    #   Visualisation.print_grid(grid, centre_x: 21, centre_y: 35, x_dim: 42, y_dim: 70, sleep: 0.01, spacer: ' ', colour_char: '#', colour: :red)
+    # end
+
   end
 
-  def get_value_of_the_cell(coordinates)
-    map[coordinates.first][coordinates.last]
-  end
+def solution_pt1(input)
+  SolutionOne.run(input, nil)
 end
 
-def hill = @hill # rubocop:disable Style/TrivialAccessors
-
-def prep_data(input)
-  buffer = []
-  input
-    .lines
-    .map(&:strip)
-    .each_with_index do |line, i|
-      buffer << line.split('')
-      @start_pos = [i, find_start_column(line)] if find_start_column(line)
-      @end_pos = [i, find_end_column(line)] if find_end_column(line)
-    end
-  @hill = Hill.new(
-    map: buffer,
-    start_pos: @start_pos,
-    end_pos: @end_pos
-  )
-end
-
-def find_start_column(line)
-  line.index('S')
-end
-
-def find_end_column(line)
-  line.index('E')
-end
 
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
@@ -116,5 +95,5 @@ if __FILE__ == $PROGRAM_NAME
 
   puts '==============='
   puts 'part 2 solution'
-  puts solution_pt2(input)
+  # puts solution_pt2(input)
 end
