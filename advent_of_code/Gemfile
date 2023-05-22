@@ -5,3 +5,5 @@ gem 'pqueue'
 gem 'ruby-progressbar'
 gem 'super_diff'
 gem 'set'
+
+gem "ruby2d", "~> 0.12.1"
