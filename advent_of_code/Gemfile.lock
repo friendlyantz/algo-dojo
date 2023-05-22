@@ -18,6 +18,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-21
+  arm64-darwin-22
 
 DEPENDENCIES
   colorize
@@ -28,4 +29,4 @@ DEPENDENCIES
   super_diff
 
 BUNDLED WITH
-   2.3.16
+   2.4.7
