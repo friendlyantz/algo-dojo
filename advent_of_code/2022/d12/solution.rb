@@ -31,24 +31,24 @@ class Hill
 
   def climb
     visited = Set.new
-    
+
     until heap.empty?
-      position, trail_length = heap.pop 
+      position, trail_length = heap.pop
       next unless visited.add?(position)
 
       value_of_position = get_value_of_the_cell(position)
 
-      if value_of_position == "E"
+      if value_of_position == 'E'
         h = heap.dup
         h.each_pop { |e| @shortcut << e.first }
- 
+
         return trail_length
       end
-      
+
       NeighbourYield.all(map, position) do |x, y|
         if can_step?(position, [x, y])
           # binding.pry if value_of_position.match?(/[c-z]/)
-          heap.push([[x,y], trail_length += 1])
+          heap.push([[x, y], trail_length += 1])
         end
       end
     end
@@ -57,13 +57,13 @@ class Hill
   def can_step?(current_pos, next_pos)
     current_alt = get_value_of_the_cell(current_pos)
     return true if current_alt == 'S'
-    
+
     next_alt = get_value_of_the_cell(next_pos)
     return false if next_alt == 'S'
     return true if next_alt == 'E'
-    
+
     return true if current_alt <= next_alt
-    
+
     false
   end
 
@@ -78,7 +78,7 @@ class Hill
   end
 end
 
-def hill = @hill
+def hill = @hill # rubocop:disable Style/TrivialAccessors
 
 def prep_data(input)
   buffer = []
