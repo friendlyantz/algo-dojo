@@ -1,6 +1,6 @@
 # frozen_string_literal: true
 
-require('colorized_string')
+require 'colorized_string'
 
 module Visualisation
   def self.print_grid(grid, centre_x: 20, centre_y: 20, x_dim: 40, y_dim: 40, sleep: 0.01, spacer: ' ', colour_char: nil, colour: nil, flip: false, empty_char: '.')
@@ -32,7 +32,7 @@ module Visualisation
   end
 
   def self.print_and_flush(str, colour_char, colour)
-    str = ColorizedString[str].colorize(colour) if str[0] == colour_char
+    str = ColorizedString[str].colorize(colour).on_yellow if str[0] == colour_char
     print(str)
     $stdout.flush
   end
