@@ -132,28 +132,27 @@ RSpec.describe 'DistressSignal' do
         expect(ds.pairs.first.last).to eq true
       end
 
-      it 'compares integers and arrays' do
+      it 'compares arrays' do
         ds = DistressSignal.new(
           <<~DATA
-              [[1],[2,3,4]]
-              [[1],4]
-            )
+            [[1],[2,3,4]]
+            [[1],4]
           DATA
         )
-        pending 'pt1 implementation'
         ds.validate
         expect(ds.pairs.first.last).to eq true
       end
-      #
-      #   ds = DistressSignal.new(
-      #     <<~DATA
-      #       [9]
-      #       [[8,7,6]]
-      #     DATA
-      #   )
-      # )
-      # ds.validate
-      # expect(ds.pairs.first.last).to eq false
+
+      it 'compares arrays and integers mixed in' do
+        ds = DistressSignal.new(
+          <<~DATA
+            [9]
+            [[8,7,6]]
+        DATA
+        )
+        ds.validate
+        expect(ds.pairs.first.last).to eq false
+      end
     end
 
     describe 'final result for pt1' do

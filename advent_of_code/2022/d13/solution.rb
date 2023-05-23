@@ -17,28 +17,50 @@ class DistressSignal
 
   def prep_data(input)
     @pairs = {}
-    a = input
-        .split("\n\n")
-        .map { |line| @pairs[line.split("\n").map { |i| i[1..-2].split(',') }] = nil }
+    input
+      .split("\n\n")
+      .then do |data|
+      data.map do |pair|
+        p = pair
+            .split("\n")
+            .map { |string| eval(string) }
+        @pairs[p] = nil
+      end
+    end
   end
 
   def validate
-    pairs.each_pair.map do |packet, ordered|
+    pairs.each_pair.map do |packet, _ordered|
       packet.first
             .zip(packet.last)
             .each do |pair|
-              break unless compare(pair)
-
-              pairs[packet] = true
+              pairs[packet] = ordered?(pair) ? true : false
             end
     end
   end
 
-  def compare(pair)
-    return true if pair.first == pair.last
-    return true if pair.first > pair.last
+  def ordered?(pair)
+    return compare_integers(pair) if pair.first.is_a?(Integer) && pair.last.is_a?(Integer)
 
-    false
+    pair[0] = [pair.first] if pair.first.is_a?(Integer) && pair.last.is_a?(Array)
+    pair[1] = [pair.last] if pair.first.is_a?(Array) && pair.last.is_a?(Integer)
+    return compare_arrays(pair) if pair.first.is_a?(Array) && pair.last.is_a?(Array)
+  end
+
+  def compare_arrays(pair)
+    pair.first.each do |integer|
+      pair.last.each do |integer2|
+        next if integer <= integer2
+
+        return false
+      end
+    end
+  end
+
+  def compare_integers(pair)
+    return false unless pair.first <= pair.last
+
+    true
   end
 end
 
