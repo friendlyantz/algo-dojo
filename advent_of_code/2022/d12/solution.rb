@@ -1,13 +1,16 @@
 # frozen_string_literal: true
 
 require 'pry'
+require 'pqueue' # https://en.wikipedia.org/wiki/Priority_queue#Dijkstra's_algorithm
+require 'set'
+
 require File.join(__dir__, '../lib/my_colorize')
 require File.join(__dir__, '../lib/neighbour_yield_lateral')
 require File.join(__dir__, '../lib/visualisation.rb')
 
 class SolutionOne
   attr_reader :start, :finish, :alt_map
-  attr_accessor :nav_map, :visited
+  attr_accessor :nav_map, :heap
 
   def initialize(input)
     @nav_map = [] # map with explored path
@@ -17,7 +20,10 @@ class SolutionOne
     @start = [0, 0]
     @finish = [0, 0]
     set_start_and_finish
-    @visited = {}
+
+    @heap = PQueue.new([[@start, trail_length = 0]]) do |a, b|
+      a.last < b.last
+    end
   end
 
   def generate_nav_map(input)
@@ -49,32 +55,33 @@ class SolutionOne
   end
 
   def run
-    step(start, 0)
-    visited[finish]
+    dijkstra
   end
 
-  def step(current_position, steps)
-    return visited if visited[current_position] && steps >= visited[current_position]
+  def dijkstra
+    visited_set = Set.new
 
-    visited[current_position] = steps
+    until heap.empty?
+      current_position, trail_length = heap.pop
 
-    x, y = current_position
+      next unless visited_set.add?(current_position)
 
-    current_alt = alt_map[x][y]
-    return visited if current_alt == 27
+      x, y = current_position
 
-    nav_map[x][y] = '#'
-    print(nav_map)
+      current_alt = alt_map[x][y]
+      return trail_length if current_alt == 27
 
-    NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
-      alt = alt_map[dx][dy] || 30
-      step([dx, dy], steps + 1) if alt - current_alt <= 1 || (current_alt == 25 && alt == 27)
+      nav_map[x][y] = '#'
+      print(nav_map)
+
+      NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
+        alt = alt_map[dx][dy] || 30
+        heap.push([[dx, dy], trail_length + 1]) if alt - current_alt <= 1 || (current_alt == 25 && alt == 27)
+      end
     end
 
     nav_map[x][y] = (alt_map[x][y] + 96).chr # cleanup '#' visited marker when coming back
     print(nav_map)
-
-    visited
   end
 
   def print(nav_map)
@@ -86,7 +93,7 @@ class SolutionOne
       # sleep: 0.01,
       spacer: ' ',
       colour_char: '#', colour: :red
-    ) 
+    )
   end
 end
 
