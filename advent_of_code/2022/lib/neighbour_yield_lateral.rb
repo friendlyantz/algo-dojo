@@ -1,4 +1,4 @@
-module NeighbourYield
+module NeighbourYieldLateral
   def self.all(data, (i, j))
     yield [i - 1, j] if i > 0 # top
     yield [i + 1, j] if i < data.length - 1 # bottom

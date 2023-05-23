@@ -49,11 +49,12 @@ class SolutionOne
   end
 
   def run
-    step(start[0], start[1], 0, visited)
+    step(start, 0)
     visited["#{finish[0]}:#{finish[1]}"]
   end
 
-  def step(x, y, steps, visited)
+  def step(current_position, steps)
+    x, y = current_position
     return visited if !visited["#{x}:#{y}"].nil? && steps >= visited["#{x}:#{y}"]
 
     visited["#{x}:#{y}"] = steps
@@ -63,23 +64,14 @@ class SolutionOne
     nav_map[x][y] = '#'
     print(nav_map)
 
-    up = (y - 1 >= 0 ? alt_map[x][y - 1] : 30)
-    down = (y + 1 <= alt_map.first.size - 1 ? alt_map[x][y + 1] : 30)
-    left = (x - 1 >= 0 ? alt_map[x - 1][y] : 30)
-    right = (x + 1 <= alt_map.size - 1 ? alt_map[x + 1][y] : 30)
+    NeighbourYieldLateral.all(alt_map, [x, y]) do |dx, dy|
+      alt = alt_map[dx][dy] || 30
+      step([dx, dy], steps + 1) if alt - current < 2 || (current == 25 && alt == 27)
+    end
 
-    visited = step(x, y - 1, steps + 1, visited) if up - current < 2 || (current == 25 && up == 27)
-    visited = step(x, y + 1, steps + 1, visited) if down - current < 2 || (current == 25 && down == 27)
-    visited = step(x - 1, y, steps + 1, visited) if left - current < 2 || (current == 25 && left == 27)
-    visited = step(x + 1, y, steps + 1, visited) if right - current < 2 || (current == 25 && right == 27)
-
-    nav_map[x][y] =
-      if alt_map[x][y].zero?
-        'S'
-      else
-        (alt_map[x][y] + 96).chr
-      end
+    nav_map[x][y] = alt_map[x][y].zero? ? 'S' : (alt_map[x][y] + 96).chr # cleanup '#' visited marker when coming back
     print(nav_map)
+
     visited
   end
 
