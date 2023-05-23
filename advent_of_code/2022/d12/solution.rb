@@ -32,7 +32,7 @@ class SolutionOne
         line.map do |x|
           case x
           when 'S' then 0
-          when 'E' then 27
+          when 'E' then 27 # 'z' is 26 in our case
           else          x.ord - 96
           end
         end
@@ -41,48 +41,52 @@ class SolutionOne
 
   def set_start_and_finish
     alt_map.each_with_index do |x, idx|
-      x.each_with_index do |y, idy|
-        @finish = [idx, idy] if y == 27
-        @start = [idx, idy] if y == 0
+      x.each_with_index do |alt, idy|
+        @finish = [idx, idy] if alt == 27
+        @start = [idx, idy] if alt.zero?
       end
     end
   end
 
   def run
     step(start, 0)
-    visited["#{finish[0]}:#{finish[1]}"]
+    visited[finish]
   end
 
   def step(current_position, steps)
-    x, y = current_position
-    return visited if !visited["#{x}:#{y}"].nil? && steps >= visited["#{x}:#{y}"]
+    return visited if visited[current_position] && steps >= visited[current_position]
 
-    visited["#{x}:#{y}"] = steps
-    current = alt_map[x][y]
-    return visited if current == 27
+    visited[current_position] = steps
+
+    x, y = current_position
+
+    current_alt = alt_map[x][y]
+    return visited if current_alt == 27
 
     nav_map[x][y] = '#'
     print(nav_map)
 
-    NeighbourYieldLateral.all(alt_map, [x, y]) do |dx, dy|
+    NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
       alt = alt_map[dx][dy] || 30
-      step([dx, dy], steps + 1) if alt - current < 2 || (current == 25 && alt == 27)
+      step([dx, dy], steps + 1) if alt - current_alt <= 1 || (current_alt == 25 && alt == 27)
     end
 
-    nav_map[x][y] = alt_map[x][y].zero? ? 'S' : (alt_map[x][y] + 96).chr # cleanup '#' visited marker when coming back
+    nav_map[x][y] = (alt_map[x][y] + 96).chr # cleanup '#' visited marker when coming back
     print(nav_map)
 
     visited
   end
 
   def print(nav_map)
+    return unless __FILE__ == $PROGRAM_NAME
+
     Visualisation.print_grid(
       nav_map,
       centre_x: 21, centre_y: 35, x_dim: 42, y_dim: 170,
       # sleep: 0.01,
       spacer: ' ',
       colour_char: '#', colour: :red
-    )
+    ) 
   end
 end
 
