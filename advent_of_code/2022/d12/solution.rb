@@ -13,12 +13,8 @@ class SolutionOne
   attr_accessor :nav_map, :heap
 
   def initialize(input)
-    @nav_map = [] # map with explored path
-    generate_nav_map(input)
-    @alt_map = [] # map with altitudes
-    generate_alt_map
-    @start = [0, 0]
-    @finish = [0, 0]
+    generate_nav_map(input) # map with explored path for graphycal use
+    generate_alt_map  # same map, but with altitudes as integers
     set_start_and_finish
 
     @heap = PQueue.new([[@start, trail_length = 0]]) do |a, b|
@@ -27,12 +23,14 @@ class SolutionOne
   end
 
   def generate_nav_map(input)
+    @nav_map = [] 
     input.lines do |line|
       nav_map << line.chomp.chars
     end
   end
 
   def generate_alt_map
+    @alt_map = []
     nav_map.each do |line|
       alt_map <<
         line.map do |x|
@@ -46,6 +44,8 @@ class SolutionOne
   end
 
   def set_start_and_finish
+    @start = [0, 0]
+    @finish = [0, 0]
     alt_map.each_with_index do |x, idx|
       x.each_with_index do |alt, idy|
         @finish = [idx, idy] if alt == 27
@@ -55,10 +55,6 @@ class SolutionOne
   end
 
   def run
-    dijkstra
-  end
-
-  def dijkstra
     visited_set = Set.new
 
     until heap.empty?
