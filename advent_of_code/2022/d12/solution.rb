@@ -14,7 +14,7 @@ class SolutionOne
 
   def initialize(input)
     generate_nav_map(input) # map with explored path for graphycal use
-    generate_alt_map  # same map, but with altitudes as integers
+    generate_alt_map # same map, but with altitudes as integers
     set_start_and_finish
 
     @heap = PQueue.new([[@start, trail_length = 0]]) do |a, b|
@@ -22,12 +22,12 @@ class SolutionOne
     end
 
     @reversed_heap = PQueue.new([[@finish, trail_length = 0]]) do |a, b|
-      a.last > b.last
+      a.last < b.last
     end
   end
 
   def generate_nav_map(input)
-    @nav_map = [] 
+    @nav_map = []
     input.lines do |line|
       nav_map << line.chomp.chars
     end
@@ -72,7 +72,7 @@ class SolutionOne
       return trail_length if current_alt == 27
 
       nav_map[x][y] = '#'
-      # print(nav_map) if current_alt >15
+      print(nav_map)
 
       NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
         alt = alt_map[dx][dy] || 30
@@ -92,21 +92,15 @@ class SolutionOne
       x, y = current_position
 
       current_alt = alt_map[x][y]
-      if current_alt == 1 
-        
-        # binding.pry #unless heap.top
-        
-# return trail_length  - 1
-      end
-      # && reversed_heap.top.nil?
 
+      return trail_length if current_alt == 1
 
       nav_map[x][y] = '#'
-      print(nav_map) if current_alt <3
+      print(nav_map)
 
       NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
         alt = alt_map[dx][dy] || 30
-        reversed_heap.push([[dx, dy], trail_length + 1]) if current_alt  - alt <= 1 
+        reversed_heap.push([[dx, dy], trail_length + 1]) if current_alt - alt <= 1
       end
     end
   end
@@ -117,7 +111,7 @@ class SolutionOne
     Visualisation.print_grid(
       nav_map,
       centre_x: 21, centre_y: 35, x_dim: 42, y_dim: 170,
-      # sleep: 0.01,
+      sleep: 0.1,
       spacer: ' ',
       colour_char: '#', colour: :red
     )
@@ -143,6 +137,6 @@ if __FILE__ == $PROGRAM_NAME
 
   puts '==============='
   puts 'part 2 solution'
-  # puts solution_pt2(input)
+  puts solution_pt2(input)
   # puts solution_pt2(input)
 end
