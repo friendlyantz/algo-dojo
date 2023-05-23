@@ -31,6 +31,8 @@ class DistressSignal
 
   def validate
     pairs.each_pair.map do |packet, _ordered|
+      return pairs[packet] = true if packet.first.empty?
+
       packet.first
             .zip(packet.last)
             .each do |pair|

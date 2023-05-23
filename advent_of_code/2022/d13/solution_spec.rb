@@ -153,6 +153,39 @@ RSpec.describe 'DistressSignal' do
         ds.validate
         expect(ds.pairs.first.last).to eq false
       end
+
+      it 'compares if integer does not have a pair from a secont packet' do
+        ds = DistressSignal.new(
+          <<~DATA
+            [[4,4],4,4]
+            [[4,4],4,4,4]
+          DATA
+        )
+        ds.validate
+        expect(ds.pairs.first.last).to eq true
+      end
+
+      it 'compares if integer does not have a pair from a first packet' do
+        ds = DistressSignal.new(
+          <<~DATA
+            [7,7,7,7]
+            [7,7,7]
+          DATA
+        )
+        ds.validate
+        expect(ds.pairs.first.last).to eq false
+      end
+
+      it 'compares if first packet is blanc' do
+        ds = DistressSignal.new(
+          <<~DATA
+            []
+            [3]
+          DATA
+        )
+        ds.validate
+        expect(ds.pairs.first.last).to eq true
+      end
     end
 
     describe 'final result for pt1' do
