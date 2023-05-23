@@ -10,7 +10,7 @@ require File.join(__dir__, '../lib/visualisation.rb')
 
 class SolutionOne
   attr_reader :start, :finish, :alt_map
-  attr_accessor :nav_map, :heap
+  attr_accessor :nav_map, :heap, :reversed_heap
 
   def initialize(input)
     generate_nav_map(input) # map with explored path for graphycal use
@@ -19,6 +19,10 @@ class SolutionOne
 
     @heap = PQueue.new([[@start, trail_length = 0]]) do |a, b|
       a.last < b.last
+    end
+
+    @reversed_heap = PQueue.new([[@finish, trail_length = 0]]) do |a, b|
+      a.last > b.last
     end
   end
 
@@ -68,16 +72,43 @@ class SolutionOne
       return trail_length if current_alt == 27
 
       nav_map[x][y] = '#'
-      print(nav_map)
+      # print(nav_map) if current_alt >15
 
       NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
         alt = alt_map[dx][dy] || 30
-        heap.push([[dx, dy], trail_length + 1]) if alt - current_alt <= 1 || (current_alt == 25 && alt == 27)
+        heap.push([[dx, dy], trail_length + 1]) if alt - current_alt <= 1
       end
     end
+  end
 
-    nav_map[x][y] = (alt_map[x][y] + 96).chr # cleanup '#' visited marker when coming back
-    print(nav_map)
+  def run_two
+    visited_set = Set.new
+
+    until reversed_heap.empty?
+      current_position, trail_length = reversed_heap.pop
+
+      next unless visited_set.add?(current_position)
+
+      x, y = current_position
+
+      current_alt = alt_map[x][y]
+      if current_alt == 1 
+        
+        # binding.pry #unless heap.top
+        
+# return trail_length  - 1
+      end
+      # && reversed_heap.top.nil?
+
+
+      nav_map[x][y] = '#'
+      print(nav_map) if current_alt <3
+
+      NeighbourYieldLateral.all(alt_map, current_position) do |dx, dy|
+        alt = alt_map[dx][dy] || 30
+        reversed_heap.push([[dx, dy], trail_length + 1]) if current_alt  - alt <= 1 
+      end
+    end
   end
 
   def print(nav_map)
@@ -97,6 +128,10 @@ def solution_pt1(input)
   SolutionOne.new(input).run
 end
 
+def solution_pt2(input)
+  SolutionOne.new(input).run_two
+end
+
 if __FILE__ == $PROGRAM_NAME
   if ARGV.empty?
     raise 'please provide input file destination as an argument following script name when executing this file'
@@ -108,5 +143,6 @@ if __FILE__ == $PROGRAM_NAME
 
   puts '==============='
   puts 'part 2 solution'
+  # puts solution_pt2(input)
   # puts solution_pt2(input)
 end
