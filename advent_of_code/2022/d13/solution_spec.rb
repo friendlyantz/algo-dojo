@@ -186,6 +186,17 @@ RSpec.describe 'DistressSignal' do
         ds.validate
         expect(ds.pairs.first.last).to eq true
       end
+
+      it 'compares if first packet is blanc' do
+        ds = DistressSignal.new(
+          <<~DATA
+            [1,[2,[3,[4,[5,6,7]]]],8,9]
+            [1,[2,[3,[4,[5,6,0]]]],8,9]
+          DATA
+        )
+        ds.validate
+        expect(ds.pairs.first.last).to eq false
+      end
     end
 
     describe 'final result for pt1' do

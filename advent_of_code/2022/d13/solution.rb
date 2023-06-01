@@ -42,11 +42,22 @@ class DistressSignal
   end
 
   def ordered?(pair)
-    return compare_integers(pair) if pair.first.is_a?(Integer) && pair.last.is_a?(Integer)
-
-    pair[0] = [pair.first] if pair.first.is_a?(Integer) && pair.last.is_a?(Array)
-    pair[1] = [pair.last] if pair.first.is_a?(Array) && pair.last.is_a?(Integer)
-    return compare_arrays(pair) if pair.first.is_a?(Array) && pair.last.is_a?(Array)
+    case [pair.first.class, pair.last.class]
+    when [Integer, Integer]
+      pair.first <= pair.last
+    when [Integer, NilClass]
+      false
+    when [Integer, Array]
+      pair[0] = [pair.first]
+      ordered?(pair)
+    when [Array, Integer]
+      pair[1] = [pair.last]
+      ordered?(pair)
+    when [Array, Array]
+      compare_arrays(pair)
+    else
+      binding.pry # TODO cleanup
+    end
   end
 
   def compare_arrays(pair)
@@ -57,12 +68,6 @@ class DistressSignal
         return false
       end
     end
-  end
-
-  def compare_integers(pair)
-    return false unless pair.first <= pair.last
-
-    true
   end
 end
 
