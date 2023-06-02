@@ -75,17 +75,14 @@ class DistressSignal
   def compare_arrays(l, r)
     l = l.dup
     r = r.dup
-    result = nil
 
     while l.any? && r.any?
       a = l.shift
       b = r.shift
-
-      result = ordered?([a, b])
-      return false unless result
+      return false unless ordered?([a, b])
     end
-    result
-    # ordered?([l_head, r_head])
+
+    true
   end
 end
 
