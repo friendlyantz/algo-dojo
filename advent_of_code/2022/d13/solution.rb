@@ -1,6 +1,10 @@
 require 'pry'
 def solution_pt1(input)
-  # input
+  ds = DistressSignal.new(input)
+  
+  ds.validate
+  binding.pry
+  
 end
 
 def solution_pt2(input)
@@ -43,26 +47,27 @@ class DistressSignal
 
               binding.pry if result.nil?
 
-              result = false
+            packet_pairs[packet] = result
               break
             end
-
-      packet_pairs[packet] = result
+              binding.pry if result.nil?
+            packet_pairs[packet] = result
     end
   end
 
   def ordered?(pair)
     a, b = pair
     case [a, b]
-    in [Integer, Integer]
+      in [Integer, Integer]
       a <= b
-    in [Integer, NilClass]
+      in [Integer, NilClass]
       false
-    in [Integer, Array]
+      in [Integer, Array]
       ordered?([[a], b])
-    in [Array, Integer]
+      in [Array, Integer]
       ordered?([a, [b]])
-    in [Array, Array]
+      in [Array, Array]
+    return false if a.any? && b.empty?
       compare_arrays(a, b)
     else
       binding.pry # TODO:
@@ -79,7 +84,7 @@ class DistressSignal
       b = r.shift
 
       result = ordered?([a, b])
-      break unless result
+      return false unless result
     end
     result
     # ordered?([l_head, r_head])
