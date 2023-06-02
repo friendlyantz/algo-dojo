@@ -226,8 +226,8 @@ RSpec.describe 'DistressSignal' do
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          # expect(solution_pt1(custom_input)).to eq true
+          expect(solution_pt1(custom_input) < 498).to eq true # less 498
+          expect(solution_pt1(custom_input)).to eq true
         end
       end
     end

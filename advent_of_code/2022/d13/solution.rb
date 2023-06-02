@@ -1,4 +1,5 @@
 require 'pry'
+
 def solution_pt1(input)
   ds = DistressSignal.new(input)
 
@@ -24,21 +25,14 @@ class DistressSignal
   end
 
   def prep_data(input)
-    @packet_pairs = {}
-    input
-      .split("\n\n")
-      .then do |data|
-      data.map do |pair|
-        p = pair
-            .split("\n")
-            .map { |string| eval(string) }
-        @packet_pairs[p] = nil
-      end
-    end
+    @packet_pairs = input.split("\n\n").map do |pair|
+      p = pair.split("\n").map { |string| eval(string) }
+      [p, nil]
+    end.to_h
   end
 
   def validate
-    packet_pairs.each_pair.map do |packet, _ordered|
+    packet_pairs.each_key.map do |packet|
       if packet.first.empty?
         packet_pairs[packet] = true
         next
@@ -70,12 +64,15 @@ class DistressSignal
       a <= b
     in [Integer, NilClass]
       false
+    in [Array, NilClass]
+      false
     in [Integer, Array]
       ordered?([[a], b])
     in [Array, Integer]
       ordered?([a, [b]])
     in [Array, Array]
       return false if a.any? && b.empty?
+      return true if a.empty?
 
       compare_arrays(a, b)
     else
