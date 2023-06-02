@@ -3,7 +3,12 @@ def solution_pt1(input)
   ds = DistressSignal.new(input)
 
   ds.validate
-  binding.pry
+
+  sum = 0
+  ds.packet_pairs.each.with_index do |hash, i|
+    sum += (i + 1) if hash.last
+  end
+  sum
 end
 
 def solution_pt2(input)
