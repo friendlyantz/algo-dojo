@@ -1,10 +1,9 @@
 require 'pry'
 def solution_pt1(input)
   ds = DistressSignal.new(input)
-  
+
   ds.validate
   binding.pry
-  
 end
 
 def solution_pt2(input)
@@ -35,9 +34,13 @@ class DistressSignal
 
   def validate
     packet_pairs.each_pair.map do |packet, _ordered|
-      return packet_pairs[packet] = true if packet.first.empty?
+      if packet.first.empty?
+        packet_pairs[packet] = true
+        next
+      end
 
       result = nil
+
       packet.first
             .zip(packet.last)
             .each do |pair|
@@ -47,27 +50,28 @@ class DistressSignal
 
               binding.pry if result.nil?
 
-            packet_pairs[packet] = result
+              packet_pairs[packet] = result
               break
             end
-              binding.pry if result.nil?
-            packet_pairs[packet] = result
+      binding.pry if result.nil?
+      packet_pairs[packet] = result
     end
   end
 
   def ordered?(pair)
     a, b = pair
     case [a, b]
-      in [Integer, Integer]
+    in [Integer, Integer]
       a <= b
-      in [Integer, NilClass]
+    in [Integer, NilClass]
       false
-      in [Integer, Array]
+    in [Integer, Array]
       ordered?([[a], b])
-      in [Array, Integer]
+    in [Array, Integer]
       ordered?([a, [b]])
-      in [Array, Array]
-    return false if a.any? && b.empty?
+    in [Array, Array]
+      return false if a.any? && b.empty?
+
       compare_arrays(a, b)
     else
       binding.pry # TODO:

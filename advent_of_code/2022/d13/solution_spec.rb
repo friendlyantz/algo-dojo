@@ -220,7 +220,7 @@ RSpec.describe 'DistressSignal' do
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns correct result' do
-          # expect(solution_pt1(example_input)).to eq 13
+          expect(solution_pt1(example_input)).to eq 13
         end
       end
 
