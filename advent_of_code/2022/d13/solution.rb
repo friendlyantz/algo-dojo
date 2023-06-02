@@ -32,7 +32,7 @@ class DistressSignal
   end
 
   def validate
-    packet_pairs.each_key.map do |packet|
+    packet_pairs.each_key do |packet|
       if packet.first.empty?
         packet_pairs[packet] = true
         next
@@ -40,19 +40,11 @@ class DistressSignal
 
       result = nil
 
-      packet.first
-            .zip(packet.last)
-            .each do |pair|
-              result = ordered?(pair)
+      packet.first.zip(packet.last).each do |pair|
+        result = ordered?(pair)
+        break unless result
+      end
 
-              next if result
-
-              binding.pry if result.nil?
-
-              packet_pairs[packet] = result
-              break
-            end
-      binding.pry if result.nil?
       packet_pairs[packet] = result
     end
   end
