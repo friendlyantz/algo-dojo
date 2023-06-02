@@ -9,14 +9,14 @@ def solution_pt2(input)
 end
 
 class DistressSignal
-  attr_reader :pairs
+  attr_reader :packet_pairs
 
   def initialize(input)
     prep_data input
   end
 
   def prep_data(input)
-    @pairs = {}
+    @packet_pairs = {}
     input
       .split("\n\n")
       .then do |data|
@@ -24,50 +24,65 @@ class DistressSignal
         p = pair
             .split("\n")
             .map { |string| eval(string) }
-        @pairs[p] = nil
+        @packet_pairs[p] = nil
       end
     end
   end
 
   def validate
-    pairs.each_pair.map do |packet, _ordered|
-      return pairs[packet] = true if packet.first.empty?
+    packet_pairs.each_pair.map do |packet, _ordered|
+      return packet_pairs[packet] = true if packet.first.empty?
 
+      result = nil
       packet.first
             .zip(packet.last)
             .each do |pair|
-              pairs[packet] = ordered?(pair) ? true : false
+              result = ordered?(pair)
+
+              next if result
+
+              binding.pry if result.nil?
+
+              result = false
+              break
             end
+
+      packet_pairs[packet] = result
     end
   end
 
   def ordered?(pair)
-    case [pair.first.class, pair.last.class]
-    when [Integer, Integer]
-      pair.first <= pair.last
-    when [Integer, NilClass]
+    a, b = pair
+    case [a, b]
+    in [Integer, Integer]
+      a <= b
+    in [Integer, NilClass]
       false
-    when [Integer, Array]
-      pair[0] = [pair.first]
-      ordered?(pair)
-    when [Array, Integer]
-      pair[1] = [pair.last]
-      ordered?(pair)
-    when [Array, Array]
-      compare_arrays(pair)
+    in [Integer, Array]
+      ordered?([[a], b])
+    in [Array, Integer]
+      ordered?([a, [b]])
+    in [Array, Array]
+      compare_arrays(a, b)
     else
-      binding.pry # TODO cleanup
+      binding.pry # TODO:
     end
   end
 
-  def compare_arrays(pair)
-    pair.first.each do |integer|
-      pair.last.each do |integer2|
-        next if integer <= integer2
+  def compare_arrays(l, r)
+    l = l.dup
+    r = r.dup
+    result = nil
 
-        return false
-      end
+    while l.any? && r.any?
+      a = l.shift
+      b = r.shift
+
+      result = ordered?([a, b])
+      break unless result
     end
+    result
+    # ordered?([l_head, r_head])
   end
 end
 

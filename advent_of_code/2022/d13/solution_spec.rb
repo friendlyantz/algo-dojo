@@ -13,7 +13,7 @@ RSpec.describe 'DistressSignal' do
 
     # Your handheld device must still not be working properly; the packets from the distress signal got decoded out of order. You'll need to re-order the list of received packets (your puzzle input) to decode the message.
 
-    # Your list consists of pairs of packets; pairs are separated by a blank line. You need to identify how many pairs of packets are in the right order.
+    # Your list consists of packet_pairsof packets; pairs are separated by a blank line. You need to identify how many pairs of packets are in the right order.
 
     # For example:
 
@@ -129,7 +129,7 @@ RSpec.describe 'DistressSignal' do
           pair
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq true
+        expect(ds.packet_pairs.first.last).to eq true
       end
 
       it 'compares arrays' do
@@ -140,7 +140,8 @@ RSpec.describe 'DistressSignal' do
           DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq true
+        expect(ds.packet_pairs
+  .first.last).to eq true
       end
 
       it 'compares arrays and integers mixed in' do
@@ -151,7 +152,8 @@ RSpec.describe 'DistressSignal' do
         DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq false
+        expect(ds.packet_pairs
+  .first.last).to eq false
       end
 
       it 'compares if integer does not have a pair from a secont packet' do
@@ -162,7 +164,8 @@ RSpec.describe 'DistressSignal' do
           DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq true
+        expect(ds.packet_pairs
+  .first.last).to eq true
       end
 
       it 'compares if integer does not have a pair from a first packet' do
@@ -173,7 +176,8 @@ RSpec.describe 'DistressSignal' do
           DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq false
+        expect(ds.packet_pairs
+  .first.last).to eq false
       end
 
       it 'compares if first packet is blanc' do
@@ -184,7 +188,8 @@ RSpec.describe 'DistressSignal' do
           DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq true
+        expect(ds.packet_pairs
+  .first.last).to eq true
       end
 
       it 'compares if first packet is blanc' do
@@ -195,7 +200,8 @@ RSpec.describe 'DistressSignal' do
           DATA
         )
         ds.validate
-        expect(ds.pairs.first.last).to eq false
+        expect(ds.packet_pairs
+  .first.last).to eq false
       end
     end
 
