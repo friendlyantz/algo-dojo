@@ -28,7 +28,7 @@ def intersect(nums1, nums2)
   # FASTEST SOLUTION, but WORST MEMORY USAGE
   # I think it is a bit cheeky and defeats the purpose of this exercise
   # Runtime: 64 ms 100% faster than anyone out there
-  # Memory Usage: 211.5 MB
+  # Memory Usage: 211.5 MB lowest 5% of submissions
   short_hash, long_hash = [nums1.tally, nums2.tally].sort_by(&:size)
   short_hash.each_with_object([]) do |(key, value), result|
     next unless long_hash[key]
@@ -39,8 +39,8 @@ def intersect(nums1, nums2)
   # SLOW, but GOOD MEMORY USAGE
   # Runtime: 121 ms - beats 10% of submissions
   # Memory Usage: 211.1 MB - beats 80% of submissions
-  nums1, nums2 = [nums1, nums2].sort_by(&:size)
   nums1.each_with_object([]) do |num, result|
+  nums1, nums2 = [nums1, nums2].sort_by(&:size)
     next unless nums2.include?(num)
 
     nums2.delete_at(nums2.index(num))
@@ -51,7 +51,7 @@ end
 RSpec.describe 'Solution' do
   let(:input_one) { [2, 2, 1] }
   let(:input_two) { [4, 1, 2, 1, 2] }
-  it 'return uniq number' do
+  it 'return intersections' do
     nums1 = [1, 2, 2, 1]
     nums2 = [2, 2]
     expect(intersect(nums1, nums2)).to eq [2, 2]
