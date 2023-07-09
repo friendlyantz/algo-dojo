@@ -23,7 +23,8 @@
 #     -109 <= nums[i] <= 109
 
 def contains_duplicate(nums)
-  nums.tally.any? { |_k, v| v > 1 }
+  # nums.tally.any? { |_k, v| v > 1 }
+  nums.uniq != nums
 end
 
 RSpec.describe 'Solution' do
