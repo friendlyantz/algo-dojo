@@ -35,6 +35,17 @@ def intersect(nums1, nums2)
 
     result << Array.new([value, long_hash[key]].min, key)
   end.flatten
+
+  # SLOW, but GOOD MEMORY USAGE
+  # Runtime: 121 ms - beats 10% of submissions
+  # Memory Usage: 211.1 MB - beats 80% of submissions
+  nums1, nums2 = [nums1, nums2].sort_by(&:size)
+  nums1.each_with_object([]) do |num, result|
+    next unless nums2.include?(num)
+
+    nums2.delete_at(nums2.index(num))
+    result << num
+  end
 end
 
 RSpec.describe 'Solution' do
