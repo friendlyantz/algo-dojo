@@ -7,35 +7,20 @@ q.map! { |element| element.to_i }
 # p q
 
 def minimumBribes(q)
-  bribe_sum = 0
-  bribing_counter = 0
-  # max_shifted_number = 0
-  bribe_streak = 0
-  too_chaotic = 0
-  q.each_with_index do |number, index|
-    puts "#{number} checking for bribes. index: #{index}" if index % 10 == 0
-    # break if index == 10
-    if bribe_streak = q[index...q.length].count { |element| element < number }
-      # puts "basta"
-      # bribe_streak = q[index...q.length].count {|element| element < number }
-      # p bribe_streak
-      if bribe_streak <= 2
-        bribe_sum += bribe_streak
-      else
-        too_chaotic = 'Too chaotic'
-        puts too_chaotic
-        break
-      end
+  bribes_counter = 0
+  q.map! { _1 - 1}
+  (q.size - 1).downto(0) do |i|
+    if (q[i] - i) > 2
+      puts 'Too chaotic'
+      break
     end
+    ahead_of_it = q[i] - 2
+    (ahead_of_it..i).each do |j|
+      next if j < 0
+      bribes_counter += 1 if q[j] > q[i]
+    end 
   end
-
-  puts 'finished'
-
-  if too_chaotic == 'Too chaotic'
-    too_chaotic
-  else
-    puts bribe_sum
-  end
+  puts bribes_counter
 end
 
 minimumBribes(q)
