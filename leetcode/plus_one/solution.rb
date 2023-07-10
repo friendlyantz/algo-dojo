@@ -36,9 +36,9 @@
 
 def plus_one(digits)
   # reverse - reverse with break, to avoid looping through all elements
-  # LEETCODE stats: 80-85% better than other submissions TIME and MEM
-  # Runtime: 73 ms
-  # Memory Usage: 211 MB
+  # LEETCODE stats: 
+  # Runtime: 73 - 100ms - fluctuates 8-85% better than other submissions 
+  # Memory Usage: 211(80%better) - 211.2MB(le bad) - fluctuates a lot, 0-80% better than other submissions
   digits.reverse!
   digits.size.times do |i|
     if (digits[i]) == 9
@@ -50,6 +50,15 @@ def plus_one(digits)
     end
   end
   digits.reverse!
+end
+
+def plus_one(digits)
+  # naive implementation using ruby join and split
+  # Trust this uses some C magic, and it beats the above solution
+  # still timeframe / mem are very close and good for both
+  # Runtime:75 - 84 ms -  50 - 85% better than other submissions maxed at 7
+  # Memory Usage: 210.9-211.1 MB- from 30% to 97% better than other submissions
+  digits.join.to_i.next.to_s.split('').map(&:to_i)
 end
 
 RSpec.describe 'Solution' do
