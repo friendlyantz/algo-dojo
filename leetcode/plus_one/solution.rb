@@ -36,8 +36,8 @@
 
 def plus_one(digits)
   # reverse - reverse with break, to avoid looping through all elements
-  # LEETCODE stats: 
-  # Runtime: 73 - 100ms - fluctuates 8-85% better than other submissions 
+  # LEETCODE stats:
+  # Runtime: 73 - 100ms - fluctuates 8-85% better than other submissions
   # Memory Usage: 211(80%better) - 211.2MB(le bad) - fluctuates a lot, 0-80% better than other submissions
   digits.reverse!
   digits.size.times do |i|

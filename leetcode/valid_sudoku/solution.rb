@@ -63,7 +63,8 @@ def is_valid_sudoku(board)
   # 1. check lines
   board.each do |line|
     line = line.dup
-    line.delete('.')
+    line.delete('.') # note, deleting is important,
+    # otherwise uniq will not work with nil
     return false unless line.uniq == line
   end
 
