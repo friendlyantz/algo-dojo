@@ -2,7 +2,8 @@ import unittest
 
 class Solution:
     def isAnagram(self, s: str, t: str) -> bool:
-        return True
+        # easy way
+        return sorted(s) == sorted(t)
 
 class TestSolution(unittest.TestCase):
     def test_containsDuplicate_true(self):
