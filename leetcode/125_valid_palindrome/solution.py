@@ -35,11 +35,16 @@ import unittest
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
-        # Runtime68 ms 41.3% Beats Memory22.2 MB Beats 6.77%
+        # this data prep is a potential MEM hog?
         s = ''.join(c.lower() for c in s if c.isalnum())
-        head_i = 0
-        tail_i = len(s) - 1
 
+        # naive reverse
+        # Runtime45 ms Beats 98.90% Memory22.3 MB Beats 5.89%
+        return s == s[::-1]
+
+        # pointers
+        # Runtime68 ms 41.3% Beats Memory22.2 MB Beats 6.77%
+        head_i, tail_i = 0, len(s) - 1
         while head_i <= tail_i:
             if s[head_i] != s[tail_i]:
                 return False
