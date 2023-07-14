@@ -25,8 +25,10 @@ def TreeNode(val=0, left=None, right=None):
         self.left = left
         self.right = right
 
+
 class Solution:
     def maxDepth(self, root: Optional[TreeNode]) -> int:
+        # RECURSION / DFS SOLUTION O(n) time and O(n) space
         # LEETCODE STATS are unstable
         # Runtime Details 69ms Beats 5.55%of users with Python3
         # Memory Details 18.89mb Beats 13.18%of users with Python3
@@ -48,4 +50,34 @@ class Solution:
             max_depth = max(left_depth, right_depth)
 
             return max_depth + 1
-        return maxDepth_helper(root)
+
+        # return maxDepth_helper(root)
+
+        # -----
+        # BFS / Iterative solution
+        # -----
+
+        if root is None:
+            return 0
+
+        from collections import deque
+        q = deque()
+        q.append(root)
+        depth = 0
+
+        while q:
+            level_size = len(q)
+
+            for i in range(level_size):
+                node = q.popleft()
+                l_child = node.left
+                r_child = node.right
+
+                if l_child:
+                    q.append(l_child)
+                if r_child:
+                    q.append(r_child)
+
+            depth += 1
+
+        return depth
