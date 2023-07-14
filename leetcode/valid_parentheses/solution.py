@@ -42,17 +42,14 @@ class Solution:
             if c == "(" or c == "[" or c == "{":
                 stack.append(c)
             elif c == ")":
-                if len(stack) == 0 or stack[-1] != "(":
+                if len(stack) == 0 or stack.pop() != "(":
                     return False
-                stack.pop()
             elif c == "]":
-                if len(stack) == 0 or stack[-1] != "[":
+                if len(stack) == 0 or stack.pop() != "[":
                     return False
-                stack.pop()
             elif c == "}":
-                if len(stack) == 0 or stack[-1] != "{":
+                if len(stack) == 0 or stack.pop() != "{":
                     return False
-                stack.pop()
         if len(stack) != 0:
             return False
         return True
