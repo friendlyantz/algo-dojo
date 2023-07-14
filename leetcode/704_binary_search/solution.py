@@ -29,12 +29,15 @@ import math # might be too slow for LEET
 
 class Solution:
     def search(self, nums: List[int], target: int) -> bool:
-        # Output Limit Exceeded
+        # Runtime
+        # Details 244ms Beats 70.71%of users with Python3 Memory Details 17.89mb Beats 70.96%of users with Python3
         head_i = 0
         tail_i = len(nums) - 1
-        while head_i != tail_i:
-            # diff = math.floor((tail_i - head_i) / 2)
-            diff = math.floor((tail_i - head_i) / 2)
+        while head_i <= tail_i: # ez way to do !=, but this will break if 1-element array
+            # note the below t - h halfed, then adding the head
+            # we can simple do (t + h) // 2, BUT
+            # this will break in case of n^31+ as adding big ints can overflow MEM in some languages   
+            diff = (tail_i - head_i) // 2
             mid_i = head_i + diff
 
             if nums[mid_i] == target:
@@ -43,16 +46,18 @@ class Solution:
                 head_i = mid_i + 1
             elif nums[mid_i] > target:
                 tail_i = mid_i - 1
-
-        if nums[tail_i] == target:
-            return tail_i
-        else:
-            return -1
+        return -1
 
 
 class TestSolution(unittest.TestCase):
     def test_search(self):
         s = Solution()
+
+        # Test case 0
+        nums = [5]
+        target = 5
+        expected_output = 0
+        self.assertEqual(s.search(nums, target), expected_output)
 
         # Test case 1
         nums = [-1,0,3,5,9,12]
