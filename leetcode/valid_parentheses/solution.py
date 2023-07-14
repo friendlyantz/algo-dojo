@@ -1,4 +1,5 @@
-# Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+# Given a string s containing just the characters '(', ')', '{', '}', '[' and
+# ']', determine if the input string is valid.
 #
 # An input string is valid if:
 #
@@ -35,6 +36,25 @@ import unittest
 
 class Solution:
     def isValid(self, s: str) -> bool:
+        # Runtime39 ms Beats 93.56% Memory16.3 MB Beats 54.46%
+        stack = []
+        for c in s:
+            if c == "(" or c == "[" or c == "{":
+                stack.append(c)
+            elif c == ")":
+                if len(stack) == 0 or stack[-1] != "(":
+                    return False
+                stack.pop()
+            elif c == "]":
+                if len(stack) == 0 or stack[-1] != "[":
+                    return False
+                stack.pop()
+            elif c == "}":
+                if len(stack) == 0 or stack[-1] != "{":
+                    return False
+                stack.pop()
+        if len(stack) != 0:
+            return False
         return True
 
 class TestSolution(unittest.TestCase):
