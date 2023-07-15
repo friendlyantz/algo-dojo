@@ -22,13 +22,40 @@
 #     The number of nodes in the tree is in the range [1, 104].
 #     -100 <= Node.val <= 100
 
-class TreeNode(val=0, left=None, right=None):
+def TreeNode(val=0, left=None, right=None):
     def __init__(self, val=0, left=None, right=None):
         self.val = val
         self.left = left
         self.right = right
 
 
+from typing import Optional
+import pdb
 class Solution:
     def diameterOfBinaryTree(self, root: Optional[TreeNode]) -> int:
-        return True
+        # LEETCODE STATS
+        # Runtime Details 58ms Beats 72.03%of users with Python3
+        # Memory Details 18.70mb Beats 45.46%of users with Python3
+        self.diameter = 0 # diameter is the longest(MAX) path!!! not just max width
+
+        if not root.left and not root.right:
+            return 0
+
+        def maxDia_helper(node):
+            # PRE RECURSE
+            if not node:
+                return 0
+            path_from_parent = 1
+
+            # RECURSE
+            left_d = maxDia_helper(node.left)
+            right_d = maxDia_helper(node.right)
+
+            # POST RECURSE
+            # update max width if we beat it
+            self.diameter = max(self.diameter, left_d + right_d)
+            # choose the widest child and add parent link
+            return max(left_d, right_d) + path_from_parent
+
+        maxDia_helper(root)
+        return self.diameter
