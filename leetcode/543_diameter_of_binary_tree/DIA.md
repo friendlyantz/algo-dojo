@@ -1,5 +1,5 @@
 # DFS / RECURSION
 
-same as 104 and others
-
-![image](https://github.com/friendlyantz/puzzles-and-challanges/assets/70934030/c56b79ca-4b34-4313-8e25-1b8fe1381ae8)
+similar as 104 and others
+> but note:  diameter is the longest(MAX) path between nodes!!! not just max width
+![image](https://github.com/friendlyantz/puzzles-and-challanges/assets/70934030/6beb78ce-81f5-43ca-bfe1-c8f002343474)
