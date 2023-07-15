@@ -32,7 +32,26 @@ class TreeNode:
 
 class Solution:
     def isSameTree(self, p: Optional[TreeNode], q: Optional[TreeNode]) -> bool:
-        return True
+        # Runtime # Details # 33ms # Beats 98.73%of users with Python3
+        # Memory # Details # 16.34mb # Beats 57.90%of users with Python3
+        def comparator(node_a, node_b):
+            # PRE
+            if node_a is False or node_b is False:
+                return False
+
+            if node_a is None and node_b is None:
+                return True
+            elif node_a is None or node_b is None:
+                return False
+
+            if node_a.val != node_b.val:
+                return False
+            # REC
+            l_result = comparator(node_a.left, node_b.left)
+            r_result = comparator(node_a.right, node_b.right)
+            # POST
+            return l_result and r_result
+        return comparator(p, q)
 
 class TestSolution(unittest.TestCase):
     def test_same_tree(self):
