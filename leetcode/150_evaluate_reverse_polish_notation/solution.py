@@ -47,26 +47,30 @@ from functools import reduce
 
 class Solution:
     def evalRPN(self, tokens: list[str]) -> int:
-        stack = []
+        def calc(operator, l_op, r_op):
+            l_op, r_op = int(l_op), int(r_op)
+            if operator == "+":
+                return l_op + r_op
+            elif operator == "*":
+                return l_op * r_op
+            elif operator == "/":
+                return l_op / r_op
+            elif operator == "-":
+                return l_op - r_op
         
-        for e in tokens:
-            if e == "+":
-                r = reduce(lambda x, y: x + y, stack)
-                stack = [r]
-            elif e == "*":
-                r = reduce(lambda x, y: x * y, stack)
-                stack = [r]
-            elif e == "/":
-                result = reduce(lambda x, y: int(x / y), stack)
-                ipdb.set_trace() # <======
-                stack = [result]
-            elif e == "-":
-                r = reduce(lambda x, y: int(x - y), stack)
-                stack = [r]
+        def walk(arg):
+            # PRE
+            if arg in ["+","-", "/","*"]:
+                operator = arg
             else:
-                e = int(e)
-                stack.append(e)
-        return stack[0]
+                return arg
+            # REC
+            r_op = walk(tokens.pop())
+            l_op = walk(tokens.pop())
+            # POST
+            return calc(operator, l_op, r_op)
+
+        return walk(tokens.pop())
 
 
 class TestSolution(unittest.TestCase):
@@ -75,6 +79,8 @@ class TestSolution(unittest.TestCase):
 
     def test_evalRPN(self):
         self.assertEqual(self.solution.evalRPN(["2", "1", "+", "3", "*"]), 9)
+        self.assertEqual(self.solution.evalRPN(["4", "13", "5", "/", "+"]), 6)
+        self.assertEqual(self.solution.evalRPN(["10", "6", "9", "3", "+", "-11", "*", "/", "*", "17", "+", "5", "+"]), 22)
 
 if __name__ == '__main__':
     unittest.main()
