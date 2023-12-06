@@ -1,0 +1,10 @@
+# frozen_string_literal: true
+
+source "https://rubygems.org"
+
+gem "advent_of_code_cli"
+gem 'colorize'
+gem 'pqueue'
+gem 'ruby-progressbar'
+gem 'super_diff'
+gem 'set'
