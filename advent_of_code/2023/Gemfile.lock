@@ -10,6 +10,19 @@ GEM
     patience_diff (1.2.0)
       optimist (~> 3.0)
     pqueue (2.1.0)
+    rspec (3.12.0)
+      rspec-core (~> 3.12.0)
+      rspec-expectations (~> 3.12.0)
+      rspec-mocks (~> 3.12.0)
+    rspec-core (3.12.2)
+      rspec-support (~> 3.12.0)
+    rspec-expectations (3.12.3)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-mocks (3.12.6)
+      diff-lcs (>= 1.2.0, < 2.0)
+      rspec-support (~> 3.12.0)
+    rspec-support (3.12.1)
     ruby-progressbar (1.13.0)
     set (1.0.3)
     super_diff (0.10.0)
@@ -25,9 +38,13 @@ DEPENDENCIES
   advent_of_code_cli
   colorize
   pqueue
+  rspec
   ruby-progressbar
   set
   super_diff
+
+RUBY VERSION
+   ruby 3.3.0.preview2
 
 BUNDLED WITH
    2.4.19
