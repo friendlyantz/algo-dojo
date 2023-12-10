@@ -1,17 +1,18 @@
 # frozen_string_literal: true
 
-source "https://rubygems.org"
+source 'https://rubygems.org'
 
-ruby "3.3.0.preview2"
+ruby '3.3.0.preview2'
 
-gem "advent_of_code_cli"
-gem "awesome_print"
+gem 'advent_of_code_cli'
+gem 'awesome_print'
 gem 'colorize'
 gem 'pqueue'
 gem 'pry'
 gem 'rspec'
+gem 'rubocop'
 gem 'ruby-progressbar'
-gem 'super_diff'
 gem 'set'
+gem 'super_diff'
 
-gem "zeitwerk", "~> 2.6"
+gem 'zeitwerk'

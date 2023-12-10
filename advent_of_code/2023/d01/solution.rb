@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 def solution_pt1(input)
   # input
 end

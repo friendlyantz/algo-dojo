@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'pry'
 require 'awesome_print'
 require 'zeitwerk'
