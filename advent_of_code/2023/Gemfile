@@ -13,3 +13,5 @@ gem 'rspec'
 gem 'ruby-progressbar'
 gem 'super_diff'
 gem 'set'
+
+gem "zeitwerk", "~> 2.6"
