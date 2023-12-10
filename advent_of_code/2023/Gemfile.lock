@@ -53,6 +53,14 @@ GEM
       unicode-display_width (>= 2.4.0, < 3.0)
     rubocop-ast (1.30.0)
       parser (>= 3.2.1.0)
+    rubocop-capybara (2.19.0)
+      rubocop (~> 1.41)
+    rubocop-factory_bot (2.24.0)
+      rubocop (~> 1.33)
+    rubocop-rspec (2.25.0)
+      rubocop (~> 1.40)
+      rubocop-capybara (~> 2.17)
+      rubocop-factory_bot (~> 2.22)
     ruby-progressbar (1.13.0)
     set (1.0.3)
     super_diff (0.10.0)
@@ -74,6 +82,7 @@ DEPENDENCIES
   pry
   rspec
   rubocop
+  rubocop-rspec
   ruby-progressbar
   set
   super_diff

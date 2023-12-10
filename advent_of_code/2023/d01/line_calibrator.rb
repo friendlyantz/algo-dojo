@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# scans lines for digits
 class LineCalibrator
   def initialize(line)
     @line = line
