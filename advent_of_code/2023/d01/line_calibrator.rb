@@ -9,7 +9,6 @@ class LineCalibrator
   end
 
   def call
-    @line.split('').map(&:to_i)
     find_first_digit
     find_second_digit
     (@char_one + @char_two).to_i

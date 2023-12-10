@@ -57,8 +57,7 @@ RSpec.describe Solution do
 
       context 'custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(solution_pt1(custom_input)).to eq true
+          expect(Solution.new.solution_pt1(custom_input)).to eq 55_477
         end
       end
     end
