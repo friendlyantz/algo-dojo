@@ -5,6 +5,7 @@ source "https://rubygems.org"
 ruby "3.3.0.preview2"
 
 gem "advent_of_code_cli"
+gem "awesome_print"
 gem 'colorize'
 gem 'pqueue'
 gem 'pry'
