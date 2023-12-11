@@ -9,6 +9,7 @@ loader.push_dir(__dir__)
 loader.setup
 RSpec.describe Solution do
   let(:example_input) { File.read(File.join(__dir__, 'ie_input')) }
+  let(:example_input_two) { File.read(File.join(__dir__, 'ie_input_two')) }
   let(:custom_input) { File.read(File.join(__dir__, 'input')) }
 
   describe 'Part 1' do
@@ -64,20 +65,41 @@ RSpec.describe Solution do
   end
 
   describe 'Part 2' do
-    #
-    # DESCRIPTION Part 2
-    #
+    #     Your calculation isn't quite right.
+    #     It looks like some of the digits are actually spelled out with
+    #     letters: one, two, three, four, five, six, seven, eight, and nine
+    #     also count as valid "digits".
+
+    # Equipped with this new information, you now need to find the real first and last digit on each line. For example:
+
+    # two1nine
+    # eightwothree
+    # abcone2threexyz
+    # xtwone3four
+    # 4nineeightseven2
+    # zoneight234
+    # 7pqrstsixteen
+
+    # In this example, the calibration values are 29, 83, 13, 24, 42, 14, and 76. Adding these together produces 281.
     context 'example input data' do
+      it 'calibration values are correct for each line' do
+        expect(LineCalibrator.new('two1nine').call_two).to eq 29
+        expect(LineCalibrator.new('eightwothree').call_two).to eq 83
+        expect(LineCalibrator.new('abcone2threexyz').call_two).to eq 13
+        expect(LineCalibrator.new('xtwone3four').call_two).to eq 24
+        expect(LineCalibrator.new('4nineeightseven2').call_two).to eq 42
+        expect(LineCalibrator.new('zoneight234').call_two).to eq 14
+        expect(LineCalibrator.new('7pqrstsixteen').call_two).to eq 76
+      end
+
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(example_input)).to eq true
+        expect(Solution.new.solution_pt2(example_input_two)).to eq 281
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        pending 'pt2 implementation'
-        expect(solution_pt2(custom_input)).to eq true
+        expect(Solution.new.solution_pt2(custom_input)).to eq true
       end
     end
   end

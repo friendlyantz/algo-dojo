@@ -14,8 +14,14 @@ class Solution
   end
 
   def solution_pt2(input)
-    # input
-    # .then { |data| binding.pry }
+    sum = 0
+
+    input.each_line do |line|
+      skip if line.empty?
+      sum += LineCalibrator.new(line).call_two
+    end
+
+    sum
   end
 
   if __FILE__ == $PROGRAM_NAME
