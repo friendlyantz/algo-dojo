@@ -13,9 +13,9 @@ class LimitAssessor
   end
 
   def call
-    return false if @red >= LIMITS[:red]
-    return false if @green >= LIMITS[:green]
-    return false if @blue >= LIMITS[:blue]
+    return false if @red > LIMITS[:red]
+    return false if @green > LIMITS[:green]
+    return false if @blue > LIMITS[:blue]
 
     true
   end

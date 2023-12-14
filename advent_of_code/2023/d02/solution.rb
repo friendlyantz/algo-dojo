@@ -6,7 +6,11 @@ class Solution
   end
 
   def solution_pt1
-    # input
+    @input
+      .lines
+      .map { |line| LineTranslator.new(line).call }
+      .map { |line| AssessLine.new(line).call }
+      .map { |data| data[true] || 0 }.sum
   end
 
   def solution_pt2

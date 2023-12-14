@@ -5,7 +5,7 @@ class AssessLine
   end
 
   def call
-    if assess_subserts_separately && assess_subserts_sum
+    if assess_subserts_separately
       { true => @input.keys.first }
     else
       { false => @input.keys.first }
@@ -21,16 +21,5 @@ class AssessLine
       end
     end
     result
-  end
-
-  def assess_subserts_sum
-    array = @input.values.first
-    result = array.each_with_object({ red: 0, green: 0, blue: 0 }) do |hash, total|
-      total[:red] += hash[:red]
-      total[:green] += hash[:green]
-      total[:blue] += hash[:blue]
-    end
-
-    LimitAssessor.new(result).call
   end
 end

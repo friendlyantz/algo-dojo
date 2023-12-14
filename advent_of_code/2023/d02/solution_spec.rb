@@ -76,7 +76,7 @@ RSpec.describe 'Solutions' do
                         { red: 1, green: 2, blue: 6 },
                         { red: 0, green: 2, blue: 0 }] }
 
-        it 'returns HashMap of cube colours and counts' do
+        it 'returns result and game number' do
           expect(AssessLine.new(input).call).to eq(
             { true => 1 }
           )
@@ -88,7 +88,7 @@ RSpec.describe 'Solutions' do
                         { red: 13, green: 2, blue: 6 },
                         { red: 5, green: 2, blue: 0 }] }
 
-        it 'returns HashMap of cube colours and counts' do
+        it 'returns result and game number' do
           expect(AssessLine.new(input).call).to eq(
             { false => 1 }
           )
@@ -100,36 +100,34 @@ RSpec.describe 'Solutions' do
                         { red: 4, green: 2, blue: 6 },
                         { red: 5, green: 2, blue: 0 }] }
 
-        it 'returns HashMap of cube colours and counts' do
+        it 'returns result and game number' do
           expect(AssessLine.new(input).call).to eq(
-            { false => 1 }
+            { true => 1 }
           )
         end
       end
     end
 
     describe 'LimitAssessor' do
-      it 'returns false if the game over/in the limit' do
-        expect(LimitAssessor.new({ red: 12, green: 13, blue: 14 }).call).to eq false
+      it 'returns false if the game over the limit' do
+        expect(LimitAssessor.new({ red: 13, green: 14, blue: 15 }).call).to eq false
       end
 
-      it 'returns true if the game under the limit' do
-        expect(LimitAssessor.new({ red: 11, green: 12, blue: 13 }).call).to eq true
+      it 'returns true if the game under/in the limit' do
+        expect(LimitAssessor.new({ red: 12, green: 13, blue: 14 }).call).to eq true
       end
     end
 
-    describe 'final result for pt1' do
+    describe 'final result for pt1 (it does not use sums )' do
       context 'with example input data' do
-        it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(Solution.new(example_input).solution_pt1).to eq true
+        it 'returns sum of the winningg(trueish) games' do
+          expect(Solution.new(example_input).solution_pt1).to eq 8
         end
       end
 
       context 'with custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(Solution.new(custom_input).solution_pt1).to eq true
+          expect(Solution.new(custom_input).solution_pt1).to eq 3099
         end
       end
     end
