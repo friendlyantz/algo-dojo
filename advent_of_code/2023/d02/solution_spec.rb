@@ -78,7 +78,7 @@ RSpec.describe 'Solutions' do
 
         it 'returns HashMap of cube colours and counts' do
           expect(AssessLine.new(input).call).to eq(
-            { 1 => true }
+            { true => 1 }
           )
         end
       end
@@ -90,7 +90,7 @@ RSpec.describe 'Solutions' do
 
         it 'returns HashMap of cube colours and counts' do
           expect(AssessLine.new(input).call).to eq(
-            { 1 => false }
+            { false => 1 }
           )
         end
       end
@@ -102,7 +102,7 @@ RSpec.describe 'Solutions' do
 
         it 'returns HashMap of cube colours and counts' do
           expect(AssessLine.new(input).call).to eq(
-            { 1 => false }
+            { false => 1 }
           )
         end
       end

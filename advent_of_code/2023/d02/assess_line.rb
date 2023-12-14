@@ -6,9 +6,9 @@ class AssessLine
 
   def call
     if assess_subserts_separately && assess_subserts_sum
-      @input.each_key { |k| @input[k] = true }
+      { true => @input.keys.first }
     else
-      @input.each_key { |k| @input[k] = false }
+      { false => @input.keys.first }
     end
   end
 
