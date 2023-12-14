@@ -48,14 +48,25 @@ RSpec.describe 'Solutions' do
     end
 
     describe 'LineTranslator' do
-      expectation = { 1 => [{ red: 4, green: 0, blue: 3 },
-                            { red: 1, green: 2, blue: 6 },
-                            { red: 0, green: 2, blue: 0 }] }
-      it 'returns HashMap of cube colours and counts' do
-        pending
-        expect(LineTranslator.new(
-          'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
-        ).call).to eq expectation
+      context 'with multiple subsets' do
+        expectation = { 1 => [{ red: 4, green: 0, blue: 3 },
+                              { red: 1, green: 2, blue: 6 },
+                              { red: 0, green: 2, blue: 0 }] }
+
+        it 'returns HashMap of cube colours and counts' do
+          expect(LineTranslator.new(
+            'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
+          ).call).to eq expectation
+        end
+      end
+
+      context 'with only 1 subset' do
+        expectation = { 2 => [{ red: 4, green: 0, blue: 3 }] }
+        it 'returns HashMap of cube colours and counts' do
+          expect(LineTranslator.new(
+            'Game 2: 3 blue, 4 red'
+          ).call).to eq expectation
+        end
       end
     end
 
