@@ -38,13 +38,24 @@ RSpec.describe 'Solutions' do
 
     # Determine which games would have been possible if the bag had been loaded with only 12 red cubes, 13 green cubes, and 14 blue cubes. What is the sum of the IDs of those games?
 
-    describe 'implementation' do
+    describe 'LineTranslator' do
+      expectation = { 1 => [{ red: 4, green: 0, blue: 3 },
+                            { red: 1, green: 2, blue: 6 },
+                            { red: 0, green: 2, blue: 0 }] }
+      it 'returns HashMap of cube colours and counts' do
+        expect(LineTranslator.new(
+          'Game 1: 3 blue, 4 red; 1 red, 2 green, 6 blue; 2 green'
+        ).call).to eq expectation
+      end
+    end
+
+    describe 'LimitAssessor' do
       it 'returns false if the game over/in the limit' do
-        expect(RoundAssessor.new({ red: 12, green: 13, blue: 14 }).call).to eq false
+        expect(LimitAssessor.new({ red: 12, green: 13, blue: 14 }).call).to eq false
       end
 
       it 'returns true if the game under the limit' do
-        expect(RoundAssessor.new({ red: 11, green: 12, blue: 13 }).call).to eq true
+        expect(LimitAssessor.new({ red: 11, green: 12, blue: 13 }).call).to eq true
       end
     end
 
