@@ -14,6 +14,7 @@
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 require 'zeitwerk'
+require 'super_diff/rspec'
 
 loader = Zeitwerk::Loader.new
 Dir.glob('d*/').each do |dir|
