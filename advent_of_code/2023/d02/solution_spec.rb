@@ -70,6 +70,44 @@ RSpec.describe 'Solutions' do
       end
     end
 
+    describe 'AssessLine' do
+      context 'with complying line' do
+        input = { 1 => [{ red: 4, green: 0, blue: 3 },
+                        { red: 1, green: 2, blue: 6 },
+                        { red: 0, green: 2, blue: 0 }] }
+
+        it 'returns HashMap of cube colours and counts' do
+          expect(AssessLine.new(input).call).to eq(
+            { 1 => true }
+          )
+        end
+      end
+
+      context 'with complying line if 1 subset is above the limit' do
+        input = { 1 => [{ red: 4, green: 0, blue: 3 },
+                        { red: 13, green: 2, blue: 6 },
+                        { red: 5, green: 2, blue: 0 }] }
+
+        it 'returns HashMap of cube colours and counts' do
+          expect(AssessLine.new(input).call).to eq(
+            { 1 => false }
+          )
+        end
+      end
+
+      context 'with complying line if sum of subsets is above the limit' do
+        input = { 1 => [{ red: 4, green: 0, blue: 3 },
+                        { red: 4, green: 2, blue: 6 },
+                        { red: 5, green: 2, blue: 0 }] }
+
+        it 'returns HashMap of cube colours and counts' do
+          expect(AssessLine.new(input).call).to eq(
+            { 1 => false }
+          )
+        end
+      end
+    end
+
     describe 'LimitAssessor' do
       it 'returns false if the game over/in the limit' do
         expect(LimitAssessor.new({ red: 12, green: 13, blue: 14 }).call).to eq false
