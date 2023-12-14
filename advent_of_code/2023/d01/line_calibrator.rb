@@ -21,7 +21,7 @@ class LineCalibrator
   def call_two
     nums = []
     @line.size.times do |i|
-      nums << (@line[i..-1]).match(/#{NUMS.join('|')}|\d/, 0)
+      nums << (@line[i..]).match(/#{NUMS.join('|')}|\d/, 0)
     end
     nums.delete nil
     @char_one = nums.first[0]
