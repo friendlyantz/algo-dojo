@@ -2,3 +2,6 @@ require: rubocop-rspec
 
 RSpec/NestedGroups:
   Max: 4
+
+Style/Documentation:
+  Enabled: false
