@@ -14,8 +14,12 @@ class Solution
   end
 
   def solution_pt2
-    # input
-    # .then { |data| binding.pry }
+    @input
+      .lines
+      .map { |line| LineTranslator.new(line).call }
+      .map { |data| MaxCubesCounter.new(data).call }
+      .map { |data| data.values.first.values.inject(:*) }
+      .sum
   end
 
   if __FILE__ == $PROGRAM_NAME
