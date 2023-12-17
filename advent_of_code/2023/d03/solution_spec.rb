@@ -100,7 +100,7 @@ RSpec.describe 'Solutions' do
     end
 
     describe 'NumberFinder' do
-      context 'with simple input' do
+      context "with simple input (one '*' symbol)" do
         map =
           [
             [4,   6,   7,   nil, nil, 1,   1,   4,   nil, nil],
@@ -110,6 +110,29 @@ RSpec.describe 'Solutions' do
 
         coordinates = [[1, 3]]
         expecation = [467, 35]
+        it 'get coordinates of symbols' do
+          expect(NumberFinder.new(map, coordinates).call).to eq expecation
+        end
+      end
+
+      context 'with multiple symbols input' do
+        map = [
+          [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
+          [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
+          [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
+          [nil, nil, nil, nil, nil, nil, '#', nil, nil, nil],
+          [6, 1, 7, '*', nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, '+', nil, 5, 8, nil],
+          [nil, nil, 5, 9, 2, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, 7, 5, 5, nil],
+          [nil, nil, nil, '$', nil, '*', nil, nil, nil, nil],
+          [nil, 6, 6, 4, nil, 5, 9, 8, nil, nil],
+        ]
+
+        coordinates = [
+          [1, 3], [3, 6], [4, 3], [5, 5], [8, 3], [8, 5],
+        ]
+        expecation = [467, 35, 633, 617, 592, 664, 755, 598]
         it 'get coordinates of symbols' do
           expect(NumberFinder.new(map, coordinates).call).to eq expecation
         end
