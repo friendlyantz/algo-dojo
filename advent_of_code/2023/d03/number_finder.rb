@@ -1,7 +1,8 @@
 class NumberFinder
-  def initialize(map, coordinates)
+  def initialize(map, coordinates, gears: false)
     @map = map
     @coordinates = coordinates
+    @gears = gears
   end
 
   def call
@@ -27,7 +28,18 @@ class NumberFinder
         found_nums << { num => coordinates }
       end
     end
-    found_nums.uniq
+
+    if @gears
+      if found_nums.uniq.size == 2
+        multiplied_gear_ration = found_nums.uniq.map { _1.keys.first }.inject(:*)
+        coordinates = found_nums.uniq.map { _1.values.first }
+        [{ multiplied_gear_ration => coordinates }]
+      else
+        []
+      end
+    else
+      found_nums.uniq
+    end
   end
 
   def integer?(line, column)

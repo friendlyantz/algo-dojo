@@ -15,8 +15,12 @@ class Solution
   end
 
   def solution_pt2
-    # input
-    # .then { |data| binding.pry }
+    map = convert_input_to_map
+    GearLocator
+      .new(map)
+      .call
+      .then { |symbol_coordinates| NumberFinder.new(map, symbol_coordinates, gears: true).call }
+      .sum
   end
 
   if __FILE__ == $PROGRAM_NAME
