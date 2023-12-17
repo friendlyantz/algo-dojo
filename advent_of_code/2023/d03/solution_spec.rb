@@ -141,16 +141,14 @@ RSpec.describe 'Solutions' do
 
     describe 'final result for pt1' do
       context 'with example input data' do
-        it 'returns correct result' do
-          pending 'pt1 implementation'
+        it 'returns correct result - sum of found numbers' do
           expect(Solution.new(example_input).solution_pt1).to eq 4361
         end
       end
 
       context 'with custom input data' do
         it 'returns correct result' do
-          pending 'pt1 implementation'
-          expect(Solution.new(custom_input).solution_pt1).to eq true
+          expect(Solution.new(custom_input).solution_pt1).to eq 520_019
         end
       end
     end

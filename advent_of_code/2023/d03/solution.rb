@@ -10,9 +10,8 @@ class Solution
     SymbolLocator
       .new(map)
       .call
-      .then do |data|
-      # binding.pry
-    end
+      .then { |symbol_coordinates| NumberFinder.new(map, symbol_coordinates).call }
+      .sum
   end
 
   def solution_pt2
