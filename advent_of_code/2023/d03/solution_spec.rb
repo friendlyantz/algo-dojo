@@ -99,6 +99,21 @@ RSpec.describe 'Solutions' do
           expect(SymbolLocator.new(input).call).to eq expecation
         end
       end
+
+      describe 'NumberFinder' do
+        map =
+          [
+            [4,   6,   7,   nil, nil, 1,   1,   4,   nil, nil],
+            [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
+            [nil, nil, 3,   5,   nil, nil, 6,   3,   3, nil],
+          ]
+
+        coordinates = [[1, 3]]
+        expecation = [467, 35]
+        it 'get coordinates of symbols' do
+          expect(NumberFinder.new(map, coordinates).call).to eq expecation
+        end
+      end
     end
 
     describe 'final result for pt1' do

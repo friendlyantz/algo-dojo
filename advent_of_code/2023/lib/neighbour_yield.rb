@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# i - line (y), j - column (x)
 module NeighbourYield
   def self.all(data, (i, j))
     yield [i - 1, j] if i.positive? # top

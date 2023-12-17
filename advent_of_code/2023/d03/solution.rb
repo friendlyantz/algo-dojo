@@ -6,8 +6,13 @@ class Solution
   end
 
   def solution_pt1
-    'lala'
-    # input
+    map = convert_input_to_map
+    SymbolLocator
+      .new(map)
+      .call
+      .then do |data|
+      # binding.pry
+    end
   end
 
   def solution_pt2

@@ -20,6 +20,7 @@ loader = Zeitwerk::Loader.new
 Dir.glob('d*/').each do |dir|
   loader.push_dir(dir)
 end
+loader.push_dir('lib')
 loader.setup
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
