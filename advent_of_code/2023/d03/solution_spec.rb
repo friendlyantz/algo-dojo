@@ -42,25 +42,44 @@ RSpec.describe 'Solutions' do
 
     # Of course, the actual engine schematic is much larger. What is the sum of all of the part numbers in the engine schematic?
 
-    describe 'implementation' do
-      describe 'convert_input_to_map' do
-        it 'converts single line input to matrix map' do
-          expect(Solution.new('467..114..').convert_input_to_map).to eq(
-            [[4, 6, 7, nil, nil, 1, 1, 4, nil, nil]],
-          )
-        end
+    describe 'convert_input_to_map' do
+      it 'converts single line input to matrix map' do
+        expect(Solution.new('467..114..').convert_input_to_map).to eq(
+          [[4, 6, 7, nil, nil, 1, 1, 4, nil, nil]],
+        )
+      end
 
-        it 'converts input to matrix map' do
-          expect(Solution.new("467..114..\n...*......\n..35..633.\n").convert_input_to_map).to eq(
-            [
-              [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
-              [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
-              [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
-            ],
-          )
-        end
+      it 'converts input to matrix map' do
+        expect(Solution.new("467..114..\n...*......\n..35..633.\n").convert_input_to_map).to eq(
+          [
+            [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
+            [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
+            [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
+          ],
+        )
+      end
 
-        expecation = [
+      expecation = [
+        [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
+        [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
+        [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
+        [nil, nil, nil, nil, nil, nil, '#', nil, nil, nil],
+        [6, 1, 7, '*', nil, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, '+', nil, 5, 8, nil],
+        [nil, nil, 5, 9, 2, nil, nil, nil, nil, nil],
+        [nil, nil, nil, nil, nil, nil, 7, 5, 5, nil],
+        [nil, nil, nil, '$', nil, '*', nil, nil, nil, nil],
+        [nil, 6, 6, 4, nil, 5, 9, 8, nil, nil],
+      ]
+
+      it 'converts input to matrix map' do
+        expect(Solution.new(example_input).convert_input_to_map).to eq(expecation)
+      end
+    end
+
+    describe 'SymbolLocator' do
+      input =
+        [
           [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
           [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
           [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
@@ -72,35 +91,16 @@ RSpec.describe 'Solutions' do
           [nil, nil, nil, '$', nil, '*', nil, nil, nil, nil],
           [nil, 6, 6, 4, nil, 5, 9, 8, nil, nil],
         ]
-
-        it 'converts input to matrix map' do
-          expect(Solution.new(example_input).convert_input_to_map).to eq(expecation)
-        end
+      expecation = [
+        [1, 3], [3, 6], [4, 3], [5, 5], [8, 3], [8, 5],
+      ]
+      it 'get coordinates of symbols' do
+        expect(SymbolLocator.new(input).call).to eq expecation
       end
+    end
 
-      describe 'SymbolLocator' do
-        input =
-          [
-            [4, 6, 7, nil, nil, 1, 1, 4, nil, nil],
-            [nil, nil, nil, '*', nil, nil, nil, nil, nil, nil],
-            [nil, nil, 3, 5, nil, nil, 6, 3, 3, nil],
-            [nil, nil, nil, nil, nil, nil, '#', nil, nil, nil],
-            [6, 1, 7, '*', nil, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, '+', nil, 5, 8, nil],
-            [nil, nil, 5, 9, 2, nil, nil, nil, nil, nil],
-            [nil, nil, nil, nil, nil, nil, 7, 5, 5, nil],
-            [nil, nil, nil, '$', nil, '*', nil, nil, nil, nil],
-            [nil, 6, 6, 4, nil, 5, 9, 8, nil, nil],
-          ]
-        expecation = [
-          [1, 3], [3, 6], [4, 3], [5, 5], [8, 3], [8, 5],
-        ]
-        it 'get coordinates of symbols' do
-          expect(SymbolLocator.new(input).call).to eq expecation
-        end
-      end
-
-      describe 'NumberFinder' do
+    describe 'NumberFinder' do
+      context 'with simple input' do
         map =
           [
             [4,   6,   7,   nil, nil, 1,   1,   4,   nil, nil],
