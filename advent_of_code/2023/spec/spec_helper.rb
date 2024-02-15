@@ -17,6 +17,8 @@ require 'zeitwerk'
 require 'super_diff/rspec'
 
 loader = Zeitwerk::Loader.new
+# require 'pry'
+# binding.pry
 Dir.glob('d*/').each do |dir|
   loader.push_dir(dir)
 end

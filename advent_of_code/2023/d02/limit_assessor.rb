@@ -1,9 +1,10 @@
+# frozen_string_literal: true
 # Description: Round assessor
 class LimitAssessor
   LIMITS = {
     red: 12,
     green: 13,
-    blue: 14
+    blue: 14,
   }.freeze
 
   def initialize(hash)

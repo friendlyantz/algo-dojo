@@ -52,13 +52,13 @@ RSpec.describe Solution do
     describe 'final result for pt1' do
       context 'example input data' do
         it 'returns sum of lines' do
-          expect(Solution.new.solution_pt1(example_input)).to eq 142
+          expect(described_class.new.solution_pt1(example_input)).to eq 142
         end
       end
 
       context 'custom input data' do
         it 'returns correct result' do
-          expect(Solution.new.solution_pt1(custom_input)).to eq 55_477
+          expect(described_class.new.solution_pt1(custom_input)).to eq 55_477
         end
       end
     end
@@ -93,13 +93,13 @@ RSpec.describe Solution do
       end
 
       it 'returns correct result' do
-        expect(Solution.new.solution_pt2(example_input_two)).to eq 281
+        expect(described_class.new.solution_pt2(example_input_two)).to eq 281
       end
     end
 
     context 'custom input data' do
       it 'returns correct result' do
-        expect(Solution.new.solution_pt2(custom_input)).to eq true
+        expect(described_class.new.solution_pt2(custom_input)).to eq true
       end
     end
   end

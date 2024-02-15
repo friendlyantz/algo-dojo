@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # Description: Round assessor
 class AssessLine
   def initialize(input)
