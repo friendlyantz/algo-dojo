@@ -6,10 +6,15 @@ end
 
 puts candy_times_three
 
-def triple
+def intro(name)
   puts 'we are in the METHOD'
-  yield
+  yield(name)
+  yield('Amanda')
+  yield(name)
+  yield('John')
   puts 'we are back in the METHOD'
 end
 
-triple { puts 'we are in the BLOCK' }
+intro('Anton') do |n|
+  puts "Hello, #{n}"
+end
